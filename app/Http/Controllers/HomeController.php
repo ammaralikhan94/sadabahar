@@ -23,6 +23,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('admin.dashboard');
+    }
+
+    /*Logout*/
+    public function logout(){
+        Auth::logout();
+        return redirect('/')->with('status', 'You are logged out!');    
     }
 }

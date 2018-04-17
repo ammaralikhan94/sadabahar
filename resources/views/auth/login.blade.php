@@ -8,7 +8,7 @@
 
         <link rel="shortcut icon" href="{{URL('/')}}/backend/images/favicon_1.ico">
 
-        <title>Ubold - Responsive Admin Dashboard Template</title>
+        <title>Sadabahar ERP SYSTEM</title>
 
         <link href="{{URL('/')}}/backend/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="{{URL('/')}}/backend/css/core.css" rel="stylesheet" type="text/css" />
@@ -34,7 +34,7 @@
         <div class="wrapper-page">
             <div class=" card-box">
             <div class="panel-heading"> 
-                <h3 class="text-center"> Sign In to <strong class="text-custom">UBold</strong> </h3>
+                <h3 class="text-center"> Sign In to <strong class="text-custom">Sadabahar</strong> </h3>
             </div> 
 
 
