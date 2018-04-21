@@ -49,6 +49,11 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/update_customer/', ['as' => 'update_customer',  'uses' => 'admin\CustomerController@update_customer']);/*update users*/
 	/*********************************Customer Routes Ends****************************************/
 
+	/*********************************Inventory Stars****************************************/
+	Route::get('/create_inventory/', ['as' => 'create_inventory',  'uses' => 'admin\InventoryController@create_inventory']);/*create users*/
+	Route::post('/insert_inventory/', ['as' => 'insert_inventory',  'uses' => 'admin\InventoryController@insert_inventory']);/*insert users*/
+
+	/*********************************Inventory Ends****************************************/
 
 
 	

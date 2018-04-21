@@ -39,6 +39,7 @@
                     <th>Supplier Name</th>
                     <th>Due Date</th>
                     <th>Amount Due</th>
+                    <th>Payment status</th>
                     <th>Added on</th>
                 </tr>
                 </thead>
@@ -47,8 +48,9 @@
                 <tr>
                     <td>{{$val->key + 1}}</td>
                     <td>{{$val->supplier_name['name']}}</td>
-                    <td>{{$val->due_date}}</td>
-                    <td>{{$val->due_amount}}</td>
+                    <td>{{($val->due_date == '')?'-':$val->due_date}}</td>
+                    <td>{{($val->due_amount == 0)?'-':$val->due_amount}}</td>
+                    <td>{{$val->status}}</td>
                     <td>{{$val->created_at}}</td>
                 </tr>
                 @endforeach

@@ -60,10 +60,7 @@
                                     <select class="form-control" required="" name="cheque_status" id="payment_status">
                                         <option value="">Select Payment Status</option>
                                         <option value="cleared" {{($supplier->cheque_status == 'cleared')?'selected':''}}>Cleared</option>
-                                        <optgroup label="Due">
-                                            <option value="due_date" {{($supplier->cheque_status == 'due_date')?'selected':''}}>Due Date</option>
-                                            <option value="amount" {{($supplier->cheque_status == 'amount')?'selected':''}}>Due Amount</option>
-                                        </optgroup>
+                                        <option value="due" {{($supplier->cheque_status == 'due')?'selected':''}}>Due</option>
                                         <option value="bounced" {{($supplier->cheque_status == 'bounced')?'selected':''}}>Bounced</option>
                                     </select>
                                 </div>
@@ -71,22 +68,63 @@
 
                                <input type="hidden" name="payment_id" value="{{$supplier_payment->id}}">
 
+                            <div class="form-group col-md-6">
+                                <label class="col-md-2 control-label">Payment Mode</label>
+                                <div class="col-md-10">
+                                    <select class="form-control" required="" name="payment_mode" id="payment_mode">
+                                        <option value="">Select Payment Mode</option>
+                                        <option value="cash" {{($supplier->payment_mode == 'cash')?'selected':''}}>Cash</option>
+                                        <option value="credit_limit" {{($supplier->payment_mode == 'credit_limit')?'selected':''}}>Set credit limit</option>
+                                        <option value="post_dated_cheques" {{($supplier->payment_mode == 'post_dated_cheques')?'selected':''}}>Post-dated cheques</option>
+                                    </select>
+                                </div>
+                            </div>   
 
-                             <div class="form-group col-md-6" style="display: none" id="due_date">
+
+
+                           {{-- Payment Amount Limit --}}
+                            <div class="form-group col-md-6" id="credit_limit" <?php  if($supplier->payment_mode == 'credit_limit'){echo '';}else{?> style="display: none"<?php }?>    id="credit_limit" >
+                                <label class="col-md-2 control-label">Amount limit</label>
+                                <div class="col-md-10">
+                                    <input type="numebr" class="form-control" name="supplier_amount_limit" value="{{$supplier_amount_limit->supplier_amount_limit}}"  >
+                                </div>
+                            </div>
+                            {{-- Payment Amount Limit --}}
+
+
+                            {{-- Payment Mode --}}
+                            <div class="form-group col-md-6" id="cheque_due_date"   <?php  if($supplier->payment_mode == 'post_dated_cheques'){echo '';}else{?> style="display: none"<?php }?>  >
                                 <label class="col-md-2 control-label">Due date</label>
                                 <div class="col-md-10">
-                                    <input type="text" class="form-control" name="due_date" placeholder="Due date" value="{{$supplier_payment->due_date}}"  >
+                                    <input type="text" class="form-control" name="cheque_date_limit" placeholder="Cheque Due Date" value="{{$Supplier_cheques->cheque_date_limit}}"  >
                                 </div>
                             </div>
 
-                             <div class="form-group col-md-6" style="display: none" id="due_amount">
+                             <div class="form-group col-md-6" id="cheque_amount_limit" <?php  if($supplier->payment_mode == 'post_dated_cheques'){echo '';}else{?> style="display: none"<?php }?> >
                                 <label class="col-md-2 control-label">Due amount</label>
                                 <div class="col-md-10">
-                                    <input type="text" class="form-control" name="due_amount" placeholder="Due amount" value="{{$supplier_payment->due_amount}}"  >
+                                    <input type="text" class="form-control" name="cheque_amount_limit" placeholder="cheque amount limit" value="{{$Supplier_cheques->cheque_amount_limit}}"  >
                                 </div>
                             </div>
+                            {{-- Payment Mode End--}}
 
 
+                            {{-- Payment Status --}}
+                            <div class="form-group col-md-6" id="due_date" <?php  if($supplier->cheque_status == 'due'){echo '';}else{?> style="display: none"<?php }?>  >
+                                <label class="col-md-2 control-label">Due date</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control due_date" name="due_date" placeholder="Cheque Due Date" value="{{$supplier_payment->due_date}}"  >
+                                </div>
+                            </div>
+                             <div class="form-group col-md-6" id="due_amount" <?php  if($supplier->cheque_status == 'due'){echo '';}else{?> style="display: none"<?php }?> >
+                                <label class="col-md-2 control-label">Due amount</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control due_amount" name="due_amount" placeholder="cheque amount limit" value="{{$supplier_payment->due_amount}}"  >
+                                </div>
+                            </div>
+                            {{-- Payment Status --}}
+
+                        
                             <div class="form-group col-md-6">
                             	<label class="col-md-2 control-label"></label>
                                 <div class="col-md-10">
@@ -118,15 +156,37 @@
 
              $(document).on('change' ,'#payment_status', function (){
                 var value = $(this).val();
-                if(value == 'due_date'){
+                alert(value);
+                if(value == 'due'){
                     $('#due_date').show('slow');
-                    $('#due_amount').hide('slow');
-                    $('#due_amount').removeAttr('required');
-                }
-                if(value == 'amount'){
-                    $('#due_date').hide('slow');
                     $('#due_amount').show('slow');
-                    $('#due_date').removeAttr('required');
+                }
+                if(value == 'cleared'){
+                    $('#due_date').hide('slow');
+                    $('#due_amount').hide('slow');
+                    $('#due_date').hide('slow');
+                    $('#due_amount').hide('slow');
+                    $('.due_date').value('0');
+                    $('.due_amount').value('0');
+                }
+            });
+
+             $(document).on('change' ,'#payment_mode', function (){
+                var value = $(this).val();
+                if(value == 'post_dated_cheques'){
+                    $('#cheque_due_date').show('slow');
+                    $('#cheque_amount_limit').show('slow');
+                    $('#credit_limit').hide('slow');
+                }
+                if(value == 'credit_limit'){
+                    $('#credit_limit').show('slow');
+                    $('#cheque_due_date').hide('slow');
+                    $('#cheque_amount_limit').hide('slow');
+                }
+                if(value == 'cash'){
+                    $('#credit_limit').hide('slow');
+                    $('#cheque_due_date').hide('slow');
+                    $('#cheque_amount_limit').hide('slow');
                 }
             });
         </script>
