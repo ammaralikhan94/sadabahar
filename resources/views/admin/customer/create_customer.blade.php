@@ -138,11 +138,15 @@
                     $('#cheque_date_limit').hide('slow');                
                     $('#cheque_amount_limit').hide('slow');            
                 }
-                
                 if(value == 'post_dated_cheques'){
                     $('#cheque_date_limit').show('slow');                
                     $('#cheque_amount_limit').show('slow');         
                     $('#credit_limit').hide('slow');         
+                }
+                if(value == 'cash'){
+                     $('#cheque_date_limit').hide('slow');                
+                    $('#cheque_amount_limit').hide('slow');         
+                    $('#credit_limit').hide('slow');     
                 }
             });
         </script>

@@ -41,34 +41,37 @@
 
                             <div class="form-group col-md-6">
                                 <label class="col-md-2 control-label">Purchase Quanity</label>
-                                <div class="col-md-10">
-                                    <input type="text" class="form-control" name="address" placeholder="address"  required="">
+                                <div class="col-md-3">
+                                    <input type="number" class="form-control" name="quantity" placeholder="quantity"  required="">
+                                </div>
+                                <label class="col-md-3 control-label">Purchase Quanity Type</label>
+                                <div class="col-md-3">
+                                    <select class="form-control">
+                                        <option value="">Select Type</option>
+                                        <option value="kg">Kg</option>
+                                        <option value="liter">liter</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label class="col-md-2 control-label">Chemical Amount</label>
+                                <div class="col-md-3">
+                                    <input type="number" class="form-control s_amount" name="chemical_amount" id="chemical_amount" placeholder="Chemical amount"  required="">
+                                </div>
+                                <label class="col-md-3 control-label">Barrel Amount</label>
+                                <div class="col-md-3">
+                                     <input type="number" class="form-control s_amount" name="barrel_amount" id="barrel_amount" placeholder="barrel amount"  required="">
                                 </div>
                             </div>
 
                             <div class="form-group col-md-6">
                                 <label class="col-md-2 control-label">Purchase Amount</label>
                                 <div class="col-md-10">
-                                    <input type="text" class="form-control" name="address" placeholder="address"  required="">
+                                    <input type="text" class="form-control" name="total_amount" id="total_amount" placeholder="amount"  required="" readonly="">
                                 </div>
                             </div>
                             
-                            <div class="form-group col-md-6">
-                                <label class="col-md-2 control-label">Payment Status</label>
-                                <div class="col-md-10">
-                                    <select class="form-control" required="" name="payment_status">
-                                        <option value="">Select Payment Status</option>
-                                        <option value="cleared">Cleared</option>
-                                        <option value="new_customer">New Customer</option>
-                                        <optgroup label="Due">
-                                            <option value="due_date">Due Date</option>
-                                            <option value="amount">Due Amount</option>
-                                        </optgroup>
-                                        <option value="bounced">Bounced</option>
-                                    </select>
-                                </div>
-                            </div>
-
                             <div class="form-group col-md-6">
                                 <label class="col-md-2 control-label">Payment Mode</label>
                                 <div class="col-md-10">
@@ -76,11 +79,7 @@
                                         <option value="">Select Payment Status</option>
                                         <option value="cash">Cash</option>
                                         <option value="credit_limit">Set credit limit</option>
-                                        <optgroup label="Post Dated Cheques">
-                                            <option value="date_limit">Date Limit</option>
-                                            <option value="amount_limit">Amount Limit</option>
-                                        </optgroup>
-                                        <option value="bounced">Bounced</option>
+                                        <option value="pdc">Post-dated cheques</option>
                                     </select>
                                 </div>
                             </div>
@@ -98,5 +97,15 @@
             </div>
         </div>
     </div>
-
+@section('customScript')
+    <script type="text/javascript">
+        $(document).on('keyup','.s_amount' , function (){
+            chemical_amount = $('#chemical_amount').val();
+            barrel_amount   = $('#barrel_amount').val();
+            chemical_amount = 0;
+            total_amount    = parseInt(barrel_amount)  +  chemical_amount;
+            $('#total_amount').val(total_amount);
+        });
+    </script> 
+@endsection
 @endsection

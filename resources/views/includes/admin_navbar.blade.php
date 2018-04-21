@@ -34,17 +34,17 @@
                                     </li>
                                 </ul>       
                             </li>   
-                            {{--  <li class="has-submenu">
-                             <a href="#"><i class="fa fa-street-view"></i>Inventory</a>
+                             <li class="has-submenu">
+                             <a href="#"><i class="fa fa-opencart"></i>Inventory</a>
                                 <ul class="submenu megamenu">
                                     <li>
                                         <ul>
                                             <li><a href="{{route('create_inventory')}}">Add Inventory</a></li>
-                                            <li><a href="">List Customer</a></li>
+                                            
                                         </ul>
                                     </li>
                                 </ul>       
-                            </li>    --}}
+                            </li>  
                         </ul>
                         <!-- End navigation menu        -->
                     </div>
