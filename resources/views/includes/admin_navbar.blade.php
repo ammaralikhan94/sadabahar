@@ -65,7 +65,29 @@
                                         </ul>
                                     </li>
                                 </ul>       
-                            </li>   
+                            </li>  
+                            <li class="has-submenu">
+                             <a href="#"><i class="fa  fa-money"></i>Expense</a>
+                                <ul class="submenu megamenu">
+                                    <li>
+                                        <ul>
+                                            <li><a href="{{route('create_expense')}}"><i class="fa  fa-money"></i> Add Expense</a></li>
+                                            {{-- <li><a href="{{route('list_inventory')}}"><i class="fa  fa-list  "></i>  List Inventory</a></li> --}}
+                                        </ul>
+                                    </li>
+                                </ul>       
+                            </li> 
+                            <li class="has-submenu">
+                             <a href="#"><i class="fa  fa-money"></i>Chemical</a>
+                                <ul class="submenu megamenu">
+                                    <li>
+                                        <ul>
+                                            <li><a href="{{route('create_chemical')}}"><i class="fa  fa-money"></i> Add Chemical</a></li>
+                                            <li><a href="{{route('list_chemical')}}"><i class="fa  fa-list  "></i>  List Chemical</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>       
+                            </li> 
                         </ul>
                         <!-- End navigation menu        -->
                     </div>

@@ -9,6 +9,7 @@ use App\Supplier;
 use App\Supplier_amount_limit;
 use App\Supplier_cheques;
 use App\Inventory;
+use App\Chemical;
 
 class InventoryController extends Controller
 {
@@ -16,7 +17,8 @@ class InventoryController extends Controller
     {	
     	$item_type = item_purchase_type::get();
     	$supplier  = supplier::get();
-    	return view('admin.inventory.create_inventory' , compact('item_type','supplier'));
+        $chemical  = Chemical::get();
+    	return view('admin.inventory.create_inventory' , compact('item_type','supplier','chemical'));
     }
 
 
@@ -43,6 +45,7 @@ class InventoryController extends Controller
     		'limit_cheque_date' => $request->limit_cheque_date,
     		'payment_status' => $request->payment_status,
     		'due_date' => $request->due_date,
+            'chemical_name' => $request->chemical_name,
     		'due_amount' => $request->due_amount,
     		'purchasing_type' => $request->purchasing_type,
     		'total_quantity' => $request->total_quantity
@@ -55,6 +58,12 @@ class InventoryController extends Controller
 		$item_type = item_purchase_type::where('item_name' , $_POST['item_type'])->first();
 		return json_encode($item_type);
 	}
+
+    /*For barrel*/
+    public function get_barrel_type(){
+        $item_type = item_purchase_type::where('id' , $_POST['item_type'])->first();
+        return json_encode($item_type);
+    }
 
 	/*Ajax call for getting supplier limit*/
 	public function get_credit_limit(){
@@ -95,6 +104,7 @@ class InventoryController extends Controller
     		'payment_status' => $request->payment_status,
     		'due_date' => $request->due_date,
     		'due_amount' => $request->due_amount,
+            'chemical_name' => $request->chemical_name,
     		'purchasing_type' => $request->purchasing_type,
     		'total_quantity' => $request->total_quantity
     	]);
@@ -114,4 +124,24 @@ class InventoryController extends Controller
         $item_type = item_purchase_type::get();
 		return view('admin.barrel.create_barrel',compact('item_type'));
 	}
+
+    /**************************************************************************************************************/
+
+
+    /***************************************CHEMICAL START*********************************************************/
+    public function create_chemical(){
+        return view('admin.chemical.create_chemical');
+    }
+
+    public function insert_chemical(Request $request){
+        chemical::insert([
+            'chemical_name' => $request->chemical_name
+        ]); 
+        return redirect()->back()->with('success' , 'Chemical added successfully !');
+    }
+
+    public function list_chemical(){
+        $chemical = Chemical::get();
+        return view('admin.chemical.list_chemical',compact('chemical'));
+    }
 }

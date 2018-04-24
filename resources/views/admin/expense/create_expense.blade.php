@@ -1,6 +1,6 @@
 @extends('layouts.admin_layout')
 @section('title')
-	Add - Barrel Inventory
+	Add - Expense
 @endsection
 @section('content')
 @if ($message = Session::get('success'))
@@ -20,40 +20,16 @@
 <div class="row">
         <div class="col-sm-12">
             <div class="card-box">
-                <h4 class="m-t-0 header-title"><b>Create Item Type</b></h4>
+                <h4 class="m-t-0 header-title"><b>Create Expense</b></h4>
                 <div class="row">
                     <div class="col-md-12">
                         <form class="form-horizontal" action="{{route('insert_item')}}" method="post">
                         	{{csrf_field()}}
-                            <div class="form-group col-md-6">
-                                <label class="col-md-2 control-label">Barrel Type</label>
-                                <div class="col-md-10">
-                                    <select class="form-control" name="barrel_type">
-                                        <option value="">Select barrel type</option>
-                                        @foreach($item_type as $key => $val)
-                                            @if($val->item_name == 'drum' || $val->item_name == 'gallon')
-                                                <option value="{{$val->id}}" >{{$val->item_name}}</option>
-                                            @endif  
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                             <div class="form-group col-md-6">
-                                <label class="col-md-2 control-label">Barrel Type</label>
-                                <div class="col-md-4">
-                                    <input type="text" name="barrel_strength" class="form-control" readonly="">
-                                </div>
-                                <label class="col-md-2 control-label">Barrel Strength</label>
-                                <div class="col-md-4">
-                                    <input type="text" name="barrel_measure" class="form-control" readonly="">
-                                </div>
-                            </div>
                         
                             <div class="form-group col-md-6">
-                                <label class="col-md-2 control-label">Empty barrel</label>
+                                <label class="col-md-2 control-label">Date</label>
                                 <div class="col-md-10">
-                                    <input type="number" name="empty_barrel" class="form-control" placeholder="Empty Barrel Quantity">
+                                    <input type="text" name="doe" value="{{date('d/m/Y')}}" class="form-control" placeholder="Empty Barrel Quantity" readonly="">
                                 </div>
                             </div>
 

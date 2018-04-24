@@ -40,6 +40,7 @@
                                 </div>
                             </div>
 
+
                             <div class="form-group col-md-6">
                                 <label class="col-md-2 control-label">Date of Purchase</label>
                                 <div class="col-md-10">
@@ -65,6 +66,19 @@
                                 </div>
                             </div>
                             
+                            <div class="form-group col-md-6">
+                                <div class="row">
+                                    <label class="col-md-2 control-label">Chemical</label>
+                                    <div class="col-md-10">                                    
+                                        <select class="form-control" name="chemical_name" required="">
+                                                <option value="">Select Chemical</option>
+                                                @foreach($chemical as $key => $val)
+                                                    <option value="{{$val->id}}">{{$val->chemical_name}}</option>
+                                                @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group col-md-6">
                                 <label class="col-md-2 control-label">Supplier</label>
                                 <div class="col-md-10">
@@ -95,7 +109,7 @@
                             <div class="form-group col-md-6" style="display: none;" id="credit_amount">
                                 <label class="col-md-2 control-label">Credit Amount</label>
                                 <div class="col-md-10">
-                                    <input type="number" class="form-control" name="limit_amount" placeholder="amount" value="0"  required="" >
+                                    <input type="number" class="form-control" name="limit_amount" placeholder="amount" value="0"  required="" readonly="" >
                                 </div>
                                 <p><strong>Credit limit for this supplier is <span id="credit_limit" style="color: red"></span></strong></p>
                             </div>      
@@ -122,6 +136,14 @@
                                 </div>
                             </div>
                             {{-- Payment Mode Additional Field --}}
+                            
+                            <div class="form-group col-md-6 ">
+                                <label class="col-md-2 control-label">Cash Recieved</label>
+                                <div class="col-md-10">
+                                    <input type="number" class="form-control" name="cash_recieved" placeholder="Amount recieved" required="" >
+                                </div>
+                            </div>
+
 
                              <div class="form-group col-md-6">
                                 <label class="col-md-2 control-label">Payment Status</label>
@@ -244,6 +266,10 @@
                 $('[name="cheque_image"]').prop('required',false);
                 $('[name="limit_cheque_date"]').prop('required',false);
                 $('[name="cheque_number"]').prop('required',true);
+                total_amount = $('[name="total_amount"]').val();
+                cash_recieved = $('[name="cash_recieved"]').val();
+                credit_amount = parseInt(total_amount -   cash_recieved);
+                $('[name="limit_amount"]').val(credit_amount);
             }if(option == 'pdc'){
                 $('.show_post_cheques').show('slow');
                 $('#credit_amount').hide();
@@ -310,6 +336,12 @@
                 $('[name="due_amount"]').prop('required',false);
                 $('[name="due_amount"]').prop('required',false);
             }
+         });
+         $(document).on('keyup','[name="cash_recieved"]',function (){
+             total_amount = $('[name="total_amount"]').val();
+                cash_recieved = $('[name="cash_recieved"]').val();
+                credit_amount = parseInt(total_amount -   cash_recieved);
+                $('[name="limit_amount"]').val(credit_amount);
          });
     </script> 
 @endsection

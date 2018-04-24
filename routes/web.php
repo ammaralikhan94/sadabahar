@@ -57,6 +57,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/update_inventory/', ['as' => 'update_inventory',  'uses' => 'admin\InventoryController@update_inventory']);/*update users*/
 	Route::get('/delete_inventory/{id}', ['as' => 'delete_inventory',  'uses' => 'admin\InventoryController@delete_inventory']);/*update users*/
 	Route::post('/get-purchase-type/', ['as' => 'get-purchase-type',  'uses' => 'admin\InventoryController@get_purchase_type']);/*get purchase type AJAX*/
+	Route::post('/get-barrel-type/', ['as' => 'get-barrel-type',  'uses' => 'admin\InventoryController@get_barrel_type']);/*get barrel type AJAX*/
 	Route::post('/get-credit-limit/', ['as' => 'get-credit-limit',  'uses' => 'admin\InventoryController@get_credit_limit']);/*get credit limit AJAX*/
 	Route::post('/get-cheque-limit/', ['as' => 'get-cheque-limit',  'uses' => 'admin\InventoryController@get_cheque_limit']);/*get cheque limit AJAX*/
 	/*********************************Inventory Ends****************************************/
@@ -74,9 +75,15 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/create_barrel/', ['as' => 'create_barrel',  'uses' => 'admin\InventoryController@create_barrel']);/*create users*/
 	/*********************************Barell Inventory Ends****************************************/
 
+	/*********************************Expense Start****************************************/
+	Route::get('/create_expense/', ['as' => 'create_expense',  'uses' => 'admin\ExpenseController@create_expense']);/*create expense*/
+	/*********************************Expense END****************************************/
 
-	
-
+	/*********************************Chemical Start****************************************/
+	Route::get('/create_chemical/', ['as' => 'create_chemical',  'uses' => 'admin\InventoryController@create_chemical']);/*create chemcial*/
+	Route::post('/insert_chemical/', ['as' => 'insert_chemical',  'uses' => 'admin\InventoryController@insert_chemical']);/*insert chemical*/
+	Route::get('/list_chemical/', ['as' => 'list_chemical',  'uses' => 'admin\InventoryController@list_chemical']);/*insert chemical*/
+	/*********************************Chemical END****************************************/
 
 });
 

@@ -1,6 +1,6 @@
 @extends('layouts.admin_layout')
 @section('title')
-	List - Inventory
+	List - Chemical
 @endsection
 @section('customCss')
         <!-- DataTables -->
@@ -30,31 +30,20 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="card-box table-responsive">
-            <h4 class="m-t-0 header-title"><b>Inventory</b></h4>
+            <h4 class="m-t-0 header-title"><b>Chemical</b></h4>
             <table id="subadmin_table" class="table table-striped table-bordered">
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Chemical Name</th>
-                    <th>Storage type</th>
-                    <th>Quantity</th>
-                    <th>Total Amount</th>
-                    <th>Payment Mode</th>
-                    <th>Payment Status</th>
-                    <th>Action</th>
+                    <th>Name</th>
+                    
                 </tr>
                 </thead>
                 <tbody>
-                    @foreach($inventory as $key => $val)
+                    @foreach($chemical as $key => $val)
                 <tr>
                     <td>{{$val->key + 1}}</td>
-                    <td>{{$val->get_chemical['chemical_name']}}</td>
-                    <td>{{$val->item_name}}</td>
-                    <td>{{$val->quantity}}</td>
-                    <td>{{$val->total_amount}}</td>
-                    <td>{{$val->payment_mode}}</td>
-                    <td>{{$val->payment_status}}</td>
-                    <td><a class="btn btn-primary" href="{{route('edit_inventory' , ['id' => $val->id])}}">Edit</a> <a class="btn btn-danger" href="{{route('delete_inventory' , ['id' => $val->id])}}">Delete</a></td>
+                    <td>{{$val->chemical_name}}</td>
                 </tr>
                 @endforeach
                 </tbody>
