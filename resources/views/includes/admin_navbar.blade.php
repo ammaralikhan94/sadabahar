@@ -28,23 +28,44 @@
                                 <ul class="submenu megamenu">
                                     <li>
                                         <ul>
-                                            <li><a href="{{route('create_customer')}}">Add Customer</a></li>
-                                            <li><a href="{{route('list_customer')}}">List Customer</a></li>
+                                            <li><a href="{{route('create_customer')}}"><i class="fa fa-street-view"></i> Add Customer</a></li>
+                                            <li><a href="{{route('list_customer')}}"><i class="fa  fa-list  "></i>  List Customer</a></li>
                                         </ul>
                                     </li>
                                 </ul>       
                             </li>   
-                             <li class="has-submenu">
+                            <li class="has-submenu">
                              <a href="#"><i class="fa fa-opencart"></i>Inventory</a>
                                 <ul class="submenu megamenu">
                                     <li>
                                         <ul>
-                                            <li><a href="{{route('create_inventory')}}">Add Inventory</a></li>
-                                            
+                                            <li><a href="{{route('create_inventory')}}"><i class="fa fa-opencart"></i> Add Inventory</a></li>
+                                            <li><a href="{{route('list_inventory')}}"><i class="fa  fa-list  "></i>  List Inventory</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>       
+                            </li> 
+                            <li class="has-submenu">
+                             <a href="#"><i class="fa fa-wrench"></i>Add Item Purchase Type</a>
+                                <ul class="submenu megamenu">
+                                    <li>
+                                        <ul>
+                                            <li><a href="{{route('create_items')}}"><i class="fa fa-wrench"></i> Add Purchase Type</a></li>
+                                            <li><a href="{{route('list_items')}}"><i class="fa  fa-list  "></i>  List Purchase Types</a></li>
                                         </ul>
                                     </li>
                                 </ul>       
                             </li>  
+                            <li class="has-submenu">
+                                <a href="#"><i class="fa  fa-bitbucket"></i>Barrel</a>
+                                <ul class="submenu megamenu">
+                                    <li>
+                                        <ul>
+                                            <li><a href="{{route('create_barrel')}}"><i class="fa  fa-bitbucket"></i> Add Barrel</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>       
+                            </li>   
                         </ul>
                         <!-- End navigation menu        -->
                     </div>

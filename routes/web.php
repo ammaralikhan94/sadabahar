@@ -51,9 +51,28 @@ Route::group(['middleware' => 'auth'], function () {
 
 	/*********************************Inventory Stars****************************************/
 	Route::get('/create_inventory/', ['as' => 'create_inventory',  'uses' => 'admin\InventoryController@create_inventory']);/*create users*/
-	Route::post('/insert_inventory/', ['as' => 'insert_inventory',  'uses' => 'admin\InventoryController@insert_inventory']);/*insert users*/
-
+	Route::post('/insert_inventory/', ['as' => 'insert_inventory',  'uses' => 'admin\InventoryController@insert_inventory']);/*Insert users*/
+	Route::get('/list_inventory/', ['as' => 'list_inventory',  'uses' => 'admin\InventoryController@list_inventory']);/*List users*/
+	Route::get('/edit_inventory/{id}', ['as' => 'edit_inventory',  'uses' => 'admin\InventoryController@edit_inventory']);/*edit users*/
+	Route::post('/update_inventory/', ['as' => 'update_inventory',  'uses' => 'admin\InventoryController@update_inventory']);/*update users*/
+	Route::get('/delete_inventory/{id}', ['as' => 'delete_inventory',  'uses' => 'admin\InventoryController@delete_inventory']);/*update users*/
+	Route::post('/get-purchase-type/', ['as' => 'get-purchase-type',  'uses' => 'admin\InventoryController@get_purchase_type']);/*get purchase type AJAX*/
+	Route::post('/get-credit-limit/', ['as' => 'get-credit-limit',  'uses' => 'admin\InventoryController@get_credit_limit']);/*get credit limit AJAX*/
+	Route::post('/get-cheque-limit/', ['as' => 'get-cheque-limit',  'uses' => 'admin\InventoryController@get_cheque_limit']);/*get cheque limit AJAX*/
 	/*********************************Inventory Ends****************************************/
+
+	/*********************************Inventory Stars****************************************/
+	Route::get('/create_items/', ['as' => 'create_items',  'uses' => 'admin\ItemController@create_items']);/*create users*/
+	Route::post('/insert_item/', ['as' => 'insert_item',  'uses' => 'admin\ItemController@insert_item']);/*insert users*/
+	Route::get('/list_items/', ['as' => 'list_items',  'uses' => 'admin\ItemController@list_items']);/*list users*/
+	Route::get('/edit_item/{id}', ['as' => 'edit_item',  'uses' => 'admin\ItemController@edit_item']);/*edit users*/
+	Route::post('/update_item', ['as' => 'update_item',  'uses' => 'admin\ItemController@update_item']);/*edit users*/
+	Route::get('/delete_item/{id}', ['as' => 'delete_item',  'uses' => 'admin\ItemController@delete_item']);/*edit users*/
+	/*********************************Inventory Ends****************************************/
+
+	/*********************************Barell Inventory Stars****************************************/
+	Route::get('/create_barrel/', ['as' => 'create_barrel',  'uses' => 'admin\InventoryController@create_barrel']);/*create users*/
+	/*********************************Barell Inventory Ends****************************************/
 
 
 	

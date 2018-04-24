@@ -63,7 +63,8 @@ class SupplierController extends Controller
 
     public function update_supplier(Request $request)
     {   
-       
+        
+        
     	Supplier::where('id' , $request->supplier_id)->update([
             'name' => $request->name,
     		'phone_number' => $request->phone_number,
@@ -72,11 +73,11 @@ class SupplierController extends Controller
             'payment_mode'  => $request->payment_mode
         ]);
 
-        Supplier_cheques::where('id' , $request->supplier_id)->update([
+        Supplier_cheques::where('supplier_id' , $request->supplier_id)->update([
             'cheque_date_limit' => $request->cheque_date_limit,
             'cheque_amount_limit' => $request->cheque_amount_limit
         ]);
-        Supplier_amount_limit::where('id' , $request->supplier_id)->update([
+        Supplier_amount_limit::where('supplier_id' , $request->supplier_id)->update([
             'supplier_amount_limit' => $request->supplier_amount_limit,
         ]);
         if($request->cheque_status == 'due_date' || $request->cheque_status == 'amount' ){
