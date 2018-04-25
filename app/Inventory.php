@@ -9,7 +9,7 @@ class Inventory extends Model
     protected $table = "inventory";
 
     protected $fillable = [
-        'item_name', 'dop','chemical_amount','quantity','total_amount','supplier','payment_mode','limit_amount','added_by','cheque_number','cheque_image','limit_cheque_date','payment_status','due_date','due_amount','purchasing_type','total_quantity','chemical_name'
+        'item_name', 'dop','chemical_amount','quantity','total_amount','supplier','payment_mode','limit_amount','added_by','cash_recieved','cheque_number','cheque_image','limit_cheque_date','payment_status','due_date','due_amount','purchasing_type','total_quantity','chemical_name'
     ];
 
      public  function supplier_name(){

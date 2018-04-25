@@ -48,6 +48,7 @@ class InventoryController extends Controller
             'chemical_name' => $request->chemical_name,
     		'due_amount' => $request->due_amount,
     		'purchasing_type' => $request->purchasing_type,
+            'cash_recieved' => $request->cash_recieved,
     		'total_quantity' => $request->total_quantity
     	]);
     	return redirect()->back()->with('success' , 'Item successfully added !');
@@ -106,6 +107,7 @@ class InventoryController extends Controller
     		'due_amount' => $request->due_amount,
             'chemical_name' => $request->chemical_name,
     		'purchasing_type' => $request->purchasing_type,
+            'cash_recieved' => $request->cash_recieved,
     		'total_quantity' => $request->total_quantity
     	]);
     	return redirect()->back()->with('success' , 'Item successfully added !');

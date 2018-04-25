@@ -92,7 +92,7 @@
                             <div class="form-group col-md-6" id="credit_amount" @php if($inventory->payment_mode == 'credit_amount'){}else{@endphp style="display: none" @php } @endphp >
                                 <label class="col-md-2 control-label">Credit Amount</label>
                                 <div class="col-md-10">
-                                    <input type="number" class="form-control" value="{{$inventory->limit_amount}}" name="limit_amount" placeholder="amount" value="0"  required="" >
+                                    <input type="number" class="form-control" value="{{($inventory->limit_amount == 0)?$inventory->due_amount:$inventory->limit_amount}}" name="limit_amount" placeholder="amount" value="0"  required="" >
                                 </div>
                                 <p><strong>Credit limit for this supplier is <span id="credit_limit" style="color: red"></span></strong></p>
                             </div>      
@@ -111,6 +111,14 @@
                                     <input type="file" class="form-control" value="{{$inventory->cheque_image}}"  name="cheque_image"  >
                                 </div>
                             </div>
+
+                            <div class="form-group col-md-6">
+                                <label class="col-md-2 control-label">Chemical name</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control"  placeholder="Chemical Name" name="chemical_name"  value="{{$inventory->get_chemical['chemical_name']}}" readonly="">
+                                </div>
+                            </div>
+
 
                             <div class="form-group col-md-6 show_post_cheques" @php if($inventory->payment_mode == 'pdc'){}else{@endphp style="display: none" @php } @endphp>
                                 <label class="col-md-2 control-label">Cheque Date</label>
@@ -154,6 +162,13 @@
                                 <label class="col-md-2 control-label"></label>
                                 <div class="col-md-3">
                                     <p>Per <strong id="list_itemname"></strong> contain <strong id="list_itemtype"></strong></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label class="col-md-2 control-label">Cash Recieved</label>
+                                <div class="col-md-10">
+                                    <input type="number" class="form-control"  placeholder="Cash Recieved" name="cash_recieved"  value="{{$inventory->cash_recieved}}">
                                 </div>
                             </div>
 

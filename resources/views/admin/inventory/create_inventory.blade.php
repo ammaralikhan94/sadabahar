@@ -44,7 +44,7 @@
                             <div class="form-group col-md-6">
                                 <label class="col-md-2 control-label">Date of Purchase</label>
                                 <div class="col-md-10">
-                                    <input type="date" class="form-control" name="dop"  required="">
+                                    <input type="text" class="form-control" name="dop"  required="" value="<?php echo date('Y-m-d');?>" readonly>
                                 </div>
                             </div>
 
@@ -94,12 +94,30 @@
                             <div class="form-group col-md-6">
                                 <label class="col-md-2 control-label">Payment Mode</label>
                                 <div class="col-md-10">
-                                    <select class="form-control" required="" name="payment_mode" id="payment_mode">
+                                    {{-- <select class="form-control" required="" name="payment_mode" id="payment_mode">
                                         <option value="">Select Payment Mode</option>
                                         <option value="cash">Cash</option>
                                         <option value="credit_amount">Credit amount</option>
                                         <option value="pdc">Post-dated cheques</option>
-                                    </select>
+                                    </select> --}}
+                                    <div class="checkbox checkbox-warning" style="float: left; margin-right:5px;">
+                                            <input id="checkbox5" name="payment_mode" type="checkbox" value="cash" checked>
+                                            <label for="checkbox5">
+                                                Cash
+                                            </label>
+                                        </div>
+                                        <div class="checkbox checkbox-warning" style="float: left; margin-right:5px;">
+                                            <input id="checkbox5" type="checkbox" name="payment_mode" id="credit_amount"  value="credit_amount" >
+                                            <label for="checkbox5">
+                                                Credit amount
+                                            </label>
+                                        </div>
+                                        <div class="checkbox checkbox-warning" style="float: left; margin-right:5px;">
+                                            <input id="checkbox5" type="checkbox"  name="payment_mode" id="pdc" value="pdc">
+                                            <label for="checkbox5">
+                                                Post-dated cheque
+                                            </label>
+                                        </div>
                                 </div>
                             </div>
 
@@ -109,7 +127,7 @@
                             <div class="form-group col-md-6" style="display: none;" id="credit_amount">
                                 <label class="col-md-2 control-label">Credit Amount</label>
                                 <div class="col-md-10">
-                                    <input type="number" class="form-control" name="limit_amount" placeholder="amount" value="0"  required="" readonly="" >
+                                    <input type="number" class="form-control" name="limit_amount" placeholder="amount"  required=""  >
                                 </div>
                                 <p><strong>Credit limit for this supplier is <span id="credit_limit" style="color: red"></span></strong></p>
                             </div>      
@@ -132,7 +150,7 @@
                             <div class="form-group col-md-6 show_post_cheques" style="display: none">
                                 <label class="col-md-2 control-label">Cheque Date</label>
                                 <div class="col-md-10">
-                                    <input type="date" class="form-control" name="limit_cheque_date" min="@php date('Y-m-d'); @endphp"  id="limit_cheque_date"  >
+                                    <input type="date" class="form-control" name="limit_cheque_date" min="@php echo date('Y-m-d'); @endphp"  id="limit_cheque_date"  >
                                 </div>
                             </div>
                             {{-- Payment Mode Additional Field --}}
@@ -160,13 +178,13 @@
                             <div class="form-group col-md-6 due" style="display: none">
                                 <label class="col-md-2 control-label">Due Date</label>
                                 <div class="col-md-10">
-                                    <input type="date" class="form-control" name="due_date" >
+                                    <input type="date" class="form-control" name="due_date"  min="{{date("Y-m-d")}}">
                                 </div>
                             </div>
                             <div class="form-group col-md-6 due" style="display: none">
                                 <label class="col-md-2 control-label">Due amount</label>
                                 <div class="col-md-10">
-                                    <input type="number" class="form-control" name="due_amount" min="{{date("Y-m-d")}}"  >
+                                    <input type="number" class="form-control" name="due_amount"  >
                                 </div>
                             </div>
                             
@@ -257,27 +275,40 @@
         }); 
 
         /*Payment method show on credit seletion*/
-        $(document).on('change','#payment_mode',function (){
+        $(document).on('click','[name="payment_mode"]',function (){
             option = $(this).val();
+            
+            if($('#credit_amount').is(":checked")){
+                alert('checked he credit amount');
+            }
+
+            if($('#pdc').is(":checked")){
+                alert('pdc');
+            }
             if(option == 'credit_amount'){
                 $('#credit_amount').show('slow');
                 $('.show_post_cheques').hide();
-                $('[name="cheque_number"]').prop('required',false);
-                $('[name="cheque_image"]').prop('required',false);
-                $('[name="limit_cheque_date"]').prop('required',false);
+                $('[name="cheque_number"]').prop('required',true);
+                $('[name="cheque_image"]').prop('required',true);
+                $('[name="limit_cheque_date"]').prop('required',true);
                 $('[name="cheque_number"]').prop('required',true);
                 total_amount = $('[name="total_amount"]').val();
                 cash_recieved = $('[name="cash_recieved"]').val();
                 credit_amount = parseInt(total_amount -   cash_recieved);
                 $('[name="limit_amount"]').val(credit_amount);
             }if(option == 'pdc'){
+                supplier = $('[name="supplier"]').val();
+                if(supplier == ''){
+                    alert('please select supplier first');
+                    return false;
+                }
                 $('.show_post_cheques').show('slow');
-                $('#credit_amount').hide();
+                $('#credit_amount').show('slow');
                  $('[name="cheque_number"]').prop('required',true);
                 $('[name="cheque_image"]').prop('required',true);
                 $('[name="limit_cheque_date"]').prop('required',true);
-                $('[name="cheque_number"]').prop('required',false);
-                supplier = $('[name="supplier"]').val();
+                $('[name="cheque_number"]').prop('required',true);
+                
                  $.ajax({
                    type:'POST',
                    url:'{{route('get-cheque-limit')}}',
@@ -287,15 +318,16 @@
                    },
                    success:function(data){
                         data = JSON.parse(data);
-                        console.log(data);
+                        
                         var someDate = new Date();
-                        var numberOfDaysToAdd = 6;
+                        var numberOfDaysToAdd = parseInt(data.cheque_date_limit);
                         datee = someDate.setDate(someDate.getDate() + numberOfDaysToAdd); 
-                        var dd = someDate.getDate();
+                        var dd =( '0' + ( someDate.getDate()+1) ).slice( -2 );
                         var mm = ( '0' + (someDate.getMonth()+1) ).slice( -2 );
                         var y = someDate.getFullYear();
                         date_limit = someFormattedDate = y + '-'+ mm + '-'+ dd;
                         $('#limit_cheque_date').attr('max',date_limit);
+                        $('[name="due_date"]').attr('max' ,date_limit);
                    }
                 });
             }else{
@@ -320,6 +352,7 @@
                  data = JSON.parse(data);
                  $('#credit_limit').html(data.supplier_amount_limit);
                  $('[name="limit_amount"]').attr('max' , data.supplier_amount_limit);
+                 
                }
             });
         }); 
@@ -342,7 +375,15 @@
                 cash_recieved = $('[name="cash_recieved"]').val();
                 credit_amount = parseInt(total_amount -   cash_recieved);
                 $('[name="limit_amount"]').val(credit_amount);
-         });
+         }); 
+         $(document).on('blur','[name="due_amount"]',function (){
+             total_amount = $('[name="limit_amount"]').val();
+                cash_recieved = $('[name="due_amount"]').val();
+                credit_amount = parseInt(total_amount) -   parseInt(cash_recieved);
+                $('[name="limit_amount"]').val(credit_amount);
+         }); 
+    
+
     </script> 
 @endsection
 @endsection
