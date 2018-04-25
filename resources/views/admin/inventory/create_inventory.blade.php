@@ -101,19 +101,19 @@
                                         <option value="pdc">Post-dated cheques</option>
                                     </select> --}}
                                     <div class="checkbox checkbox-warning" style="float: left; margin-right:5px;">
-                                            <input id="checkbox5" name="payment_mode" type="checkbox" value="cash" checked>
+                                            <input  name="payment_mode" type="checkbox" value="cash" checked>
                                             <label for="checkbox5">
                                                 Cash
                                             </label>
                                         </div>
                                         <div class="checkbox checkbox-warning" style="float: left; margin-right:5px;">
-                                            <input id="checkbox5" type="checkbox" name="payment_mode" id="credit_amount"  value="credit_amount" >
+                                            <input  type="checkbox" name="payment_mode" id="credit_amount_check"  value="credit_amount" >
                                             <label for="checkbox5">
                                                 Credit amount
                                             </label>
                                         </div>
                                         <div class="checkbox checkbox-warning" style="float: left; margin-right:5px;">
-                                            <input id="checkbox5" type="checkbox"  name="payment_mode" id="pdc" value="pdc">
+                                            <input  type="checkbox"  name="payment_mode" id="pdc" value="pdc">
                                             <label for="checkbox5">
                                                 Post-dated cheque
                                             </label>
@@ -278,14 +278,7 @@
         $(document).on('click','[name="payment_mode"]',function (){
             option = $(this).val();
             
-            if($('#credit_amount').is(":checked")){
-                alert('checked he credit amount');
-            }
-
-            if($('#pdc').is(":checked")){
-                alert('pdc');
-            }
-            if(option == 'credit_amount'){
+            if($('#credit_amount_check').is(":checked")){
                 $('#credit_amount').show('slow');
                 $('.show_post_cheques').hide();
                 $('[name="cheque_number"]').prop('required',true);
@@ -296,7 +289,11 @@
                 cash_recieved = $('[name="cash_recieved"]').val();
                 credit_amount = parseInt(total_amount -   cash_recieved);
                 $('[name="limit_amount"]').val(credit_amount);
-            }if(option == 'pdc'){
+            }else{
+                 $('#credit_amount').hide('slow');
+            }
+
+            if($('#pdc').is(":checked")){
                 supplier = $('[name="supplier"]').val();
                 if(supplier == ''){
                     alert('please select supplier first');
@@ -330,6 +327,14 @@
                         $('[name="due_date"]').attr('max' ,date_limit);
                    }
                 });
+            }else{
+                 $('.show_post_cheques').hide('slow');
+            }
+                
+            if(option == 'credit_amount'){alert();
+                
+            }if(option == 'pdc'){
+                
             }else{
                 $('[name="cheque_number"]').prop('required',false);
                 $('[name="cheque_image"]').prop('required',false);
