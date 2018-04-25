@@ -75,7 +75,6 @@
                                         <option value="">Select Payment Mode</option>
                                         <option value="cash" {{($customer->payment_mode == 'cash')?'selected':''}}>Cash</option>
                                         <option value="credit_limit" {{($customer->payment_mode == 'credit_limit')?'selected':''}}>Set credit limit</option>
-                                        <option value="post_dated_cheques" {{($customer->payment_mode == 'post_dated_cheques')?'selected':''}}>Post-dated cheques</option>
                                     </select>
                                 </div>
                             </div>   
@@ -86,21 +85,21 @@
                             <div class="form-group col-md-6" id="credit_limit" <?php  if($customer->payment_mode == 'credit_limit'){echo '';}else{?> style="display: none"<?php }?>    id="credit_limit" >
                                 <label class="col-md-2 control-label">Amount limit</label>
                                 <div class="col-md-10">
-                                    <input type="numebr" class="form-control" name="customer_amount_limit" value="{{$customer_cheque_bounce->customer_amount_limit}}"  >
+                                    <input type="numebr" class="form-control" name="credit_limit" value="{{$customer_amount_limit->customer_amount_limit}}" >
                                 </div>
                             </div>
                             {{-- Payment Amount Limit --}}
 
 
                             {{-- Payment Mode --}}
-                            <div class="form-group col-md-6" id="cheque_due_date"   <?php  if($customer->payment_mode == 'post_dated_cheques'){echo '';}else{?> style="display: none"<?php }?>  >
+                            <div class="form-group col-md-6" id="cheque_due_date"  <?php  if($customer->payment_mode == 'credit_limit'){echo '';}else{?> style="display: none"<?php }?>  >
                                 <label class="col-md-2 control-label">Cheque  day limit</label>
                                 <div class="col-md-10">
                                     <input type="text" class="form-control" name="cheque_date_limit" placeholder="Cheque Due Date" value="{{$customer_cheque_bounce->cheque_date_limit}}"  >
                                 </div>
                             </div>
 
-                             <div class="form-group col-md-6" id="cheque_amount_limit" <?php  if($customer->payment_mode == 'post_dated_cheques'){echo '';}else{?> style="display: none"<?php }?> >
+                             <div class="form-group col-md-6" id="cheque_amount_limit" <?php  if($customer->payment_mode == 'credit_limit'){echo '';}else{?> style="display: none"<?php }?> >
                                 <label class="col-md-2 control-label">Cheque amount limit</label>
                                 <div class="col-md-10">
                                     <input type="text" class="form-control" name="cheque_date_amount" placeholder="cheque amount limit" value="{{$customer_cheque_bounce->cheque_date_amount}}"  >
@@ -113,7 +112,7 @@
                             <div class="form-group col-md-6" id="due_date" <?php  if($customer->cheque_status == 'due'){echo '';}else{?> style="display: none"<?php }?>  >
                                 <label class="col-md-2 control-label">Due date</label>
                                 <div class="col-md-10">
-                                    <input type="text" class="form-control due_date" name="due_date" placeholder="Cheque Due Date" value="{{$customer_payment_limit->due_date}}"  >
+                                    <input type="date" class="form-control due_date" name="due_date" placeholder="Cheque Due Date" value="{{$customer_payment_limit->due_date}}"  >
                                 </div>
                             </div>
                              <div class="form-group col-md-6" id="due_amount" <?php  if($customer->cheque_status == 'due'){echo '';}else{?> style="display: none"<?php }?> >
@@ -172,15 +171,10 @@
 
              $(document).on('change' ,'#payment_mode', function (){
                 var value = $(this).val();
-                if(value == 'post_dated_cheques'){
-                    $('#cheque_due_date').show('slow');
-                    $('#cheque_amount_limit').show('slow');
-                    $('#credit_limit').hide('slow');
-                }
                 if(value == 'credit_limit'){
                     $('#credit_limit').show('slow');
-                    $('#cheque_due_date').hide('slow');
-                    $('#cheque_amount_limit').hide('slow');
+                    $('#cheque_due_date').show('slow');
+                    $('#cheque_amount_limit').show('slow');
                 }
                 if(value == 'cash'){
                     $('#credit_limit').hide('slow');

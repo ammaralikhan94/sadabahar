@@ -26,7 +26,8 @@ class CustomerController extends Controller
 
     /*Add new customer*/
     public function insert_customer(Request $request)
-    {	        
+    {	 
+
     	$customer_id = Customer::create([
     		'name' => $request->name,
     		'phone_number' => $request->phone_number,
@@ -37,11 +38,11 @@ class CustomerController extends Controller
         Customer_cheque_bounce::create([
             'customer_id'        => $customer_id ,
             'cheque_date_limit'  => $request->cheque_date_limit,
-            'cheque_date_amount' => $request->cheque_date_amount,  
+            'cheque_date_amount' => $request->cheque_amount_limit,  
         ]);
         Customer_amount_limit::create([
             'customer_id'   =>  $customer_id,
-            'customer_id_amount_limit'   =>  $request->customer_id_amount_limit
+            'customer_amount_limit'   =>  $request->credit_limit
         ]);
         Customer_payment::create([
             'customer_id' => $customer_id,
@@ -58,12 +59,15 @@ class CustomerController extends Controller
         $customer_cheque_bounce = Customer_cheque_bounce::orderBy('id', 'desc')->where('customer_id', $id )->first();
         $customer_amount_limit =  Customer_amount_limit::orderBy('id', 'desc')->where('customer_id', $id )->first();
         $customer_payment_limit = Customer_payment::orderBy('id', 'desc')->where('customer_id', $id )->first();
+        /*echo "<pre>";
+        var_dump($customer_amount_limit);die;*/
         return view ('admin.customer.edit_customer' , compact('customer','customer_cheque_bounce','customer_amount_limit','customer_payment_limit'));
     }
 
     /*Update Customer*/
     public function update_customer(Request $request){
-        
+        /*echo "<pre>";
+        var_dump($_POST);die;*/
         Customer::where('id' , $request->customer_id)->update([
             'name' =>$request->name ,
             'phone_number' =>$request->phone_number,
@@ -71,11 +75,14 @@ class CustomerController extends Controller
             'cheque_status'=>  $request->cheque_status ,
             'location' =>  $request->location
         ]);
-        Customer_cheque_bounce::where('id' , $request->ustomer_id)->update([
-            'cheque_date_limit'  => $request->cheque_date_limit,
-            'cheque_date_amount' => $request->cheque_date_amount,  
+        Customer_amount_limit::where('customer_id' , $request->customer_id)->update([
+            'customer_amount_limit'   =>  $request->credit_limit
         ]);
-        Customer_payment::where('id' , $request->ustomer_id)->update([
+        Customer_cheque_bounce::where('customer_id' , $request->customer_id)->update([
+            'cheque_date_limit'  => $request->cheque_date_limit,
+            'cheque_date_amount' => $request->cheque_date_amount,   
+        ]);
+        Customer_payment::where('customer_id' , $request->customer_id)->update([
             'due_date'      =>  $request->due_date,
             'due_amount'    => $request->due_amount,
             'status'        => $request->cheque_status

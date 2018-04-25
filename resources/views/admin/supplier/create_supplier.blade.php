@@ -79,7 +79,6 @@
                                         <option value="">Select Payment Mode</option>
                                         <option value="cash">Cash</option>
                                         <option value="credit_limit">Set credit limit</option>
-                                        <option value="post_dated_cheques">Post-dated cheques</option>
                                     </select>
                                 </div>
                             </div>
@@ -92,14 +91,14 @@
                             </div>
 
                             <div class="form-group col-md-6" style="display: none" id="cheque_date_limit" >
-                                <label class="col-md-2 control-label">Due Date limit</label>
+                                <label class="col-md-2 control-label">Due Days Cheque limit</label>
                                 <div class="col-md-10">
                                     <input type="number" class="form-control" name="cheque_date_limit" placeholder="In days"  >
                                 </div>
                             </div>
 
                             <div class="form-group col-md-6" style="display: none" id="cheque_amount_limit" >
-                                <label class="col-md-2 control-label">Due Amount limit</label>
+                                <label class="col-md-2 control-label">Due Cheque Amount limit</label>
                                 <div class="col-md-10">
                                     <input type="numebr" class="form-control" name="cheque_amount_limit" value="0"  >
                                 </div>
@@ -135,14 +134,18 @@
                 var value = $(this).val();
                 if(value == 'credit_limit'){
                     $('#credit_limit').show('slow');
-                    $('#cheque_date_limit').hide('slow');                
-                    $('#cheque_amount_limit').hide('slow');            
-                }
-                
-                if(value == 'post_dated_cheques'){
                     $('#cheque_date_limit').show('slow');                
-                    $('#cheque_amount_limit').show('slow');         
-                    $('#credit_limit').hide('slow');         
+                    $('#cheque_amount_limit').show('slow');
+                    $('#credit_limit').attr("required", true);
+                    $('#cheque_date_limit').attr("required", true);                
+                    $('#cheque_amount_limit').attr("required", true);                        
+                }else{
+                    $('#credit_limit').hide('slow');
+                    $('#cheque_date_limit').hide('slow');                
+                    $('#cheque_amount_limit').hide('slow');
+                    $('#credit_limit').attr("required", false);
+                    $('#cheque_date_limit').attr("required", false);                
+                    $('#cheque_amount_limit').attr("required", false);   
                 }
             });
         </script>
