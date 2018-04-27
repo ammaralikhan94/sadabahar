@@ -46,10 +46,10 @@
                                 </div>
                             </div>
 
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-6" style="display: none">
                                 <label class="col-md-2 control-label">Payment Status</label>
                                 <div class="col-md-10">
-                                    <select class="form-control" required="" id="payment_status" name="cheque_status">
+                                    <select class="form-control"  id="payment_status" name="cheque_status">
                                         <option value="">Select Payment Status</option>
                                         <option value="cleared">Cleared</option>
                                         <option value="due">Due</option>

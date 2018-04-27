@@ -62,6 +62,7 @@
                     <li>
                         <ul>
                             <li><a href="{{route('create_barrel')}}"><i class="fa  fa-bitbucket"></i> Add Barrel</a></li>
+                            <li><a href="{{route('list_barrel')}}"><i class="fa  fa-bitbucket"></i> List Barrel</a></li>
                         </ul>
                     </li>
                 </ul>       

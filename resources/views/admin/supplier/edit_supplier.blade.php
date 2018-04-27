@@ -54,7 +54,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group col-md-6">
+                           {{--  <div class="form-group col-md-6">
                                 <label class="col-md-2 control-label">Cheque Status</label>
                                 <div class="col-md-10">
                                     <select class="form-control" required="" name="cheque_status" id="payment_status">
@@ -64,11 +64,9 @@
                                         <option value="bounced" {{($supplier->cheque_status == 'bounced')?'selected':''}}>Bounced</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
 
-                               <input type="hidden" name="payment_id" value="{{$supplier_payment->id}}">
-
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-6" style="display: none">
                                 <label class="col-md-2 control-label">Payment Mode</label>
                                 <div class="col-md-10">
                                     <select class="form-control" required="" name="payment_mode" id="payment_mode">
@@ -93,38 +91,21 @@
 
 
                             {{-- Payment Mode --}}
-                            <div class="form-group col-md-6" id="cheque_due_date"   <?php  if($supplier->payment_mode == 'post_dated_cheques'){echo '';}else{?> style="display: none"<?php }?>  >
-                                <label class="col-md-2 control-label">Due date</label>
+                            <div class="form-group col-md-6" id="cheque_due_date"   <?php  if($supplier->payment_mode == 'credit_limit'){echo '';}else{?> style="display: none"<?php }?>  >
+                                <label class="col-md-2 control-label">Due Cheque Days</label>
                                 <div class="col-md-10">
                                     <input type="text" class="form-control" name="cheque_date_limit" placeholder="Cheque Due Date" value="{{$Supplier_cheques->cheque_date_limit}}"  >
                                 </div>
                             </div>
 
-                             <div class="form-group col-md-6" id="cheque_amount_limit" <?php  if($supplier->payment_mode == 'post_dated_cheques'){echo '';}else{?> style="display: none"<?php }?> >
-                                <label class="col-md-2 control-label">Due amount</label>
+                             <div class="form-group col-md-6" id="cheque_amount_limit" <?php  if($supplier->payment_mode == 'credit_limit'){echo '';}else{?> style="display: none"<?php }?> >
+                                <label class="col-md-2 control-label">Due Cheque Amount</label>
                                 <div class="col-md-10">
                                     <input type="text" class="form-control" name="cheque_amount_limit" placeholder="cheque amount limit" value="{{$Supplier_cheques->cheque_amount_limit}}"  >
                                 </div>
                             </div>
                             {{-- Payment Mode End--}}
 
-
-                            {{-- Payment Status --}}
-                            <div class="form-group col-md-6" id="due_date" <?php  if($supplier->cheque_status == 'due'){echo '';}else{?> style="display: none"<?php }?>  >
-                                <label class="col-md-2 control-label">Due date</label>
-                                <div class="col-md-10">
-                                    <input type="text" class="form-control due_date" name="due_date" placeholder="Cheque Due Date" value="{{$supplier_payment->due_date}}"  >
-                                </div>
-                            </div>
-                             <div class="form-group col-md-6" id="due_amount" <?php  if($supplier->cheque_status == 'due'){echo '';}else{?> style="display: none"<?php }?> >
-                                <label class="col-md-2 control-label">Due amount</label>
-                                <div class="col-md-10">
-                                    <input type="text" class="form-control due_amount" name="due_amount" placeholder="cheque amount limit" value="{{$supplier_payment->due_amount}}"  >
-                                </div>
-                            </div>
-                            {{-- Payment Status --}}
-
-                        
                             <div class="form-group col-md-6">
                             	<label class="col-md-2 control-label"></label>
                                 <div class="col-md-10">

@@ -2,6 +2,18 @@
 @section('title')
 	Add - Inventory
 @endsection
+@section('customCss')
+<style type="text/css">
+    input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;  
+    appearance: none;
+    margin: 0; 
+}
+
+</style>
+@endsection
 @section('content')
 @if ($message = Session::get('success'))
     <div class="alert alert-success alert-block">
@@ -48,6 +60,25 @@
                                 </div>
                             </div>
 
+
+                            <div class="form-group col-md-6">
+                                <label class="col-md-2 control-label">Purchase Unit Type</label>
+                                <div class="col-md-4">
+                                     <select class="form-control" name="purchase_unit">
+                                         <option value="">Select Purchase Unit Type</option>
+                                         <option value="kg">Kg</option>
+                                         <option value="liter">Liter</option>
+                                         <option value="gram">Gram</option>
+                                     </select>
+                                </div>
+                                <label class="col-md-2 control-label">Unit Purchased</label>
+                                <div class="col-md-4">
+                                    <input type="number" class="form-control" name="unit_purchased"  placeholder="Enter Unit Purchased"  required="">
+                                </div>
+                            </div>
+
+
+
                             <div class="form-group col-md-6">
                                 <label class="col-md-2 control-label">Item Amount</label>
                                 <div class="col-md-3">
@@ -67,6 +98,18 @@
                             </div>
                             
                             <div class="form-group col-md-6">
+                                <label class="col-md-2 control-label">Supplier</label>
+                                <div class="col-md-10">
+                                    <select class="form-control" required="" name="supplier">
+                                        <option value="">Select Supplier</option>   
+                                        @foreach($supplier as $key => $sup)
+                                            <option value="{{$sup->id}}">{{$sup->name}}</option>   
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
                                 <div class="row">
                                     <label class="col-md-2 control-label">Chemical</label>
                                     <div class="col-md-10">                                    
@@ -80,46 +123,28 @@
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="col-md-2 control-label">Supplier</label>
-                                <div class="col-md-10">
-                                    <select class="form-control" required="" name="supplier">
-                                        <option value="">Select Supplier</option>   
-                                        @foreach($supplier as $key => $sup)
-                                            <option value="{{$sup->id}}">{{$sup->name}}</option>   
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group col-md-6">
                                 <label class="col-md-2 control-label">Payment Mode</label>
                                 <div class="col-md-10">
-                                    {{-- <select class="form-control" required="" name="payment_mode" id="payment_mode">
-                                        <option value="">Select Payment Mode</option>
-                                        <option value="cash">Cash</option>
-                                        <option value="credit_amount">Credit amount</option>
-                                        <option value="pdc">Post-dated cheques</option>
-                                    </select> --}}
                                     <div class="checkbox checkbox-warning" style="float: left; margin-right:5px;">
-                                            <input  name="payment_mode" type="checkbox" value="cash" checked>
-                                            <label for="checkbox5">
-                                                Cash
-                                            </label>
-                                        </div>
-                                        <div class="checkbox checkbox-warning" style="float: left; margin-right:5px;">
-                                            <input  type="checkbox" name="payment_mode" id="credit_amount_check"  value="credit_amount" >
-                                            <label for="checkbox5">
-                                                Credit amount
-                                            </label>
-                                        </div>
-                                        <div class="checkbox checkbox-warning" style="float: left; margin-right:5px;">
-                                            <input  type="checkbox"  name="payment_mode" id="pdc" value="pdc">
-                                            <label for="checkbox5">
-                                                Post-dated cheque
-                                            </label>
-                                        </div>
+                                        <input  name="payment_cash" type="checkbox"  value="1" >
+                                        <label for="checkbox5">
+                                            Cash
+                                        </label>
+                                     </div>
+                                    <div class="checkbox checkbox-warning" style="float: left; margin-right:5px;">
+                                        <input  type="checkbox" name="payment_credit"   value="1" >
+                                        <label for="checkbox5">
+                                             Credit amount
+                                        </label>
+                                    </div>
+                                    <div class="checkbox checkbox-warning" style="float: left; margin-right:5px;">
+                                        <input  type="checkbox"  name="payment_cheque" id="pdc" value="1">
+                                        <label for="checkbox5">
+                                            Post-dated cheque
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>
+                             </div>
 
 
                             {{-- Payment Mode Additional Field --}}
@@ -128,17 +153,34 @@
                                 <label class="col-md-2 control-label">Credit Amount</label>
                                 <div class="col-md-10">
                                     <input type="number" class="form-control" name="limit_amount" placeholder="amount"  required=""  >
+                                    <p><strong>Credit limit for this supplier is <span id="credit_limit" style="color: red"></span></strong></p>
                                 </div>
-                                <p><strong>Credit limit for this supplier is <span id="credit_limit" style="color: red"></span></strong></p>
+                                
                             </div>      
                             <input type="hidden" name="added_by" value="{{Auth::user()->id}}">
                             {{-- Post Dated Cheques --}}
+                            
+                            {{-- Payment Mode Additional Field --}}
+                            
+                            <div class="form-group col-md-6 cash"  style="display: none">
+                                <label class="col-md-2 control-label">Cash Recieved</label>
+                                <div class="col-md-10">
+                                    <input type="number" class="form-control" name="cash_recieved" placeholder="Amount recieved" >
+                                </div>
+                            </div>
                             <div class="form-group col-md-6 show_post_cheques" style="display: none">
                                 <label class="col-md-2 control-label">Add cheque number</label>
                                 <div class="col-md-10">
                                     <input type="number" class="form-control" name="cheque_number">
                                 </div>
                             </div>  
+
+                            <div class="form-group col-md-6 show_post_cheques" style="display: none">
+                                <label class="col-md-2 control-label">Cheque Amount</label>
+                                <div class="col-md-10">
+                                    <input type="number" class="form-control"  name="cheque_amount"  >
+                                </div>
+                            </div>
 
                             <div class="form-group col-md-6 show_post_cheques" style="display: none">
                                 <label class="col-md-2 control-label">Upload Cheque</label>
@@ -153,22 +195,13 @@
                                     <input type="date" class="form-control" name="limit_cheque_date" min="@php echo date('Y-m-d'); @endphp"  id="limit_cheque_date"  >
                                 </div>
                             </div>
-                            {{-- Payment Mode Additional Field --}}
-                            
-                            <div class="form-group col-md-6 ">
-                                <label class="col-md-2 control-label">Cash Recieved</label>
-                                <div class="col-md-10">
-                                    <input type="number" class="form-control" name="cash_recieved" placeholder="Amount recieved" required="" >
-                                </div>
-                            </div>
-
 
                              <div class="form-group col-md-6">
                                 <label class="col-md-2 control-label">Payment Status</label>
                                 <div class="col-md-10">
                                     <select class="form-control" required="" name="payment_status" id="payment_status">
                                         <option value="">Select Payment Status</option>
-                                        <option value="cash">Cash</option>
+                                        <option value="cleared">cleared</option>
                                         <option value="due">Due</option>
                                         <option value="bounched">Bounced</option>
                                     </select>
@@ -211,6 +244,17 @@
                                 <label class="col-md-2 control-label">Calculation</label>
                                 <div class="col-md-10" id="calculation_detail">
                                    
+
+                                </div>
+                                <input type="hidden" name="strength" value="0"/>
+                                <input type="hidden" name="total_strength" value="0"/>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label class="col-md-2 control-label">Calculation</label>
+                                <div class="col-md-10" id="calculation_gram">
+                                   
+                                   
                                 </div>
                             </div>
 
@@ -220,7 +264,6 @@
                                     <p><strong></strong></p>
                                 </div>
                             </div>
-                            
                         </form>
                     </div>
                 </div>
@@ -236,9 +279,11 @@
             get_item_quantity = $('#get_item_quantity').val();
             total_amount    = parseInt(quantity *  chemical_amount);
             $('#total_amount').val(total_amount);
-            toal_purchasing_measure = parseInt(get_item_quantity *   quantity);
-            $('#calculation_detail').html('<strong>'+chemical_amount+' * '+quantity+' = '+total_amount+' rs </strong><br><strong>Total '+purchasing_type+' = '+toal_purchasing_measure+'</strong>');
+            total_purchasing_measure = parseInt(get_item_quantity *   quantity);
+            $('#calculation_detail').html('<strong>'+chemical_amount+' * '+quantity+' = '+total_amount+' rs </strong><br><strong>Total '+purchasing_type+' = '+total_purchasing_measure+'</strong>');
             $('#total_amount').val(total_amount);
+            $('[name="total_strength"]').val(total_purchasing_measure);
+            
         });
 
         /*Ajax Getting item detail */
@@ -260,6 +305,8 @@
                   $('#purchasing_type').val(purchase_type);
                   $('#list_itemname').html(data.item_name);
                   $('#list_itemtype').html(data.item_type+' '+purchase_type+'<input type="hidden" name="total_quantity" id="get_item_quantity" value="'+data.item_type+'"/>');
+                  $('[name="strength"]').val(data.item_type);
+                  $('[name="total_strength"]').val(data.item_type);
                    chemical_amount = $('#chemical_amount').val();
                    /***************************Recalling************************/
                     quantity   = $('.quantity').val();
@@ -269,22 +316,18 @@
                     $('#total_amount').val(total_amount);
                     toal_purchasing_measure = parseInt(get_item_quantity *   quantity);
                     $('#calculation_detail').html('<strong>Total amount '+chemical_amount+' * '+quantity+' = '+total_amount+' rs </strong><br><strong>Total '+purchasing_type+' = '+toal_purchasing_measure+'</strong>');
+
                     /********************Recaling********************************/
                }
             });
         }); 
 
         /*Payment method show on credit seletion*/
-        $(document).on('click','[name="payment_mode"]',function (){
+        $(document).on('click','[name="payment_credit"]',function (){
             option = $(this).val();
             
-            if($('#credit_amount_check').is(":checked")){
+            if($('[name="payment_credit"]').is(":checked")){
                 $('#credit_amount').show('slow');
-                $('.show_post_cheques').hide();
-                $('[name="cheque_number"]').prop('required',true);
-                $('[name="cheque_image"]').prop('required',true);
-                $('[name="limit_cheque_date"]').prop('required',true);
-                $('[name="cheque_number"]').prop('required',true);
                 total_amount = $('[name="total_amount"]').val();
                 cash_recieved = $('[name="cash_recieved"]').val();
                 credit_amount = parseInt(total_amount -   cash_recieved);
@@ -300,7 +343,51 @@
                     return false;
                 }
                 $('.show_post_cheques').show('slow');
-                $('#credit_amount').show('slow');
+                $('[name="cheque_number"]').prop('required',true);
+                $('[name="cheque_image"]').prop('required',true);
+                $('[name="limit_cheque_date"]').prop('required',true);
+                $('[name="cheque_amount"]').prop('required',true);
+                
+                 $.ajax({
+                   type:'POST',
+                   url:'{{route('get-cheque-limit')}}',
+                   data:{
+                        "_token": "{{ csrf_token() }}",
+                        'supplier' : supplier
+                   },
+                   success:function(data){
+                        data = JSON.parse(data);
+                        
+                        var someDate = new Date();
+                        var numberOfDaysToAdd = parseInt(data.cheque_date_limit);
+                        datee = someDate.setDate(someDate.getDate() + numberOfDaysToAdd); 
+                        var dd =( '0' + ( someDate.getDate()+1) ).slice( -2 );
+                        var mm = ( '0' + (someDate.getMonth()+1) ).slice( -2 );
+                        var y = someDate.getFullYear();
+                        date_limit = someFormattedDate = y + '-'+ mm + '-'+ dd;
+                        $('#limit_cheque_date').attr('max',date_limit);
+                        $('[name="due_date"]').attr('max' ,date_limit);
+                   }
+                });
+            }else{
+                 $('.show_post_cheques').hide('slow');
+            }
+                
+           
+        });
+
+        $(document).on('click','[name="payment_cheque"]',function (){
+            option = $(this).val();
+
+
+            if($('#pdc').is(":checked")){
+                supplier = $('[name="supplier"]').val();
+                if(supplier == ''){
+                    alert('please select supplier first');
+                    return false;
+                }
+                $('.show_post_cheques').show('slow');
+               
                  $('[name="cheque_number"]').prop('required',true);
                 $('[name="cheque_image"]').prop('required',true);
                 $('[name="limit_cheque_date"]').prop('required',true);
@@ -331,7 +418,7 @@
                  $('.show_post_cheques').hide('slow');
             }
                 
-            if(option == 'credit_amount'){alert();
+            if(option == 'credit_amount'){
                 
             }if(option == 'pdc'){
                 
@@ -342,6 +429,8 @@
                 $('[name="cheque_number"]').prop('required',false);
             }
         });
+
+
 
         /*Get selected supplier credit limit*/
          $(document).on('change','[name="supplier"]',function (){
@@ -371,7 +460,7 @@
                 $('[name="due_amount"]').prop('required',true);
             }else{
                 $('.due').hide('hide');
-                $('[name="due_amount"]').prop('required',false);
+                $('[name="due_date"]').prop('required',false);
                 $('[name="due_amount"]').prop('required',false);
             }
          });
@@ -387,7 +476,38 @@
                 credit_amount = parseInt(total_amount) -   parseInt(cash_recieved);
                 $('[name="limit_amount"]').val(credit_amount);
          }); 
-    
+          $(document).on('keyup','[name="unit_purchased"]',function (){
+            unit_entered = parseInt($('[name="unit_purchased"]').val());
+            unit_limit = parseInt($('[name="total_strength"]').val());
+            purchase_unit = $('[name="purchase_unit"] option:selected').val();
+             if(purchase_unit == 'gram'){
+                 unit_entered = parseInt($('[name="unit_purchased"]').val());
+                 conversion_unit = unit_entered;
+                 limit_conversion = unit_limit * 1000;
+                  $('#calculation_gram').html('<strong>1 kg = 1000 grams so '+unit_entered+' / 1000 = '+conversion_unit+'</strong>');
+                 if( conversion_unit > limit_conversion){
+                    $('[name="unit_purchased"]').val('');
+                    alert('Maximum unit for purchase is '+limit_conversion);
+                 }
+                
+            }
+            if(purchase_unit != 'gram'){
+                if(unit_limit < unit_entered){
+                    alert('Can not buy unit more then the drum units');
+                    $('[name="unit_purchased"]').val('');
+                }
+            }  
+         }); 
+        $(document).on('click','[name="payment_cash"]',function (){
+
+             if($('[name="payment_cash"]').is(":checked")){
+                $('.cash').show('slow')
+                $('[name="cash_recieved"]').prop('required',true);
+             }else{
+                $('.cash').hide('slow')
+                $('[name="cash_recieved"]').prop('required',false);
+             }
+        });
 
     </script> 
 @endsection

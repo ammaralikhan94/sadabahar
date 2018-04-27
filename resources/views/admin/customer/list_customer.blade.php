@@ -38,9 +38,8 @@
                     <th>#</th>
                     <th>Name</th>
                     <th>Phone Number</th>
-                    <th>Location</th>
-                    <th>Payment Status</th>
-                    <th>Cheque Status</th>
+                    <th>Address</th>
+                    <th>Payment Mode</th>
                     <th>Action</th>
                 </tr>
                 </thead>
@@ -50,9 +49,8 @@
                     <td>{{$val->key + 1}}</td>
                     <td>{{$val->name}}</td>
                     <td>{{$val->phone_number}}</td>
-                    <td>{{$val->location}}</td>
-                    <td>{{($val->payment_mode == 'post_dated_cheques')?'Post dated cheque':''}}</td>
-                    <td>{{$val->cheque_status}}</td>
+                    <td>{{$val->address}}</td>
+                    <td>{{$val->payment_mode}}</td>
                     <td><a class="btn btn-primary" href="{{route('edit_customer' , ['id' => $val->id])}}">Edit</a> <a class="btn btn-primary" href="{{route('edit_customer' , ['id' => $val->id])}}">Payment Detail</a></td>
                 </tr>
                 @endforeach

@@ -35,8 +35,8 @@
             <table id="subadmin_table" class="table table-striped table-bordered">
                 <thead>
                 <tr>
-                    <th>#</th>
-                    <th>Supplier Name</th>
+                    <th>Inventory Code</th>
+                    <th>Chemical Name</th>
                     <th>Due Date</th>
                     <th>Amount Due</th>
                     <th>Payment status</th>
@@ -46,11 +46,11 @@
                 <tbody>
                     @foreach($supplier_payment as $key => $val)
                 <tr>
-                    <td>{{$val->key + 1}}</td>
-                    <td>{{$val->supplier_name['name']}}</td>
+                    <td data-toggle="tooltip" title="Click on code to view purchase detail"><a href="{{route('edit_inventory' , ['id' => $val->id])}}">{{$val->id}}</a></td>
+                    <td>{{$val->get_chemical['chemical_name']}}</td>
                     <td>{{($val->due_date == '')?'-':$val->due_date}}</td>
                     <td>{{($val->due_amount == 0)?'-':$val->due_amount}}</td>
-                    <td>{{$val->status}}</td>
+                    <td>{{$val->payment_status}}</td>
                     <td>{{$val->created_at}}</td>
                 </tr>
                 @endforeach

@@ -42,7 +42,7 @@
                 <tbody>
                     @foreach($chemical as $key => $val)
                 <tr>
-                    <td>{{$val->key + 1}}</td>
+                    <td>{{$key + 1}}</td>
                     <td>{{$val->chemical_name}}</td>
                 </tr>
                 @endforeach

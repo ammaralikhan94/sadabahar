@@ -45,8 +45,7 @@
 
                     <!-- Logo container-->
                     <div class="logo">
-                        <a href="index.html" class="logo"><span>Ub<i
-                                class="md md-album"></i>ld</span></a>
+                        <a href="index.html" class="logo"><span>SADA BAHAR</span></a>
                     </div>
                     <!-- End Logo container-->
 

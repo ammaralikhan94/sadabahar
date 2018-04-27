@@ -9,6 +9,7 @@ use App\User;
 use App\supplier_payment;
 use App\Supplier_cheques;
 use App\supplier_amount_limit;
+use App\Inventory;
 
 class SupplierController extends Controller
 {
@@ -34,12 +35,12 @@ class SupplierController extends Controller
     		'cheque_status' => $request->cheque_status,
             'payment_mode' => $request->payment_mode
     	])->id;
-        supplier_payment::create([
+        /*supplier_payment::create([
             'supplier_id' => $supplier_id,
             'due_date' => $request->due_date,
             'due_amount' =>  $request->due_amount,
             'status' => $request->cheque_status
-        ]);
+        ]);*/
         Supplier_cheques::create([
             'supplier_id' => $supplier_id,
             'cheque_date_limit' => $request->cheque_date_limit,
@@ -87,11 +88,27 @@ class SupplierController extends Controller
                 'status' => $request->cheque_status
             ]);
         }
-        return redirect()->back()->with('success' , 'Sub Admin updated successfully !!');
+        return redirect()->back()->with('success' , 'Supplier updated successfully !!');
     }
 
     public function supplier_payment($id){
-        $supplier_payment  = supplier_payment::orderBy('id', 'desc')->where('supplier_id', $id )->get();
+        /*$supplier_payment  = supplier_payment::orderBy('id', 'desc')->where('supplier_id', $id )->get();*/
+        $supplier_payment = Inventory::orderBy('id', 'desc')->where('supplier',$id)->get();
         return view('admin.supplier.payment_supplier' ,compact('supplier_payment'));
+    }
+
+    /*Add supplier payment*/
+    public function add_payment($id){
+        $credit_limit = Supplier_amount_limit::where('supplier_id',$id)->value('supplier_amount_limit');
+        $cheque_limit = Supplier_cheques::where('supplier_id',$id)->first();    
+        return view('admin.supplier.add_payment' , compact('credit_limit' ,'cheque_limit'));
+    }
+
+    public function insert_supplier_amount(Request $request){
+        if(!isset($_POST['post_cheque']) && !isset($_POST['credit_limit'])){
+            return redirect()->back()->with('error' , 'Select "Credit limit" or "Post date cheque" to add supplier payment . ');       
+        }
+        echo "<pre>";
+        var_dump($_POST);die;
     }
 }

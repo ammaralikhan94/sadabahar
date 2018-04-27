@@ -39,6 +39,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/list_supplier/', ['as' => 'list_supplier',  'uses' => 'admin\supplierController@list_supplier']);/*list users*/
 	Route::post('/update_supplier/', ['as' => 'update_supplier',  'uses' => 'admin\supplierController@update_supplier']);/*update users*/
 	Route::get('/supplier_payment/{id}', ['as' => 'supplier_payment',  'uses' => 'admin\supplierController@supplier_payment']);/*update users*/
+	Route::get('/add_payment/{id}', ['as' => 'add_payment',  'uses' => 'admin\supplierController@add_payment']);/*add payment*/
+	Route::post('/insert_supplier_amount/', ['as' => 'insert_supplier_amount',  'uses' => 'admin\supplierController@insert_supplier_amount']);/*add payment*/
 	/*********************************Supplier Routes Ends****************************************/
 
 	/*********************************Customer Routes Starts****************************************/
@@ -60,6 +62,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/get-barrel-type/', ['as' => 'get-barrel-type',  'uses' => 'admin\InventoryController@get_barrel_type']);/*get barrel type AJAX*/
 	Route::post('/get-credit-limit/', ['as' => 'get-credit-limit',  'uses' => 'admin\InventoryController@get_credit_limit']);/*get credit limit AJAX*/
 	Route::post('/get-cheque-limit/', ['as' => 'get-cheque-limit',  'uses' => 'admin\InventoryController@get_cheque_limit']);/*get cheque limit AJAX*/
+	Route::post('/get-chemical/', ['as' => 'get-chemical',  'uses' => 'admin\InventoryController@get_chemical']);/*get chemical data from inventory AJAX*/
+
 	/*********************************Inventory Ends****************************************/
 
 	/*********************************Inventory Stars****************************************/
@@ -73,6 +77,8 @@ Route::group(['middleware' => 'auth'], function () {
 
 	/*********************************Barell Inventory Stars****************************************/
 	Route::get('/create_barrel/', ['as' => 'create_barrel',  'uses' => 'admin\InventoryController@create_barrel']);/*create users*/
+	Route::post('/insert_barrel/', ['as' => 'insert_barrel',  'uses' => 'admin\InventoryController@insert_barrel']);/*Insert users*/
+	Route::get('/list_barrel/', ['as' => 'list_barrel',  'uses' => 'admin\InventoryController@list_barrel']);/*Insert users*/
 	/*********************************Barell Inventory Ends****************************************/
 
 	/*********************************Expense Start****************************************/
@@ -82,7 +88,7 @@ Route::group(['middleware' => 'auth'], function () {
 	/*********************************Chemical Start****************************************/
 	Route::get('/create_chemical/', ['as' => 'create_chemical',  'uses' => 'admin\InventoryController@create_chemical']);/*create chemcial*/
 	Route::post('/insert_chemical/', ['as' => 'insert_chemical',  'uses' => 'admin\InventoryController@insert_chemical']);/*insert chemical*/
-	Route::get('/list_chemical/', ['as' => 'list_chemical',  'uses' => 'admin\InventoryController@list_chemical']);/*insert chemical*/
+	Route::get('/list_chemical/', ['as' => 'list_chemical',  'uses' => 'admin\InventoryController@list_chemical']);/*List chemical*/
 	/*********************************Chemical END****************************************/
 
 });

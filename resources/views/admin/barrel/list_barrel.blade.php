@@ -1,6 +1,6 @@
 @extends('layouts.admin_layout')
 @section('title')
-	Add - Suppleir
+	List - Barrel
 @endsection
 @section('customCss')
         <!-- DataTables -->
@@ -21,7 +21,6 @@
     </div>
     @endif
 
-
     @if ($message = Session::get('error'))
     <div class="alert alert-danger alert-block">
     <button type="button" class="close" data-dismiss="alert">×</button>
@@ -31,25 +30,37 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="card-box table-responsive">
-            <h4 class="m-t-0 header-title"><b>Suppleir</b></h4>
+            <h4 class="m-t-0 header-title"><b>Barrel</b></h4>
             <table id="subadmin_table" class="table table-striped table-bordered">
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Name</th>
-                    <th>Phone Number</th>
-                    <th>Joining Date</th>
-                    <th>Action</th>
+                    <th>Storage Type</th>
+                    <th>Storage Strength</th>
+                    <th>Storage unit</th>
+                    <th>Chemical Name</th>
+                    <th>Empty Barrel</th>
+                    <th>Total Barrel</th>
+                    <th>Current volume</th>
+                    <th>Total volume</th>
+                    <th>Filled volume</th>
+                    <th>Volume Remaining</th>
                 </tr>
                 </thead>
                 <tbody>
-                    @foreach($supplier as $key => $val)
+                    @foreach($barrel as $key => $val)
                 <tr>
-                    <td>{{$val->key + 1}}</td>
-                    <td>{{$val->name}}</td>
-                    <td>{{$val->phone_number}}</td>
-                    <td>{{$val->address}}</td>
-                    <td><a class="btn btn-primary" href="{{route('edit_supplier' , ['id' => $val->id])}}">Edit</a> {{-- <a class="btn btn-primary" href="{{route('add_payment' , ['id' => $val->id])}}">Add Payment</a> --}}{{-- <a class="btn btn-primary" href="{{route('supplier_payment' , ['id' => $val->id])}}">Payment Detail</a> --}} <a class="btn btn-success" href="{{route('supplier_payment' , ['id' => $val->id])}}">Payment details</a></td>
+                    <td>{{$key + 1}}</td>
+                    <td>{{$val->barrel_type}}</td>
+                    <td>{{$val->barrel_strength}}</td>
+                    <td>{{$val->barrel_measure}}</td>
+                    <td>{{$val->get_barrel_chemical['chemical_name']}}</td>
+                    <td>{{$val->empty_barrel}}</td>
+                    <td>{{$val->total_barrel}}</td>
+                    <td>{{$val->current_volume}}</td>
+                    <td>{{$val->total_volume}}</td>
+                    <td>{{$val->unit_purchased}}</td>
+                    <td>{{$val->remaining_volume}}</td>
                 </tr>
                 @endforeach
                 </tbody>
