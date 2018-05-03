@@ -133,7 +133,8 @@ input[type=number]::-webkit-outer-spin-button {
                                     <input type="number" class="form-control" name="limit_amount" placeholder="amount"  required="" value="{{$inventory->limit_amount}}" >
                                     <p><strong>Credit limit for this supplier is <span id="credit_limit" style="color: red"></span></strong></p>
                                 </div>
-                            </div>      
+                            </div>   
+                               
                             <input type="hidden" name="added_by" value="{{Auth::user()->id}}">
                             {{-- Post Dated Cheques --}}
                             
@@ -172,7 +173,7 @@ input[type=number]::-webkit-outer-spin-button {
                                 </div>
                             </div>
 
-                             <div class="form-group col-md-6">
+                            <div class="form-group col-md-6">
                                 <label class="col-md-2 control-label">Payment Status</label>
                                 <div class="col-md-10">
                                     <select class="form-control" required="" name="payment_status" id="payment_status">
@@ -184,12 +185,21 @@ input[type=number]::-webkit-outer-spin-button {
                                 </div>
                             </div>
 
+                            <div class="form-group col-md-6">
+                                <label class="col-md-2 control-label">Purchase Amount</label>
+                                <div class="col-md-10">
+                                   <input type="number" name="purchase_amount" class="form-control" value="{{$inventory->purchase_amount}}" required="">
+                                </div>
+                            </div>
+
                             <div class="form-group col-md-6 due" style="display: none">
                                 <label class="col-md-2 control-label">Due Date</label>
                                 <div class="col-md-10">
                                     <input type="date" class="form-control" name="due_date" value="{{$inventory->due_date}}"  min="{{date("Y-m-d")}}">
                                 </div>
                             </div>
+
+
                             <div class="form-group col-md-6 due" style="display: none">
                                 <label class="col-md-2 control-label">Due amount</label>
                                 <div class="col-md-10">
@@ -216,7 +226,7 @@ input[type=number]::-webkit-outer-spin-button {
                                 </div>
                             </div>
 
-                             <div class="form-group col-md-6">
+                            <div class="form-group col-md-6">
                                 <label class="col-md-2 control-label">Calculation</label>
                                 <div class="col-md-10" id="calculation_detail">
                                    

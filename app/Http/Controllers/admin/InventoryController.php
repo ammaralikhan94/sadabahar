@@ -33,9 +33,11 @@ class InventoryController extends Controller
     
     /*Insert Inventory*/
     public function insert_inventory(Request $request){
-
+        if(!isset($_POST['payment_cash']) && !isset($_POST['payment_credit']) && !isset($_POST['payment_cheque']) ){
+            return redirect()->back()->with('error' , 'Select Payment Please !');
+        }
         $total_quantity = $request->quantity * $request->total_quantity;
-    	Inventory::create([
+    	$inventory_id = Inventory::create([
     		'item_name' => $request->item_name,
             'dop' => $request->dop,
             'chemical_amount' => $request->chemical_amount,
@@ -58,9 +60,10 @@ class InventoryController extends Controller
             'purchasing_type' => $request->purchasing_type,
             'cash_recieved' => $request->cash_recieved,
             'total_quantity' => $total_quantity,
+            'purchase_amount' => $request->purchase_amount,
             'purchase_unit'  => $request->purchase_unit,
             'unit_purchased' => $request->unit_purchased
-    	]);
+    	])->id;
         $check_previous_barrel = Barrel::where('barrel_type', $request->item_name)->where('chemical_name',$request->chemical_name)->first();
         if($check_previous_barrel != '' ){
             $total_barrel = $request->quantity + $check_previous_barrel->total_barrel;
@@ -70,12 +73,16 @@ class InventoryController extends Controller
                 $purchased_unit = $purchased_unit + $check_previous_barrel->current_volume;
                 $remaining_volume = $remaining_volume + $check_previous_barrel->remaining_volume;
                 $total_volume = $request->strength + $check_previous_barrel->total_volume;
-            }else{
-                $remaining_volume =  $request->strength - $check_previous_barrel->current_volume ;
-                $purchased_unit = $check_previous_barrel->purchased_unit + $check_previous_barrel->purchased_unit;
+            }if($request->purchase_unit == 'kg' || $request->purchase_unit == 'quantity'){
+                
+                $remaining_volume =  $request->strength - $check_previous_barrel->current_volume;
+                
+                $purchased_unit = $request->unit_purchased + $check_previous_barrel->unit_purchased;
                 $remaining_volume = $remaining_volume + $check_previous_barrel->remaining_volume;
                 $total_volume = $request->strength + $check_previous_barrel->total_volume;
+
             }
+            
             Barrel::where('id',$check_previous_barrel->id)->update([
                 'total_barrel'   => $total_barrel,
                 'remaining_volume' => $remaining_volume,
@@ -87,7 +94,7 @@ class InventoryController extends Controller
            if($request->purchase_unit == 'gram'){
                 $purchased_unit= $request->unit_purchased / 1000;
                 $remaining_volume =  $request->strength - $purchased_unit ;
-           }else{
+           }if($request->purchase_unit == 'kg' || $request->purchase_unit == 'quantity' || $request->purchase_unit == 'liter'){
                 $purchased_unit = $request->unit_purchased ;    
                 $remaining_volume = $request->strength - $request->unit_purchased;
            }
@@ -110,7 +117,7 @@ class InventoryController extends Controller
                 'added_by'     => Auth::user()->id     
             ]);
         }
-    	return redirect()->back()->with('success' , 'Item successfully added !');
+    	return redirect()->back()->with(array('success' => 'Item successfully added , If you want to delete the item click on the button below' , 'id' => $inventory_id));
     }
 
 	/*Ajax call for getting type*/
@@ -169,6 +176,7 @@ class InventoryController extends Controller
             'payment_credit' => $request->payment_credit,
             'payment_cheque' => $request->payment_cheque,
             'due_amount' => $request->due_amount,
+            'purchase_amount' => $request->purchase_amount,
             'purchasing_type' => $request->purchasing_type,
             'cash_recieved' => $request->cash_recieved,
             'total_quantity' => $total_quantity

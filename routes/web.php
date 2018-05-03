@@ -91,5 +91,14 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/list_chemical/', ['as' => 'list_chemical',  'uses' => 'admin\InventoryController@list_chemical']);/*List chemical*/
 	/*********************************Chemical END****************************************/
 
+	/*********************************Sale Stars****************************************/
+	Route::get('/create_sale/', ['as' => 'create_sale',  'uses' => 'admin\SaleController@create_sale']);/*create sale*/
+	Route::post('/get-available-quantity/', ['as' => 'get_available_quantity',  'uses' => 'admin\SaleController@get_available_quantity']);/*create sale*/
+	/*********************************Sale Ends****************************************/
+
+
+	Route::get('/test', function () {
+		return view('admin.test');
+	});
 });
 

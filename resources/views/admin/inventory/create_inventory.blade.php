@@ -1,6 +1,6 @@
 @extends('layouts.admin_layout')
 @section('title')
-	Add - Inventory
+	Add - Purchase
 @endsection
 @section('customCss')
 <style type="text/css">
@@ -11,36 +11,68 @@ input[type=number]::-webkit-outer-spin-button {
     appearance: none;
     margin: 0; 
 }
-
 </style>
 @endsection
 @section('content')
-@if ($message = Session::get('success'))
-    <div class="alert alert-success alert-block">
-    <button type="button" class="close" data-dismiss="alert">×</button>
-            <strong>{{ $message }}</strong>
-    </div>
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>{{ $message }}</strong>
+                <a class="btn btn-danger" href="{{route('delete_inventory' , ['id' => Session::get('id')])}}">Delete</a>
+        </div>
+        @endif
+        @if ($message = Session::get('error'))
+        <div class="alert alert-danger alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>{{ $message }}</strong>
+        </div>
     @endif
-
-
-    @if ($message = Session::get('error'))
-    <div class="alert alert-danger alert-block">
-    <button type="button" class="close" data-dismiss="alert">×</button>
-            <strong>{{ $message }}</strong>
-    </div>
-@endif
 <div class="row">
         <div class="col-sm-12">
             <div class="card-box">
-                <h4 class="m-t-0 header-title"><b>Create Inventory</b></h4>
+                <a class="btn btn-success pull-right" href="{{route('create_inventory')}}" target="_blank">Add More Purchase</a>
+                <h4 class="m-t-0 header-title"><b>Create Purchase</b></h4>
                 <div class="row">
                     <div class="col-md-12">
-                        <small style="padding-left: 460px;"><a href="{{route('create_items')}}">Can not find item , Click here to add</a></small>
+                        <small style="padding-left: 460px;"><a href="{{route('create_items')}}" target="_blank">Can not find item , Click here to add</a></small>
                         <form class="form-horizontal" action="{{route('insert_inventory')}}" method="post">
                         	{{csrf_field()}}
                             <div class="form-group col-md-6">
+                                <label class="col-md-2 control-label">Date of Purchase</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control" name="dop"  required="" value="<?php echo date('Y-m-d');?>" readonly>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label class="col-md-2 control-label">Supplier</label>
+                                <div class="col-md-10">
+                                    <select class="form-control" required="" name="supplier">
+                                        <option value="">Select Supplier</option>   
+                                        @foreach($supplier as $key => $sup)
+                                            <option value="{{$sup->id}}">{{$sup->name}}</option>   
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
                                 <div class="row">
-                                    <label class="col-md-2 control-label">Purchase Item Name</label>
+                                    <label class="col-md-2 control-label">Product</label>
+                                    <div class="col-md-10">                                    
+                                        <select class="form-control" name="chemical_name" required="">
+                                                <option value="">Select Product</option>
+                                                @foreach($chemical as $key => $val)
+                                                    <option value="{{$val->id}}">{{$val->chemical_name}}</option>
+                                                @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div class="row">
+                                    <label class="col-md-2 control-label">Item Storage</label>
                                     <div class="col-md-10">                                    
                                         <select class="form-control" name="item_name">
                                                 <option value="">Select Purchasing Item</option>
@@ -52,14 +84,7 @@ input[type=number]::-webkit-outer-spin-button {
                                 </div>
                             </div>
 
-
-                            <div class="form-group col-md-6">
-                                <label class="col-md-2 control-label">Date of Purchase</label>
-                                <div class="col-md-10">
-                                    <input type="text" class="form-control" name="dop"  required="" value="<?php echo date('Y-m-d');?>" readonly>
-                                </div>
-                            </div>
-
+                            
 
                             <div class="form-group col-md-6">
                                 <label class="col-md-2 control-label">Purchase Unit Type</label>
@@ -69,6 +94,7 @@ input[type=number]::-webkit-outer-spin-button {
                                          <option value="kg">Kg</option>
                                          <option value="liter">Liter</option>
                                          <option value="gram">Gram</option>
+                                         <option value="quantity">Quantity</option>
                                      </select>
                                 </div>
                                 <label class="col-md-2 control-label">Unit Purchased</label>
@@ -97,31 +123,8 @@ input[type=number]::-webkit-outer-spin-button {
                                 </div>
                             </div>
                             
-                            <div class="form-group col-md-6">
-                                <label class="col-md-2 control-label">Supplier</label>
-                                <div class="col-md-10">
-                                    <select class="form-control" required="" name="supplier">
-                                        <option value="">Select Supplier</option>   
-                                        @foreach($supplier as $key => $sup)
-                                            <option value="{{$sup->id}}">{{$sup->name}}</option>   
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group col-md-6">
-                                <div class="row">
-                                    <label class="col-md-2 control-label">Chemical</label>
-                                    <div class="col-md-10">                                    
-                                        <select class="form-control" name="chemical_name" required="">
-                                                <option value="">Select Chemical</option>
-                                                @foreach($chemical as $key => $val)
-                                                    <option value="{{$val->id}}">{{$val->chemical_name}}</option>
-                                                @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+                           
+                           
                             <div class="form-group col-md-6">
                                 <label class="col-md-2 control-label">Payment Mode</label>
                                 <div class="col-md-10">
@@ -146,13 +149,12 @@ input[type=number]::-webkit-outer-spin-button {
                                 </div>
                              </div>
 
-
                             {{-- Payment Mode Additional Field --}}
 
                             <div class="form-group col-md-6" style="display: none;" id="credit_amount">
                                 <label class="col-md-2 control-label">Credit Amount</label>
                                 <div class="col-md-10">
-                                    <input type="number" class="form-control" name="limit_amount" placeholder="amount"  required=""  >
+                                    <input type="number" class="form-control" name="limit_amount" placeholder="amount" =""  >
                                     <p><strong>Credit limit for this supplier is <span id="credit_limit" style="color: red"></span></strong></p>
                                 </div>
                                 
@@ -196,7 +198,7 @@ input[type=number]::-webkit-outer-spin-button {
                                 </div>
                             </div>
 
-                             <div class="form-group col-md-6">
+                            <div class="form-group col-md-6">
                                 <label class="col-md-2 control-label">Payment Status</label>
                                 <div class="col-md-10">
                                     <select class="form-control" required="" name="payment_status" id="payment_status">
@@ -205,6 +207,13 @@ input[type=number]::-webkit-outer-spin-button {
                                         <option value="due">Due</option>
                                         <option value="bounched">Bounced</option>
                                     </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label class="col-md-2 control-label">Purchase Amount</label>
+                                <div class="col-md-10">
+                                   <input type="number" name="purchase_amount" class="form-control" required="">
                                 </div>
                             </div>
 
@@ -283,12 +292,12 @@ input[type=number]::-webkit-outer-spin-button {
             $('#calculation_detail').html('<strong>'+chemical_amount+' * '+quantity+' = '+total_amount+' rs </strong><br><strong>Total '+purchasing_type+' = '+total_purchasing_measure+'</strong>');
             $('#total_amount').val(total_amount);
             $('[name="total_strength"]').val(total_purchasing_measure);
-            
         });
 
         /*Ajax Getting item detail */
         $(document).on('change','[name="item_name"]',function (){
             option = $(this).val();
+
             $.ajax({
                type:'POST',
                url:'{{route('get-purchase-type')}}',
@@ -304,7 +313,7 @@ input[type=number]::-webkit-outer-spin-button {
                   purchase_type = data.item_purchase_type;
                   $('#purchasing_type').val(purchase_type);
                   $('#list_itemname').html(data.item_name);
-                  $('#list_itemtype').html(data.item_type+' '+purchase_type+'<input type="hidden" name="total_quantity" id="get_item_quantity" value="'+data.item_type+'"/>');
+                  $('#list_itemtype').html(data.item_type+' '+purchase_type+'<input type="hidden" name="total_quantity" id="get_item_quantity" value="'+data.item_type+'"/><input type="hidden" name="measure_type"  value="'+purchase_type+'"/>');
                   $('[name="strength"]').val(data.item_type);
                   $('[name="total_strength"]').val(data.item_type);
                    chemical_amount = $('#chemical_amount').val();
@@ -347,6 +356,7 @@ input[type=number]::-webkit-outer-spin-button {
                 $('[name="cheque_image"]').prop('required',true);
                 $('[name="limit_cheque_date"]').prop('required',true);
                 $('[name="cheque_amount"]').prop('required',true);
+
                 
                  $.ajax({
                    type:'POST',
@@ -479,6 +489,7 @@ input[type=number]::-webkit-outer-spin-button {
           $(document).on('keyup','[name="unit_purchased"]',function (){
             unit_entered = parseInt($('[name="unit_purchased"]').val());
             unit_limit = parseInt($('[name="total_strength"]').val());
+
             purchase_unit = $('[name="purchase_unit"] option:selected').val();
              if(purchase_unit == 'gram'){
                  unit_entered = parseInt($('[name="unit_purchased"]').val());
@@ -489,9 +500,8 @@ input[type=number]::-webkit-outer-spin-button {
                     $('[name="unit_purchased"]').val('');
                     alert('Maximum unit for purchase is '+limit_conversion);
                  }
-                
             }
-            if(purchase_unit != 'gram'){
+            if(purchase_unit == 'kg' || purchase_unit == 'liter' ){
                 if(unit_limit < unit_entered){
                     alert('Can not buy unit more then the drum units');
                     $('[name="unit_purchased"]').val('');
@@ -508,7 +518,20 @@ input[type=number]::-webkit-outer-spin-button {
                 $('[name="cash_recieved"]').prop('required',false);
              }
         });
+        $(document).on('change','[name="purchase_unit"]',function (){
+             purchase_unit = $('[name="purchase_unit"] option:selected').val();
+             selected_unit = $('[name="measure_type"]').val();
+             if(selected_unit == 'quantity' && purchase_unit != selected_unit ){
+               $('[name="purchase_unit"] option:last').prop("selected", "selected");
+               alert('Your are not allowed to convert quantity to other conversion!');
+             }
+             if(purchase_unit == 'quantity' && selected_unit == 'kg' || selected_unit == 'liter'){
+                strength = $('[name="strength"]').val();
+                $('[name="unit_purchased"]').val(strength);
+             }
 
+             
+        })
     </script> 
 @endsection
 @endsection

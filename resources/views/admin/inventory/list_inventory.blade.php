@@ -52,7 +52,7 @@
                     <td>{{$val->item_name}}</td>
                     <td>{{$val->quantity}}</td>
                     <td>{{$val->total_amount}}</td>
-                    <td>{{$val->payment_mode}}</td>
+                    <td>{{($val->payment_cash == 1)?'Cash':''}}   {{($val->payment_credit == 1)?'Credit':''}}  {{($val->payment_cheque == 1)?'Cheque':''}}</td>
                     <td>{{$val->payment_status}}</td>
                     <td><a class="btn btn-primary" href="{{route('edit_inventory' , ['id' => $val->id])}}">Edit</a> <a class="btn btn-danger" href="{{route('delete_inventory' , ['id' => $val->id])}}">Delete</a></td>
                 </tr>

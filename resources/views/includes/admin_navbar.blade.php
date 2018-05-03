@@ -35,12 +35,23 @@
                 </ul>       
             </li>   
             <li class="has-submenu">
-             <a href="#"><i class="fa fa-opencart"></i>Inventory</a>
+             <a href="#"><i class="fa fa-opencart"></i>Purchase</a>
                 <ul class="submenu megamenu">
                     <li>
                         <ul>
-                            <li><a href="{{route('create_inventory')}}"><i class="fa fa-opencart"></i> Add Inventory</a></li>
-                            <li><a href="{{route('list_inventory')}}"><i class="fa  fa-list  "></i>  List Inventory</a></li>
+                            <li><a href="{{route('create_inventory')}}"><i class="fa fa-opencart"></i> Add Purchase</a></li>
+                            <li><a href="{{route('list_inventory')}}"><i class="fa  fa-list  "></i>  List Purchase</a></li>
+                        </ul>
+                    </li>
+                </ul>       
+            </li> 
+            <li class="has-submenu">
+             <a href="#"><i class="fa fa-shopping-basket"></i>Product Sale</a>
+                <ul class="submenu megamenu">
+                    <li>
+                        <ul>
+                            <li><a href="{{route('create_sale')}}"><i class="fa fa-shopping-basket"></i> Add Sale</a></li>
+                            <li><a href="{{route('list_inventory')}}"><i class="fa  fa-list  "></i>  List Sale</a></li>
                         </ul>
                     </li>
                 </ul>       
@@ -79,7 +90,7 @@
                 </ul>       
             </li> 
             <li class="has-submenu">
-             <a href="#"><i class="fa   fa-eyedropper"></i>Chemical</a>
+             <a href="#"><i class="fa   fa-eyedropper"></i>Products</a>
                 <ul class="submenu megamenu">
                     <li>
                         <ul>
