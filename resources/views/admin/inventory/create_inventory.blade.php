@@ -154,7 +154,7 @@ input[type=number]::-webkit-outer-spin-button {
                             <div class="form-group col-md-6" style="display: none;" id="credit_amount">
                                 <label class="col-md-2 control-label">Credit Amount</label>
                                 <div class="col-md-10">
-                                    <input type="number" class="form-control" name="limit_amount" placeholder="amount" =""  >
+                                    <input type="number" class="form-control" name="limit_amount" placeholder="amount" min="0">
                                     <p><strong>Credit limit for this supplier is <span id="credit_limit" style="color: red"></span></strong></p>
                                 </div>
                                 
@@ -210,12 +210,12 @@ input[type=number]::-webkit-outer-spin-button {
                                 </div>
                             </div>
 
-                            <div class="form-group col-md-6">
+                            {{-- <div class="form-group col-md-6">
                                 <label class="col-md-2 control-label">Purchase Amount</label>
                                 <div class="col-md-10">
                                    <input type="number" name="purchase_amount" class="form-control" required="">
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="form-group col-md-6 due" style="display: none">
                                 <label class="col-md-2 control-label">Due Date</label>
@@ -292,6 +292,7 @@ input[type=number]::-webkit-outer-spin-button {
             $('#calculation_detail').html('<strong>'+chemical_amount+' * '+quantity+' = '+total_amount+' rs </strong><br><strong>Total '+purchasing_type+' = '+total_purchasing_measure+'</strong>');
             $('#total_amount').val(total_amount);
             $('[name="total_strength"]').val(total_purchasing_measure);
+             $('[name="unit_purchased"]').val(total_purchasing_measure);
         });
 
         /*Ajax Getting item detail */
@@ -325,16 +326,18 @@ input[type=number]::-webkit-outer-spin-button {
                     $('#total_amount').val(total_amount);
                     toal_purchasing_measure = parseInt(get_item_quantity *   quantity);
                     $('#calculation_detail').html('<strong>Total amount '+chemical_amount+' * '+quantity+' = '+total_amount+' rs </strong><br><strong>Total '+purchasing_type+' = '+toal_purchasing_measure+'</strong>');
-
+                    $('[name="unit_purchased"]').val(toal_purchasing_measure);
                     /********************Recaling********************************/
                }
             });
         }); 
-
         /*Payment method show on credit seletion*/
         $(document).on('click','[name="payment_credit"]',function (){
             option = $(this).val();
-            
+            $("select[name='payment_status']").find("option[value='due']").attr("selected",true);
+                $('.due').show('slow');
+                $('[name="due_date"]').prop('required',true);
+                $('[name="due_amount"]').prop('required',true);
             if($('[name="payment_credit"]').is(":checked")){
                 $('#credit_amount').show('slow');
                 total_amount = $('[name="total_amount"]').val();
@@ -388,8 +391,10 @@ input[type=number]::-webkit-outer-spin-button {
 
         $(document).on('click','[name="payment_cheque"]',function (){
             option = $(this).val();
-
-
+            $("select[name='payment_status']").find("option[value='due']").attr("selected",true);
+            $('.due').show('slow');
+            $('[name="due_date"]').prop('required',true);
+            $('[name="due_amount"]').prop('required',true);
             if($('#pdc').is(":checked")){
                 supplier = $('[name="supplier"]').val();
                 if(supplier == ''){

@@ -49,6 +49,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/edit_customer/{id}', ['as' => 'edit_customer',  'uses' => 'admin\CustomerController@edit_customer']);/*edit users*/
 	Route::get('/list_customer/', ['as' => 'list_customer',  'uses' => 'admin\CustomerController@list_customer']);/*list users*/
 	Route::post('/update_customer/', ['as' => 'update_customer',  'uses' => 'admin\CustomerController@update_customer']);/*update users*/
+	Route::post('/get-credit-limit-customer/', ['as' => 'get-credit-limit-customer',  'uses' => 'admin\SaleController@get_credit_limit_customer']);/*get credit limit AJAX*/
+	Route::post('/get-cheque-limit-customer/', ['as' => 'get-cheque-limit-customer',  'uses' => 'admin\SaleController@get_cheque_limit_customer']);/*get cheque limit AJAX*/
 	/*********************************Customer Routes Ends****************************************/
 
 	/*********************************Inventory Stars****************************************/
@@ -60,8 +62,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/delete_inventory/{id}', ['as' => 'delete_inventory',  'uses' => 'admin\InventoryController@delete_inventory']);/*update users*/
 	Route::post('/get-purchase-type/', ['as' => 'get-purchase-type',  'uses' => 'admin\InventoryController@get_purchase_type']);/*get purchase type AJAX*/
 	Route::post('/get-barrel-type/', ['as' => 'get-barrel-type',  'uses' => 'admin\InventoryController@get_barrel_type']);/*get barrel type AJAX*/
-	Route::post('/get-credit-limit/', ['as' => 'get-credit-limit',  'uses' => 'admin\InventoryController@get_credit_limit']);/*get credit limit AJAX*/
-	Route::post('/get-cheque-limit/', ['as' => 'get-cheque-limit',  'uses' => 'admin\InventoryController@get_cheque_limit']);/*get cheque limit AJAX*/
+	Route::post('/get-credit-limit/', ['as' => 'get-credit-limit',  'uses' => 'admin\InventoryController@get_credit_limit']);
+	Route::post('/get-cheque-limit/', ['as' => 'get-cheque-limit',  'uses' => 'admin\InventoryController@get_cheque_limit']);
 	Route::post('/get-chemical/', ['as' => 'get-chemical',  'uses' => 'admin\InventoryController@get_chemical']);/*get chemical data from inventory AJAX*/
 
 	/*********************************Inventory Ends****************************************/

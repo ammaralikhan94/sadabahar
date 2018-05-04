@@ -11,6 +11,7 @@ use App\Supplier_cheques;
 use App\Inventory;
 use App\Chemical;
 use App\Barrel;
+use App\Notification;
 use Auth;
 use DB;
 
@@ -37,6 +38,7 @@ class InventoryController extends Controller
             return redirect()->back()->with('error' , 'Select Payment Please !');
         }
         $total_quantity = $request->quantity * $request->total_quantity;
+        
     	$inventory_id = Inventory::create([
     		'item_name' => $request->item_name,
             'dop' => $request->dop,

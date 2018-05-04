@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\admin;
 
 use Illuminate\Http\Request;
@@ -94,6 +95,7 @@ class SupplierController extends Controller
     public function supplier_payment($id){
         /*$supplier_payment  = supplier_payment::orderBy('id', 'desc')->where('supplier_id', $id )->get();*/
         $supplier_payment = Inventory::orderBy('id', 'desc')->where('supplier',$id)->get();
+        
         return view('admin.supplier.payment_supplier' ,compact('supplier_payment'));
     }
 

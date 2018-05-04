@@ -185,12 +185,12 @@ input[type=number]::-webkit-outer-spin-button {
                                 </div>
                             </div>
 
-                            <div class="form-group col-md-6">
+                           {{--  <div class="form-group col-md-6">
                                 <label class="col-md-2 control-label">Purchase Amount</label>
                                 <div class="col-md-10">
                                    <input type="number" name="purchase_amount" class="form-control" value="{{$inventory->purchase_amount}}" required="">
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="form-group col-md-6 due" style="display: none">
                                 <label class="col-md-2 control-label">Due Date</label>
@@ -343,7 +343,7 @@ input[type=number]::-webkit-outer-spin-button {
         /*Payment method show on credit seletion*/
         $(document).on('click','[name="payment_credit"]',function (){
             option = $(this).val();
-            
+            $("select[name='payment_status']").find("option[value='due']").attr("selected",true);
             if($('[name="payment_credit"]').is(":checked")){
                 $('#credit_amount').show('slow');
                 total_amount = $('[name="total_amount"]').val();
@@ -396,8 +396,7 @@ input[type=number]::-webkit-outer-spin-button {
 
         $(document).on('click','[name="payment_cheque"]',function (){
             option = $(this).val();
-
-
+            $("select[name='payment_status']").find("option[value='due']").attr("selected",true);
             if($('#pdc').is(":checked")){
                 supplier = $('[name="supplier"]').val();
                 if(supplier == ''){

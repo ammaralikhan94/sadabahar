@@ -37,17 +37,40 @@ input[type=number]::-webkit-outer-spin-button {
                         {{-- <small style="padding-left: 460px;"><a href="{{route('create_items')}}" target="_blank">Can not find item , Click here to add</a></small> --}}
                         <form class="form-horizontal" action="{{route('insert_inventory')}}" method="post">
                         	{{csrf_field()}}
-                            <div class="form-group col-md-6">
-                                <label class="col-md-2 control-label">Date of Purchase</label>
-                                <div class="col-md-10">
-                                    <input type="text" class="form-control" name="dop"  required="" value="<?php echo date('Y-m-d');?>" readonly>
+
+
+                            <div class="col-md-12">
+                                <div class="card-box table-responsive">
+                                    <h4 class="m-t-0 header-title"><b>Products</b></h4>
+                                    <table class="table table-striped table-bordered" width="50px">
+                                        <thead>
+                                        <tr>
+                                            <th>Product Name</th>
+                                            <th>Product Quantity Available</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="set_product">
+                                        <tr>
+                                                <td>
+                                                     <select class="form-control" name="chemical_name[]" id="chemical_name" required="">
+                                                        <option value="">Select Product</option>
+                                                        @foreach($chemical as $key => $val)
+                                                            <option value="{{$val->id}}">{{$val->chemical_name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                <td><input type="text" class="form-control" name="quantity_available[]" id="quantity_available"  required="" readonly=""></td>
+                                                <td><button type="button" class="btn btn-primary" id="add_more_product">+</button></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-
-                            <div class="form-group col-md-6">
+                           {{--  <div class="form-group col-md-6" id="add_product_here">
                                 <div class="row">
                                     <label class="col-md-2 control-label">Product</label>
-                                    <div class="col-md-10">                                    
+                                    <div class="col-md-6">                                    
                                         <select class="form-control" name="chemical_name" id="chemical_name" required="">
                                                 <option value="">Select Product</option>
                                                 @foreach($chemical as $key => $val)
@@ -55,17 +78,90 @@ input[type=number]::-webkit-outer-spin-button {
                                                 @endforeach
                                         </select>
                                     </div>
+                                    <label class="col-md-2 control-label">Qty</label>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" name="quantity_available" id="quantity_available"  required="" readonly="">
+                                </div>
+                                  {{--   <button type="button" class="btn btn-success add_product" >+</button> --}}
+                                {{-- </div>
+                            </div>  --}}
+
+                            <div class="form-group col-md-6">
+                                <label class="col-md-2 control-label">Date of Purchase</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control" name="dop"  required="" value="<?php echo date('Y-m-d');?>">
                                 </div>
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label class="col-md-2 control-label">Quantity Available</label>
+                                <label class="col-md-2 control-label">Date of Purchase</label>
                                 <div class="col-md-10">
-                                    <input type="text" class="form-control" name="quantity_available" id="quantity_available" placeholder="Quantity Available"  required="" readonly="">
+                                    <select class="form-control" name="customer" id="customer">
+                                        <option value="">Select Customer</option>
+                                        @foreach($customer as $key => $val)
+                                        <option value="{{$val->id}}">{{$val->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
-                           
-                            <div class="form-group col-md-6">
+
+                            {{-- <div class="form-group col-md-6">
+                                <label class="col-md-2 control-label">Sale Price</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control" name="sale_price"  required="" placeholder="Sale Price">
+                                </div>
+                            </div> --}}
+
+                            {{-- Payment Mode Additional Field --}}
+
+                            <div class="form-group col-md-6" style="display: none;" id="credit_amount">
+                                <label class="col-md-2 control-label">Credit Amount</label>
+                                <div class="col-md-10">
+                                    <input type="number" class="form-control" name="limit_amount" placeholder="amount" min="0">
+                                    <p><strong>Credit limit for this customer is <span id="credit_limit" style="color: red"></span></strong></p>
+                                </div>
+                                
+                            </div>      
+                            <input type="hidden" name="added_by" value="{{Auth::user()->id}}">
+                            {{-- Post Dated Cheques --}}
+                            
+                            {{-- Payment Mode Additional Field --}}
+                            
+                            <div class="form-group col-md-6 cash"  style="display: none">
+                                <label class="col-md-2 control-label">Cash Recieved</label>
+                                <div class="col-md-10">
+                                    <input type="number" class="form-control" name="cash_recieved" placeholder="Amount recieved" >
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6 show_post_cheques" style="display: none">
+                                <label class="col-md-2 control-label">Add cheque number</label>
+                                <div class="col-md-10">
+                                    <input type="number" class="form-control" name="cheque_number">
+                                </div>
+                            </div>  
+
+                            <div class="form-group col-md-6 show_post_cheques" style="display: none">
+                                <label class="col-md-2 control-label">Cheque Amount</label>
+                                <div class="col-md-10">
+                                    <input type="number" class="form-control"  name="cheque_amount"  >
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6 show_post_cheques" style="display: none">
+                                <label class="col-md-2 control-label">Upload Cheque</label>
+                                <div class="col-md-10">
+                                    <input type="file" class="form-control"  name="cheque_image"  >
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6 show_post_cheques" style="display: none">
+                                <label class="col-md-2 control-label">Cheque Date</label>
+                                <div class="col-md-10">
+                                    <input type="date" class="form-control" name="limit_cheque_date" min="@php echo date('Y-m-d'); @endphp"  id="limit_cheque_date"  >
+                                </div>
+                            </div>
+
+                             <div class="form-group col-md-6">
                                 <label class="col-md-2 control-label">Payment Mode</label>
                                 <div class="col-md-10">
                                     <div class="checkbox checkbox-warning" style="float: left; margin-right:5px;">
@@ -88,23 +184,32 @@ input[type=number]::-webkit-outer-spin-button {
                                     </div>
                                 </div>
                             </div>
-
-                            {{-- Payment Mode Additional Field --}}
-
-                            <div class="form-group col-md-6" style="display: none;" id="credit_amount">
-                                <label class="col-md-2 control-label">Credit Amount</label>
-                                <div class="col-md-10">
-                                    <input type="number" class="form-control" name="limit_amount" placeholder="amount" =""  >
-                                    <p><strong>Credit limit for this supplier is <span id="credit_limit" style="color: red"></span></strong></p>
+                            <div class="col-md-12">
+                                <div class="card-box table-responsive">
+                                    <h4 class="m-t-0 header-title"><b>Quantity</b></h4>
+                                    <table class="table table-striped table-bordered" width="50px">
+                                        <thead>
+                                        <tr>
+                                            <th>Storage Name</th>
+                                            <th>Product Name</th>
+                                            <th>Quantity</th>
+                                            <th>Storage Quantity</th>
+                                            <th>Sale Unit</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="set_quantity">
+                                       
+                                        </tbody>
+                                    </table>
                                 </div>
-                                
-                            </div>      
+                            </div>
+                            <div class="col-md-6" {{-- style="margin-left: 1200px" --}}>
+                                <button type="button" class="btn btn-success">Add More Product</button>    
+                            </div>
+                            
                             <input type="hidden" name="added_by" value="{{Auth::user()->id}}">
-                             <div class="form-group col-md-6">
-                                <label class="col-md-2 control-label"></label>
-                                <div class="col-md-10">
-                                    <p><strong></strong></p>
-                                </div>
+                             <div class="col-md-6" style="margin-left: 1200px">
+                                <input type="submit" class="btn btn-success" value="Save" />    
                             </div>
                         </form>
                     </div>
@@ -113,10 +218,13 @@ input[type=number]::-webkit-outer-spin-button {
         </div>
     </div>
 @section('customScript')
+
+{{-- FOR FIRST PURCHASE JQUERY WORK START--}}
    <script type="text/javascript">
-       $('#chemical_name').on('change',function (){
+        $('#chemical_name').on('change',function (){
             id = $(this).attr('id');
             chemical_id = $('#'+id).val();
+            option_text = $('#chemical_name option:selected').text();
             /*Get Available Quantity*/ 
             $.ajax({
                type:'POST',
@@ -126,7 +234,218 @@ input[type=number]::-webkit-outer-spin-button {
                     'chemical_id' : chemical_id
                },
                success:function(data){
-                 console.log();
+                $('#set_quantity').html('');
+                data = JSON.parse(data);
+                $('#quantity_available').val(data.barrel_quantity);
+                $.each(data.barrel, function(key,val) {             
+                    html  = `<tr><td>`+val.barrel_type+`<input type="hidden" name="barrel_type" value="`+val.barrel_type+`" /></td><td>`+option_text+`</td><td>`+val.current_volume+`<input type="hidden" name="current_volume" value="`+val.current_volume+`" /></td><td><input type="hidden" class="form-control" name="total_barrel" min="0" max="`+val.total_barrel+`"/>`+val.total_barrel+`</td></td><td><input type="number" class="form-control" name="sale_unit" min="0" max="`+val.current_volume+`"/></td></td></tr>`;
+                    $('#set_quantity').append(html);
+                });   
+               }
+            }); 
+        });
+        /*Add more*/
+        $(document).on('click','.add_product',function (){
+            html = `<div class="form-group col-md-6">
+                                <div class="row">
+                                    <label class="col-md-2 control-label">Product</label>
+                                    <div class="col-md-8">                                    
+                                        <select class="form-control" name="chemical_name" id="chemical_name" required="">
+                                                <option value="">Select Product</option>
+                                                @foreach($chemical as $key => $val)
+                                                    <option value="{{$val->id}}">{{$val->chemical_name}}</option>
+                                                @endforeach
+                                        </select>
+                                    </div>
+                                    <button type="button" class="btn btn-success add_product" >+</button>
+                                </div>
+                            </div>`;
+            $('#add_product_here').append(html);
+        });
+         /*Payment method show on credit seletion*/
+        $(document).on('click','[name="payment_credit"]',function (){
+            option = $(this).val();
+            $("select[name='payment_status']").find("option[value='due']").attr("selected",true);
+                $('.due').show('slow');
+                $('[name="due_date"]').prop('required',true);
+                $('[name="due_amount"]').prop('required',true);
+            if($('[name="payment_credit"]').is(":checked")){
+                $('#credit_amount').show('slow');
+                total_amount = $('[name="total_amount"]').val();
+                cash_recieved = $('[name="cash_recieved"]').val();
+                credit_amount = parseInt(total_amount -   cash_recieved);
+                $('[name="limit_amount"]').val(credit_amount);
+            }else{
+                 $('#credit_amount').hide('slow');
+            }
+
+            if($('#pdc').is(":checked")){
+                customer = $('[name="customer"]').val();
+                if(customer == ''){
+                    alert('please select customer first');
+                    return false;
+                }
+                $('.show_post_cheques').show('slow');
+                $('[name="cheque_number"]').prop('required',true);
+                $('[name="cheque_image"]').prop('required',true);
+                $('[name="limit_cheque_date"]').prop('required',true);
+                $('[name="cheque_amount"]').prop('required',true);
+
+                
+                 $.ajax({
+                   type:'POST',
+                   url:'{{route('get-credit-limit-customer')}}',
+                   data:{
+                        "_token": "{{ csrf_token() }}",
+                        'customer' : customer
+                   },
+                   success:function(data){
+                        data = JSON.parse(data);
+                        
+                        var someDate = new Date();
+                        var numberOfDaysToAdd = parseInt(data.cheque_date_limit);
+                        datee = someDate.setDate(someDate.getDate() + numberOfDaysToAdd); 
+                        var dd =( '0' + ( someDate.getDate()+1) ).slice( -2 );
+                        var mm = ( '0' + (someDate.getMonth()+1) ).slice( -2 );
+                        var y = someDate.getFullYear();
+                        date_limit = someFormattedDate = y + '-'+ mm + '-'+ dd;
+                        $('#limit_cheque_date').attr('max',date_limit);
+                        $('[name="due_date"]').attr('max' ,date_limit);
+                   }
+                });
+            }else{
+                 $('.show_post_cheques').hide('slow');
+            }
+                
+           
+        });
+
+        $(document).on('click','[name="payment_cheque"]',function (){
+            alert();
+            option = $(this).val();
+            $("select[name='payment_status']").find("option[value='due']").attr("selected",true);
+            $('.due').show('slow');
+            $('[name="due_date"]').prop('required',true);
+            $('[name="due_amount"]').prop('required',true);
+            if($('#pdc').is(":checked")){
+                customer = $('[name="customer"]').val();
+                if(customer == ''){
+                    alert('please select customer first');
+                    return false;
+                }
+                $('.show_post_cheques').show('slow');
+               
+                 $('[name="cheque_number"]').prop('required',true);
+                $('[name="cheque_image"]').prop('required',true);
+                $('[name="limit_cheque_date"]').prop('required',true);
+                $('[name="cheque_number"]').prop('required',true);
+                
+                 $.ajax({
+                   type:'POST',
+                   url:'{{route('get-cheque-limit-customer')}}',
+                   data:{
+                        "_token": "{{ csrf_token() }}",
+                        'customer' : customer
+                   },
+                   success:function(data){
+                        data = JSON.parse(data);
+                        
+                        var someDate = new Date();
+                        var numberOfDaysToAdd = parseInt(data.cheque_date_limit);
+                        datee = someDate.setDate(someDate.getDate() + numberOfDaysToAdd); 
+                        var dd =( '0' + ( someDate.getDate()+1) ).slice( -2 );
+                        var mm = ( '0' + (someDate.getMonth()+1) ).slice( -2 );
+                        var y = someDate.getFullYear();
+                        date_limit = someFormattedDate = y + '-'+ mm + '-'+ dd;
+                        alert(date_limit);
+                        $('#limit_cheque_date').attr('max',date_limit);
+                        $('[name="due_date"]').attr('max' ,date_limit);
+                   }
+                });
+            }else{
+                 $('.show_post_cheques').hide('slow');
+            }
+                
+            if(option == 'credit_amount'){
+                
+            }if(option == 'pdc'){
+                
+            }else{
+                $('[name="cheque_number"]').prop('required',false);
+                $('[name="cheque_image"]').prop('required',false);
+                $('[name="limit_cheque_date"]').prop('required',false);
+                $('[name="cheque_number"]').prop('required',false);
+            }
+        });
+         $(document).on('click','[name="payment_cash"]',function (){
+
+             if($('[name="payment_cash"]').is(":checked")){
+                $('.cash').show('slow')
+                $('[name="cash_recieved"]').prop('required',true);
+             }else{
+                $('.cash').hide('slow')
+                $('[name="cash_recieved"]').prop('required',false);
+             }
+        });
+         /*get customer limit*/
+         $(document).on('change','[name="customer"]',function (){
+             option = $(this).val();
+             $.ajax({
+               type:'POST',
+               url:'{{route('get-credit-limit-customer')}}',
+               data:{
+                    "_token": "{{ csrf_token() }}",
+                    'item_type' : option
+               },
+               success:function(data){
+                  data = JSON.parse(data);
+                  console.log(data);
+                  $('[name="limit_amount"]').attr('max',data.customer_amount_limit);
+                  $('#credit_limit').html(data.customer_amount_limit);
+               }
+            });
+         });
+         count = 0 ;
+         /*Add more Product*/
+        $(document).on('click','#add_more_product',function (){
+            html = `<tr>
+                        <td>
+                             <select class="form-control add_more_product" name="chemical_name[]" id="row_product`+count+`" required="">
+                                <option value="">Select Product</option>
+                                @foreach($chemical as $key => $val)
+                                    <option value="{{$val->id}}">{{$val->chemical_name}}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                            <td><input type="text" class="form-control" name="quantity_available[]" id="quantity_available`+count+`"  required="" readonly=""></td>
+                            <td><button type="button" class="btn btn-primary" id="add_more_product">+</button></td>
+                    </tr>`;
+            $('#set_product').append(html);
+            count++;
+        });
+
+        count_product = 0;
+        $(document).on('change','.add_more_product',function (){
+             id = $(this).attr('id');
+             selected_product = $('#'+id).val();
+             option_text = $('#'+id+' option:selected').text();
+             count_value = id.substr(11);
+             $.ajax({
+               type:'POST',
+               url:'{{route('get_available_quantity')}}',
+               data:{
+                    "_token": "{{ csrf_token() }}",
+                    'chemical_id' : selected_product
+               },
+               success:function(data){
+                data = JSON.parse(data);
+                $('#quantity_available'+count_value).val(data.barrel_quantity);
+                $('.'+count_value).html('');
+                $.each(data.barrel, function(key,val) {             
+                    html  = `<tr id="`+key+`" class="`+count_value+`"></tr>`;
+                    $('#set_quantity').append(html);
+                    $('#'+key).append(`<td>`+val.barrel_type+`<input type="hidden" name="barrel_type[]" value="`+val.barrel_type+`" /></td><td>`+option_text+`</td><td>`+val.current_volume+`<input type="hidden" name="current_volume[]" value="`+val.current_volume+`" /></td><td><input type="hidden" class="form-control" name="total_barrel[]" min="0" max="`+val.total_barrel+`"/>`+val.total_barrel+`</td></td><td><input type="number" class="form-control" name="sale_unit[]" min="0" max="`+val.current_volume+`"/></td></td>`);
+                });   
                }
             }); 
         });
