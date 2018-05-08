@@ -35,7 +35,7 @@ input[type=number]::-webkit-outer-spin-button {
                 <div class="row">
                     <div class="col-md-12">
                         {{-- <small style="padding-left: 460px;"><a href="{{route('create_items')}}" target="_blank">Can not find item , Click here to add</a></small> --}}
-                        <form class="form-horizontal" action="{{route('insert_inventory')}}" method="post">
+                        <form class="form-horizontal" action="{{route('insert_sale')}}" method="post">
                         	{{csrf_field()}}
 
 
@@ -52,16 +52,16 @@ input[type=number]::-webkit-outer-spin-button {
                                         </thead>
                                         <tbody id="set_product">
                                         <tr>
-                                                <td>
-                                                     <select class="form-control" name="chemical_name[]" id="chemical_name" required="">
-                                                        <option value="">Select Product</option>
-                                                        @foreach($chemical as $key => $val)
-                                                            <option value="{{$val->id}}">{{$val->chemical_name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </td>
-                                                <td><input type="text" class="form-control" name="quantity_available[]" id="quantity_available"  required="" readonly=""></td>
-                                                <td><button type="button" class="btn btn-primary" id="add_more_product">+</button></td>
+                                            <td>
+                                                 <select class="form-control" name="chemical_name[]" id="chemical_name" required="">
+                                                    <option value="">Select Product</option>
+                                                    @foreach($chemical as $key => $val)
+                                                        <option value="{{$val->id}}">{{$val->chemical_name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td><input type="text" class="form-control" name="quantity_available[]" id="quantity_available"  required="" readonly=""></td>
+                                            <td><button type="button" class="btn btn-primary" id="add_more_product">+</button></td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -94,7 +94,7 @@ input[type=number]::-webkit-outer-spin-button {
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label class="col-md-2 control-label">Date of Purchase</label>
+                                <label class="col-md-2 control-label">Customer</label>
                                 <div class="col-md-10">
                                     <select class="form-control" name="customer" id="customer">
                                         <option value="">Select Customer</option>
@@ -190,26 +190,35 @@ input[type=number]::-webkit-outer-spin-button {
                                     <table class="table table-striped table-bordered" width="50px">
                                         <thead>
                                         <tr>
-                                            <th>Storage Name</th>
                                             <th>Product Name</th>
-                                            <th>Quantity</th>
+                                            <th>Storage Name</th>
                                             <th>Storage Quantity</th>
+                                            <th>Total Storage</th>
+                                            <th>Available Quantity</th>
+                                            <th>Unit Measure</th>
                                             <th>Sale Unit</th>
+                                            <th>Sale Price</th>
+                                            <th>Action</th>
                                         </tr>
                                         </thead>
                                         <tbody id="set_quantity">
-                                       
+                                            
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                            <div class="col-md-6" {{-- style="margin-left: 1200px" --}}>
-                                <button type="button" class="btn btn-success">Add More Product</button>    
-                            </div>
+                              <div class="form-group col-md-6" style="float: right;">
+                                        {{-- <input  type="checkbox" name="payment_credit"   value="1" > --}}
+                                        <strong style="font-size: 20px"> Total Price :</strong>
+                                      <span id="total_price" style="font-size: 20px;color: green"></span>
+                                    </div>
                             
                             <input type="hidden" name="added_by" value="{{Auth::user()->id}}">
                              <div class="col-md-6" style="margin-left: 1200px">
                                 <input type="submit" class="btn btn-success" value="Save" />    
+                            </div>
+                             <div class="col-md-6" style="margin-left: 1200px">
+                                <button type="button" class="btn btn-success" id="calculate" >Calculate </button>    
                             </div>
                         </form>
                     </div>
@@ -221,6 +230,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 {{-- FOR FIRST PURCHASE JQUERY WORK START--}}
    <script type="text/javascript">
+        count = 0 ;
         $('#chemical_name').on('change',function (){
             id = $(this).attr('id');
             chemical_id = $('#'+id).val();
@@ -237,8 +247,19 @@ input[type=number]::-webkit-outer-spin-button {
                 $('#set_quantity').html('');
                 data = JSON.parse(data);
                 $('#quantity_available').val(data.barrel_quantity);
-                $.each(data.barrel, function(key,val) {             
-                    html  = `<tr><td>`+val.barrel_type+`<input type="hidden" name="barrel_type" value="`+val.barrel_type+`" /></td><td>`+option_text+`</td><td>`+val.current_volume+`<input type="hidden" name="current_volume" value="`+val.current_volume+`" /></td><td><input type="hidden" class="form-control" name="total_barrel" min="0" max="`+val.total_barrel+`"/>`+val.total_barrel+`</td></td><td><input type="number" class="form-control" name="sale_unit" min="0" max="`+val.current_volume+`"/></td></td></tr>`;
+                $.each(data.barrel, function(key,val) {        
+                console.log(val);     
+                    html  = `<tr  id="`+val.id+`">
+                        <td>`+option_text+`</td>
+                        <td>`+val.barrel_type+`<input type="hidden" name="barrel_type[`+count+`][]" value="`+val.barrel_type+`" /></td>
+                        <td><input type="hidden" class="form-control" name="total_barrel[`+count+`][]" value="`+val.total_barrel+`" min="0" max="`+val.total_barrel+`"/>`+val.total_barrel+`</td>
+                        <td>`+parseInt(val.total_barrel  * val.total_volume)+`</td>
+                        <td>`+val.current_volume+`<input type="hidden" name="current_volume[`+count+`][]" value="`+val.current_volume+`" /></td>
+                        <td>`+val.barrel_measure+`<input type="hidden" name="barrel_measure[`+count+`][]" value="`+val.barrel_measure+`"</td>
+                        <td><input type="number" class="form-control" name="sale_unit[`+count+`][]" min="0" max="`+parseInt(val.total_barrel  * val.total_volume)+`"/></td>
+                        <td><input type="number" name="sale_price[`+count+`][]" class="form-control sale_calculate" /></td>
+                        <td><button type="button" class="btn btn-danger delete_row" id="delete_me`+val.id+`"  >Delete</button></td>
+                        </tr>`;
                     $('#set_quantity').append(html);
                 });   
                }
@@ -250,7 +271,7 @@ input[type=number]::-webkit-outer-spin-button {
                                 <div class="row">
                                     <label class="col-md-2 control-label">Product</label>
                                     <div class="col-md-8">                                    
-                                        <select class="form-control" name="chemical_name" id="chemical_name" required="">
+                                        <select class="form-control" name="chemical_name[]" id="chemical_name" required="">
                                                 <option value="">Select Product</option>
                                                 @foreach($chemical as $key => $val)
                                                     <option value="{{$val->id}}">{{$val->chemical_name}}</option>
@@ -405,10 +426,9 @@ input[type=number]::-webkit-outer-spin-button {
                }
             });
          });
-         count = 0 ;
          /*Add more Product*/
         $(document).on('click','#add_more_product',function (){
-            html = `<tr>
+            html = `<tr id="parent_`+count+`">
                         <td>
                              <select class="form-control add_more_product" name="chemical_name[]" id="row_product`+count+`" required="">
                                 <option value="">Select Product</option>
@@ -418,7 +438,7 @@ input[type=number]::-webkit-outer-spin-button {
                             </select>
                         </td>
                             <td><input type="text" class="form-control" name="quantity_available[]" id="quantity_available`+count+`"  required="" readonly=""></td>
-                            <td><button type="button" class="btn btn-primary" id="add_more_product">+</button></td>
+                            <td><button type="button" class="btn btn-primary" id="add_more_product">+</button> <button type="button" class="btn btn-danger remove_more_product" id="remove_product`+count+`">-</button></td>
                     </tr>`;
             $('#set_product').append(html);
             count++;
@@ -441,13 +461,48 @@ input[type=number]::-webkit-outer-spin-button {
                 data = JSON.parse(data);
                 $('#quantity_available'+count_value).val(data.barrel_quantity);
                 $('.'+count_value).html('');
-                $.each(data.barrel, function(key,val) {             
-                    html  = `<tr id="`+key+`" class="`+count_value+`"></tr>`;
+                $.each(data.barrel, function(key,val) {
+                $('#'+val.id).html('');             
+                    html  = `<tr id="`+val.id+`" class="`+count_value+`"></tr>`;
                     $('#set_quantity').append(html);
-                    $('#'+key).append(`<td>`+val.barrel_type+`<input type="hidden" name="barrel_type[]" value="`+val.barrel_type+`" /></td><td>`+option_text+`</td><td>`+val.current_volume+`<input type="hidden" name="current_volume[]" value="`+val.current_volume+`" /></td><td><input type="hidden" class="form-control" name="total_barrel[]" min="0" max="`+val.total_barrel+`"/>`+val.total_barrel+`</td></td><td><input type="number" class="form-control" name="sale_unit[]" min="0" max="`+val.current_volume+`"/></td></td>`);
+                    $('#'+val.id).append(`
+                        <td>`+option_text+`</td>
+                        <td>`+val.barrel_type+`<input type="hidden" name="barrel_type[`+count+`][]" value="`+val.barrel_type+`" /></td>
+                        <td><input type="hidden" class="form-control" name="total_barrel[`+count+`][]" value="`+val.total_barrel+`" min="0" max="`+val.total_barrel+`"/>`+val.total_barrel+`</td>
+                        <td>`+parseInt(val.total_barrel  * val.total_volume)+`</td>
+                        <td>`+val.current_volume+`<input type="hidden" name="current_volume[`+count+`][]" value="`+val.current_volume+`" /></td>
+                        <td>`+val.barrel_measure+`<input type="hidden" name="barrel_measure[`+count+`][]" value="`+val.barrel_measure+`"</td>
+                        <td><input type="number" class="form-control" name="sale_unit[`+count+`][]" min="0" max="`+parseInt(val.total_barrel  * val.total_volume)+`"/></td>
+                        <td><input type="number" name="sale_price[`+count+`][]" class="form-control sale_calculate" /></td>
+                        <td><button type="button" class="btn btn-danger delete_row" id="delete_me`+val.id+`" >Delete</button></td>
+                        `);
                 });   
                }
             }); 
+        });
+        $(document).on('click','.remove_more_product',function(){
+            id = $(this).attr('id');
+            id_count =id.substr(14);
+            $(this).remove();
+            $('.'+id_count).remove();
+            $('#parent_'+id_count).remove();
+        });
+        $(document).on('click','.delete_row',function (){
+            id = $(this).attr('id');
+            row_id = id.substr(9);
+            $("#"+row_id).remove();
+        });
+        arr = new Array();
+        var suma = 0;
+        $(document).on('click','#calculate',function (){
+           $(".sale_calculate").each(function(val) {
+                arr.push($(this).val());
+            });
+           for (i = 0; i < arr.length; i++) {
+              suma += parseInt(arr[i]);
+            }
+            $('#total_price').html( '');
+            $('#total_price').html(`<strong>`+suma+` Rs</strong>`);
         });
    </script>
 @endsection

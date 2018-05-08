@@ -135,7 +135,7 @@ input[type=number]::-webkit-outer-spin-button {
                                         </label>
                                      </div>
                                     <div class="checkbox checkbox-warning" style="float: left; margin-right:5px;">
-                                        <input  type="checkbox" name="payment_credit"   value="1" >
+                                        <input  type="checkbox" name="payment_credit"  value="1" >
                                         <label for="checkbox5">
                                              Credit amount
                                         </label>

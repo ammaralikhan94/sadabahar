@@ -83,7 +83,9 @@
                 <ul class="submenu megamenu">
                     <li>
                         <ul>
-                            <li><a href="{{route('create_expense')}}"><i class="fa  fa-money"></i> Add Expense</a></li>
+                            <li><a href="{{route('create_expense')}}"><i class="fa  fa-money"></i> Regular Expense</a></li>
+                            <li><a href="{{route('create_expense')}}"><i class="fa  fa-money"></i> Fixed Expense</a></li>
+                            <li><a href="{{route('create_expense')}}"><i class="fa  fa-money"></i> salary Expense </a></li>
                             {{-- <li><a href="{{route('list_inventory')}}"><i class="fa  fa-list  "></i>  List Inventory</a></li> --}}
                         </ul>
                     </li>

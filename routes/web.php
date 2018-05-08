@@ -95,9 +95,13 @@ Route::group(['middleware' => 'auth'], function () {
 
 	/*********************************Sale Stars****************************************/
 	Route::get('/create_sale/', ['as' => 'create_sale',  'uses' => 'admin\SaleController@create_sale']);/*create sale*/
+	Route::post('/insert_sale/', ['as' => 'insert_sale',  'uses' => 'admin\SaleController@insert_sale']);/*create sale*/
 	Route::post('/get-available-quantity/', ['as' => 'get_available_quantity',  'uses' => 'admin\SaleController@get_available_quantity']);/*create sale*/
 	/*********************************Sale Ends****************************************/
 
+	/*********************************Invoice Start************************************/
+	Route::get('/invoice/', ['as' => 'invoice',  'uses' => 'admin\SaleController@invoice']);
+	/*********************************Invoice End*************************************/
 
 	Route::get('/test', function () {
 		return view('admin.test');
