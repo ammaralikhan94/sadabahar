@@ -34,6 +34,24 @@ class InventoryController extends Controller
     
     /*Insert Inventory*/
     public function insert_inventory(Request $request){
+        if(isset($_POST['purchase_unit']) == 'kg'){
+            if($_POST['purchased_gram'] == '500'){
+                  $kg = floatval($_POST['purchased_kg']+0.5);
+            }
+            if($_POST['purchased_gram'] == '250'){
+                  (float) $kg = $_POST['purchased_kg']+0.25;
+            }
+            if($_POST['purchased_gram'] == '750'){
+                  $kg = $_POST['purchased_kg']+0.75;
+            }
+            if($_POST['purchased_gram'] == '1000'){
+                  $kg = $_POST['purchased_kg']+1;
+            }elseif($_POST['purchased_gram'] != '500' && $_POST['purchased_gram'] !='250' && $_POST['purchased_gram'] !='750' && $_POST['purchased_gram'] != '1000'){
+                     $kg = $_POST['purchased_kg'];
+                }
+            
+        }
+        
         if(!isset($_POST['payment_cash']) && !isset($_POST['payment_credit']) && !isset($_POST['payment_cheque']) ){
             return redirect()->back()->with('error' , 'Select Payment Please !');
         }
@@ -63,14 +81,14 @@ class InventoryController extends Controller
             'cash_recieved' => $request->cash_recieved,
             'total_quantity' => $total_quantity,
             'purchase_amount' => $request->purchase_amount,
-            'purchase_unit'  => $request->purchase_unit,
-            'unit_purchased' => $request->unit_purchased
+            'purchase_unit'  =>$request->purchase_unit,
+            'unit_purchased' => $kg
     	])->id;
         $check_previous_barrel = Barrel::where('barrel_type', $request->item_name)->where('chemical_name',$request->chemical_name)->first();
         if($check_previous_barrel != '' ){
             $total_barrel = $request->quantity + $check_previous_barrel->total_barrel;
             if($request->purchase_unit == 'gram'){
-                $purchased_unit= $request->unit_purchased / 1000;
+                $purchased_unit= $kg / 1000;
                 $remaining_volume =  $request->strength - $purchased_unit ;
                 $purchased_unit = $purchased_unit + $check_previous_barrel->current_volume;
                 $remaining_volume = $remaining_volume + $check_previous_barrel->remaining_volume;
@@ -79,7 +97,7 @@ class InventoryController extends Controller
                 
                 $remaining_volume =  $request->strength - $check_previous_barrel->current_volume;
                 
-                $purchased_unit = $request->unit_purchased + $check_previous_barrel->unit_purchased;
+                $purchased_unit = $kg+ $check_previous_barrel->unit_purchased;
                 $remaining_volume = $remaining_volume + $check_previous_barrel->remaining_volume;
                 $total_volume = $request->strength + $check_previous_barrel->total_volume;
 
@@ -94,13 +112,14 @@ class InventoryController extends Controller
             ]);
         }else{
            if($request->purchase_unit == 'gram'){
-                $purchased_unit= $request->unit_purchased / 1000;
+                $purchased_unit=  $kg/ 1000;
                 $remaining_volume =  $request->strength - $purchased_unit ;
            }if($request->purchase_unit == 'kg' || $request->purchase_unit == 'quantity' || $request->purchase_unit == 'liter'){
-                $purchased_unit = $request->unit_purchased ;    
-                $remaining_volume = $request->strength - $request->unit_purchased;
+            
+                $purchased_unit =  $kg;    
+                $remaining_volume = $request->strength -  $kg;
            }
-           
+            
             Barrel::create([
                 'barrel_type' => $request->item_name,
                 'barrel_strength' => $request->strength,

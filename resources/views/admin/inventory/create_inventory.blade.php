@@ -34,19 +34,19 @@ input[type=number]::-webkit-outer-spin-button {
                 <h4 class="m-t-0 header-title"><b>Create Purchase</b></h4>
                 <div class="row">
                     <div class="col-md-12">
-                        <small style="padding-left: 460px;"><a href="{{route('create_items')}}" target="_blank">Can not find item , Click here to add</a></small>
+                        <small style="padding-left: 210px;"><a href="{{route('create_items')}}" target="_blank">Can not find item , Click here to add</a></small>
                         <form class="form-horizontal" action="{{route('insert_inventory')}}" method="post">
                         	{{csrf_field()}}
-                            <div class="form-group col-md-6">
-                                <label class="col-md-2 control-label">Date of Purchase</label>
-                                <div class="col-md-10">
+                            <div class="form-group col-md-4">
+                                <label class="col-md-6 control-label">Date of Purchase</label>
+                                <div class="col-md-6">
                                     <input type="text" class="form-control" name="dop"  required="" value="<?php echo date('Y-m-d');?>" readonly>
                                 </div>
                             </div>
 
-                            <div class="form-group col-md-6">
-                                <label class="col-md-2 control-label">Supplier</label>
-                                <div class="col-md-10">
+                            <div class="form-group col-md-4">
+                                <label class="col-md-6 control-label">Supplier</label>
+                                <div class="col-md-6">
                                     <select class="form-control" required="" name="supplier">
                                         <option value="">Select Supplier</option>   
                                         @foreach($supplier as $key => $sup)
@@ -56,10 +56,10 @@ input[type=number]::-webkit-outer-spin-button {
                                 </div>
                             </div>
 
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-4">
                                 <div class="row">
-                                    <label class="col-md-2 control-label">Product</label>
-                                    <div class="col-md-10">                                    
+                                    <label class="col-md-6 control-label">Product</label>
+                                    <div class="col-md-6">                                    
                                         <select class="form-control" name="chemical_name" required="">
                                                 <option value="">Select Product</option>
                                                 @foreach($chemical as $key => $val)
@@ -70,10 +70,10 @@ input[type=number]::-webkit-outer-spin-button {
                                 </div>
                             </div>
 
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-4">
                                 <div class="row">
-                                    <label class="col-md-2 control-label">Item Storage</label>
-                                    <div class="col-md-10">                                    
+                                    <label class="col-md-6 control-label">Item Storage</label>
+                                    <div class="col-md-6">                                    
                                         <select class="form-control" name="item_name">
                                                 <option value="">Select Purchasing Item</option>
                                                 @foreach($item_type as $key => $val)
@@ -84,11 +84,9 @@ input[type=number]::-webkit-outer-spin-button {
                                 </div>
                             </div>
 
-                            
-
-                            <div class="form-group col-md-6">
-                                <label class="col-md-2 control-label">Purchase Unit Type</label>
-                                <div class="col-md-4">
+                            <div class="form-group col-md-4">
+                                <label class="col-md-6 control-label">Purchase Unit Type</label>
+                                <div class="col-md-6">
                                      <select class="form-control" name="purchase_unit">
                                          <option value="">Select Purchase Unit Type</option>
                                          <option value="kg">Kg</option>
@@ -97,37 +95,77 @@ input[type=number]::-webkit-outer-spin-button {
                                          <option value="quantity">Quantity</option>
                                      </select>
                                 </div>
-                                <label class="col-md-2 control-label">Unit Purchased</label>
-                                <div class="col-md-4">
-                                    <input type="number" class="form-control" name="unit_purchased"  placeholder="Enter Unit Purchased"  required="">
+                            </div>
+
+                            <div class="form-group col-md-4 unit_purchased">
+                                <label class="col-md-6 control-label">Unit Purchased</label>
+                                <div class="col-md-6 ">
+                                    <input type="number" class="form-control" name="unit_purchased"  placeholder="Enter Unit Purchased"  >
                                 </div>
                             </div>
 
-
-
-                            <div class="form-group col-md-6">
-                                <label class="col-md-2 control-label">Item Amount</label>
-                                <div class="col-md-3">
-                                    <input type="number" class="form-control amount" name="chemical_amount" id="chemical_amount" placeholder="Item amount"  required="">
+                            {{-- <div class="form-group purchased_kg col-md-4" style="display: none;">
+                                <label class="col-md-6 control-label">Purchased kg</label>
+                                <div class="col-md-6">
+                                    <select class="form-control" name="purchased_kg">
+                                         
+                                    </select>
                                 </div>
-                                <label class="col-md-3 control-label">Quantity</label>
-                                <div class="col-md-3">
+                            </div>
+
+                            <div class="form-group purchased_gram col-md-4" style="display: none;">
+                                <label class="col-md-6 control-label">Purchased Grams</label>
+                                <div class="col-md-6">
+                                    <input type="number" class="form-control" name="purchased_gram"  placeholder="Enter Grams"   >
+                                </div>
+                            </div> --}}
+
+                            <div class="col-md-4 purchased_kg" style="display: none;">
+                                <label class="col-md-6 control-label">Purchased Kg</label>
+                                <div class="col-md-6">
+                                    <select class="form-control" name="purchased_kg" > 
+                                         
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 purchased_gram" style="display: none;">
+                                <label class="col-md-6 control-label">Purchased Grams</label>
+                                <div class="col-md-6">
+                                    <select class="form-control" name="purchased_gram" placeholder="Enter kg"> 
+                                            <option value="0">None</option>
+                                            <option value="500">500 mg</option>
+                                            <option value="250">250 mg</option>
+                                            <option value="750">750 mg</option>
+                                            <option value="1000">1000 mg</option>
+                                    </select>
+                                </div>
+                            </div> 
+
+                            <div class="form-group col-md-4">
+                                <label class="col-md-6 control-label">Item Amount</label>
+                                <div class="col-md-6">
+                                    <input type="number" class="form-control amount" name="chemical_amount" id="chemical_amount" placeholder="Item amount"  required="">
+                                </div>                                
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label class="col-md-6 control-label">Quantity</label>
+                                <div class="col-md-6">
                                      <input type="number" class="form-control quantity" name="quantity" id="barrel_amount" placeholder="barrel amount"  required="" value="1">
                                 </div>
                             </div>
 
-                            <div class="form-group col-md-6">
-                                <label class="col-md-2 control-label">Purchase Amount</label>
-                                <div class="col-md-10">
+                            <div class="form-group col-md-4">
+                                <label class="col-md-6 control-label">Purchase Amount</label>
+                                <div class="col-md-6">
                                     <input type="text" class="form-control" name="total_amount" id="total_amount" placeholder="amount"  required="" readonly="">
                                 </div>
                             </div>
                             
-                           
-                           
-                            <div class="form-group col-md-6">
-                                <label class="col-md-2 control-label">Payment Mode</label>
-                                <div class="col-md-10">
+                            <div class="form-group col-md-4">
+                                <label class="col-md-6 control-label">Payment Mode</label>
+                                <div class="col-md-6">
                                     <div class="checkbox checkbox-warning" style="float: left; margin-right:5px;">
                                         <input  name="payment_cash" type="checkbox"  value="1" >
                                         <label for="checkbox5">
@@ -147,60 +185,59 @@ input[type=number]::-webkit-outer-spin-button {
                                         </label>
                                     </div>
                                 </div>
-                             </div>
-
+                            </div>
                             {{-- Payment Mode Additional Field --}}
 
-                            <div class="form-group col-md-6" style="display: none;" id="credit_amount">
-                                <label class="col-md-2 control-label">Credit Amount</label>
-                                <div class="col-md-10">
-                                    <input type="number" class="form-control" name="limit_amount" placeholder="amount" min="0">
+                            <div class="form-group col-md-4" style="display: none;" id="credit_amount">
+                                <label class="col-md-6 control-label">Credit Amount</label>
+                                <div class="col-md-6">
+                                    <input type="number" class="form-control" name="limit_amount" placeholder="amount" >
                                     <p><strong>Credit limit for this supplier is <span id="credit_limit" style="color: red"></span></strong></p>
                                 </div>
-                                
-                            </div>      
+                            </div>    
+
                             <input type="hidden" name="added_by" value="{{Auth::user()->id}}">
                             {{-- Post Dated Cheques --}}
                             
                             {{-- Payment Mode Additional Field --}}
                             
-                            <div class="form-group col-md-6 cash"  style="display: none">
-                                <label class="col-md-2 control-label">Cash Recieved</label>
-                                <div class="col-md-10">
+                            <div class="form-group col-md-4 cash"  style="display: none">
+                                <label class="col-md-6 control-label">Cash Recieved</label>
+                                <div class="col-md-6">
                                     <input type="number" class="form-control" name="cash_recieved" placeholder="Amount recieved" >
                                 </div>
                             </div>
-                            <div class="form-group col-md-6 show_post_cheques" style="display: none">
-                                <label class="col-md-2 control-label">Add cheque number</label>
-                                <div class="col-md-10">
+                            <div class="form-group col-md-4 show_post_cheques" style="display: none">
+                                <label class="col-md-6 control-label">Add cheque number</label>
+                                <div class="col-md-6">
                                     <input type="number" class="form-control" name="cheque_number">
                                 </div>
                             </div>  
 
-                            <div class="form-group col-md-6 show_post_cheques" style="display: none">
-                                <label class="col-md-2 control-label">Cheque Amount</label>
-                                <div class="col-md-10">
+                            <div class="form-group col-md-4 show_post_cheques" style="display: none">
+                                <label class="col-md-6 control-label">Cheque Amount</label>
+                                <div class="col-md-6">
                                     <input type="number" class="form-control"  name="cheque_amount"  >
                                 </div>
                             </div>
 
-                            <div class="form-group col-md-6 show_post_cheques" style="display: none">
-                                <label class="col-md-2 control-label">Upload Cheque</label>
-                                <div class="col-md-10">
+                            <div class="form-group col-md-4 show_post_cheques" style="display: none">
+                                <label class="col-md-6 control-label">Upload Cheque</label>
+                                <div class="col-md-6">
                                     <input type="file" class="form-control"  name="cheque_image"  >
                                 </div>
                             </div>
 
-                            <div class="form-group col-md-6 show_post_cheques" style="display: none">
-                                <label class="col-md-2 control-label">Cheque Date</label>
-                                <div class="col-md-10">
+                            <div class="form-group col-md-4 show_post_cheques" style="display: none">
+                                <label class="col-md-6 control-label">Cheque Date</label>
+                                <div class="col-md-6">
                                     <input type="date" class="form-control" name="limit_cheque_date" min="@php echo date('Y-m-d'); @endphp"  id="limit_cheque_date"  >
                                 </div>
                             </div>
 
-                            <div class="form-group col-md-6">
-                                <label class="col-md-2 control-label">Payment Status</label>
-                                <div class="col-md-10">
+                            <div class="form-group col-md-4">
+                                <label class="col-md-6 control-label">Payment Status</label>
+                                <div class="col-md-6">
                                     <select class="form-control" required="" name="payment_status" id="payment_status">
                                         <option value="">Select Payment Status</option>
                                         <option value="cleared">cleared</option>
@@ -210,48 +247,48 @@ input[type=number]::-webkit-outer-spin-button {
                                 </div>
                             </div>
 
-                            {{-- <div class="form-group col-md-6">
-                                <label class="col-md-2 control-label">Purchase Amount</label>
-                                <div class="col-md-10">
+                            {{-- <div class="form-group col-md-4">
+                                <label class="col-md-6 control-label">Purchase Amount</label>
+                                <div class="col-md-6">
                                    <input type="number" name="purchase_amount" class="form-control" required="">
                                 </div>
                             </div> --}}
 
-                            <div class="form-group col-md-6 due" style="display: none">
-                                <label class="col-md-2 control-label">Due Date</label>
-                                <div class="col-md-10">
+                            <div class="form-group col-md-4 due" style="display: none">
+                                <label class="col-md-6 control-label">Due Date</label>
+                                <div class="col-md-6">
                                     <input type="date" class="form-control" name="due_date"  min="{{date("Y-m-d")}}">
                                 </div>
                             </div>
-                            <div class="form-group col-md-6 due" style="display: none">
-                                <label class="col-md-2 control-label">Due amount</label>
-                                <div class="col-md-10">
+                            <div class="form-group col-md-4 due" style="display: none">
+                                <label class="col-md-6 control-label">Due amount</label>
+                                <div class="col-md-6">
                                     <input type="number" class="form-control" name="due_amount"  >
                                 </div>
                             </div>
                             
 
-                            <div class="form-group col-md-6">
-                                <label class="col-md-3 control-label">Purchase Quanity Type</label>
-                                <div class="col-md-3">
+                            <div class="form-group col-md-4">
+                                <label class="col-md-6 control-label">Purchase Quanity Type</label>
+                                <div class="col-md-6">
                                     <input type="text" name="purchasing_type" id="purchasing_type" class="form-control" readonly="">
                                 </div>
-                                <label class="col-md-2 control-label"></label>
-                                <div class="col-md-3">
+                                <label class="col-md-6 control-label"></label>
+                                <div class="col-md-6">
                                     <p>Per <strong id="list_itemname"></strong> contain <strong id="list_itemtype"></strong></p>
                                 </div>
                             </div>
 
-                            <div class="form-group col-md-6">
-                            	<label class="col-md-2 control-label"></label>
-                                <div class="col-md-10">
+                            <div class="form-group col-md-4">
+                            	<label class="col-md-6 control-label"></label>
+                                <div class="col-md-6">
                                     <input type="submit" class="form-control btn btn-success"  placeholder="placeholder" value="Save">
                                 </div>
                             </div>
 
-                             <div class="form-group col-md-6">
-                                <label class="col-md-2 control-label">Calculation</label>
-                                <div class="col-md-10" id="calculation_detail">
+                             <div class="form-group col-md-4">
+                                <label class="col-md-6 control-label">Calculation</label>
+                                <div class="col-md-6" id="calculation_detail">
                                    
 
                                 </div>
@@ -259,17 +296,17 @@ input[type=number]::-webkit-outer-spin-button {
                                 <input type="hidden" name="total_strength" value="0"/>
                             </div>
 
-                            <div class="form-group col-md-6">
-                                <label class="col-md-2 control-label">Calculation</label>
-                                <div class="col-md-10" id="calculation_gram">
+                            <div class="form-group col-md-4">
+                                <label class="col-md-6 control-label">Calculation</label>
+                                <div class="col-md-6" id="calculation_gram">
                                    
                                    
                                 </div>
                             </div>
 
-                             <div class="form-group col-md-6">
-                                <label class="col-md-2 control-label"></label>
-                                <div class="col-md-10">
+                             <div class="form-group col-md-4">
+                                <label class="col-md-6 control-label"></label>
+                                <div class="col-md-6">
                                     <p><strong></strong></p>
                                 </div>
                             </div>
@@ -281,7 +318,7 @@ input[type=number]::-webkit-outer-spin-button {
     </div>
 @section('customScript')
     <script type="text/javascript">
-        $(document).on('keyup','.amount,.quantity' , function (){
+        $(document).on('keyup','.amount' , function (){
             chemical_amount = $('#chemical_amount').val();
             quantity   = $('.quantity').val();
             purchasing_type = $('#purchasing_type').val();
@@ -292,7 +329,30 @@ input[type=number]::-webkit-outer-spin-button {
             $('#calculation_detail').html('<strong>'+chemical_amount+' * '+quantity+' = '+total_amount+' rs </strong><br><strong>Total '+purchasing_type+' = '+total_purchasing_measure+'</strong>');
             $('#total_amount').val(total_amount);
             $('[name="total_strength"]').val(total_purchasing_measure);
-             $('[name="unit_purchased"]').val(total_purchasing_measure);
+            /*$('[name="unit_purchased"]').val(total_purchasing_measure);
+             $('[name="purchased_kg"]').html('');
+            for(var i = 1;i<=total_purchasing_measure;i++){
+                $('[name="purchased_kg"]').append(`<option value="`+i+`">`+i+` kg</option>`);
+            }*/
+        });
+            
+        $(document).on('keyup','.quantity' , function (){
+            chemical_amount = $('#chemical_amount').val();
+            quantity   = $('.quantity').val();
+            purchasing_type = $('#purchasing_type').val();
+            get_item_quantity = $('#get_item_quantity').val();
+            total_amount    = parseInt(quantity *  chemical_amount);
+            $('#total_amount').val(total_amount);
+            total_purchasing_measure = parseInt(get_item_quantity *   quantity);
+            $('#calculation_detail').html('<strong>'+chemical_amount+' * '+quantity+' = '+total_amount+' rs </strong><br><strong>Total '+purchasing_type+' = '+total_purchasing_measure+'</strong>');
+            $('#total_amount').val(total_amount);
+            $('[name="total_strength"]').val(total_purchasing_measure);
+            $('[name="unit_purchased"]').val(total_purchasing_measure);
+             $('[name="purchased_kg"]').html('');
+            for(var i = 1;i<=total_purchasing_measure;i++){
+                $('[name="purchased_kg"]').append(`<option value="`+i+`">`+i+` kg</option>`);
+            }
+            alert('please select weigth again');
         });
 
         /*Ajax Getting item detail */
@@ -501,10 +561,10 @@ input[type=number]::-webkit-outer-spin-button {
                  conversion_unit = unit_entered;
                  limit_conversion = unit_limit * 1000;
                   $('#calculation_gram').html('<strong>1 kg = 1000 grams so '+unit_entered+' / 1000 = '+conversion_unit+'</strong>');
-                 if( conversion_unit > limit_conversion){
+                if( conversion_unit > limit_conversion){
                     $('[name="unit_purchased"]').val('');
                     alert('Maximum unit for purchase is '+limit_conversion);
-                 }
+                }
             }
             if(purchase_unit == 'kg' || purchase_unit == 'liter' ){
                 if(unit_limit < unit_entered){
@@ -516,24 +576,39 @@ input[type=number]::-webkit-outer-spin-button {
         $(document).on('click','[name="payment_cash"]',function (){
 
              if($('[name="payment_cash"]').is(":checked")){
-                $('.cash').show('slow')
+                $('.cash').show('slow');
                 $('[name="cash_recieved"]').prop('required',true);
+                
              }else{
-                $('.cash').hide('slow')
+                $('.cash').hide('slow');
                 $('[name="cash_recieved"]').prop('required',false);
              }
         });
         $(document).on('change','[name="purchase_unit"]',function (){
              purchase_unit = $('[name="purchase_unit"] option:selected').val();
              selected_unit = $('[name="measure_type"]').val();
+             total_strength = $('[name="total_strength"]').val();
              if(selected_unit == 'quantity' && purchase_unit != selected_unit ){
                $('[name="purchase_unit"] option:last').prop("selected", "selected");
                alert('Your are not allowed to convert quantity to other conversion!');
-             }
-             if(purchase_unit == 'quantity' && selected_unit == 'kg' || selected_unit == 'liter'){
+            }
+            if(purchase_unit == 'kg'){
+                $('.unit_purchased').hide();
+                $('.purchased_gram').show();
+                $('.purchased_kg').show();
+                $('[name="purchased_kg"]').html('');
+                for(var i = 1;i<=total_strength;i++){
+                    $('[name="purchased_kg"]').append(`<option value="`+i+`">`+i+` kg</option>`);
+                }
+            }else{
+                $('.unit_purchased').show();
+                $('.purchased_kg').hide();
+                $('.purchased_gram').hide();
+            }
+            if(purchase_unit == 'quantity' && selected_unit == 'kg' || selected_unit == 'liter'){
                 strength = $('[name="strength"]').val();
                 $('[name="unit_purchased"]').val(strength);
-             }
+            }
 
              
         })
