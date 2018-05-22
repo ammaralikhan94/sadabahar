@@ -29,32 +29,31 @@ input[type=number]::-webkit-outer-spin-button {
     @endif
 <div class="row">
         <div class="col-sm-12">
-            <div class="card-box">
-                <a class="btn btn-success pull-right" href="{{route('create_inventory')}}" target="_blank">Add More Purchase</a>
-                <h4 class="m-t-0 header-title"><b>Create Purchase</b></h4>
+            <div class="card-box">                
                 <div class="row">
-                    <div class="col-md-12">
-                        <small style="padding-left: 210px;"><a href="{{route('create_items')}}" target="_blank">Can not find item , Click here to add</a></small>
-                        <form class="form-horizontal" action="{{route('insert_inventory')}}" method="post">
-                        	{{csrf_field()}}
-                            <div class="form-group col-md-4">
-                                <label class="col-md-6 control-label">Date of Purchase</label>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" name="dop"  required="" value="<?php echo date('Y-m-d');?>" readonly>
-                                </div>
-                            </div>
+                    <div class="col-md-4">
+                        <h4 class="m-t-0 header-title"><b>Create Purchase</b></h4>
+                    </div>
 
-                            <div class="form-group col-md-4">
-                                <label class="col-md-6 control-label">Supplier</label>
-                                <div class="col-md-6">
-                                    <select class="form-control" required="" name="supplier">
-                                        <option value="">Select Supplier</option>   
-                                        @foreach($supplier as $key => $sup)
-                                            <option value="{{$sup->id}}">{{$sup->name}}</option>   
-                                        @endforeach
-                                    </select>
-                                </div>
+                        <form class="form-horizontal" action="{{route('insert_inventory')}}" method="post">
+                            {{csrf_field()}}
+                    <div class="col-md-7">
+                        <div class="form-group pull-right">
+                            <label class="col-md-6 control-label">Date of Purchase</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="dop"  required="" value="<?php echo date('Y-m-d');?>">
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <a class="btn btn-success" href="{{route('create_inventory')}}" target="_blank">+</a>
+                    </div>
+                    <div class="col-md-12">     
+                        <div class="col-md-12">
+                            <h4 class="m-t-0 header-title"><b>Products</b></h4>
+                        </div>                   
+                    
+                          
 
                             <div class="form-group col-md-4">
                                 <div class="row">
@@ -134,13 +133,43 @@ input[type=number]::-webkit-outer-spin-button {
                                 <div class="col-md-6">
                                     <select class="form-control" name="purchased_gram" placeholder="Enter kg"> 
                                             <option value="0">None</option>
-                                            <option value="500">500 mg</option>
-                                            <option value="250">250 mg</option>
-                                            <option value="750">750 mg</option>
-                                            <option value="1000">1000 mg</option>
+                                            <option value="500">500 gram</option>
+                                            <option value="250">250 gram</option>
+                                            <option value="750">750 gram</option>
+                                            <option value="1000">1000 gram</option>
                                     </select>
                                 </div>
                             </div> 
+                            <div class="form-group col-md-4">
+                                <label class="col-md-6 control-label">Quantity</label>
+                                <div class="col-md-6">
+                                     <input type="number" class="form-control quantity" name="quantity" id="barrel_amount" placeholder="barrel amount"  required="" value="1">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <hr>
+                                <h4 class="m-t-0 header-title"><b>Supplier</b></h4>
+                            </div>
+
+                            <small style="padding-left: 210px;"><a href="{{route('create_items')}}" target="_blank">Can not find item , Click here to add</a></small>
+                            <div class="form-group col-md-4">
+                                <label class="col-md-6 control-label">Supplier</label>
+                                <div class="col-md-6">
+                                    <select class="form-control" required="" name="supplier">
+                                        <option value="">Select Supplier</option>   
+                                        @foreach($supplier as $key => $sup)
+                                            <option value="{{$sup->id}}">{{$sup->name}}</option>   
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+
+                             <div class="col-md-12">
+                                <hr>
+                                <h4 class="m-t-0 header-title"><b>amount</b></h4>
+                            </div>
 
                             <div class="form-group col-md-4">
                                 <label class="col-md-6 control-label">Item Amount</label>
@@ -149,12 +178,7 @@ input[type=number]::-webkit-outer-spin-button {
                                 </div>                                
                             </div>
 
-                            <div class="form-group col-md-4">
-                                <label class="col-md-6 control-label">Quantity</label>
-                                <div class="col-md-6">
-                                     <input type="number" class="form-control quantity" name="quantity" id="barrel_amount" placeholder="barrel amount"  required="" value="1">
-                                </div>
-                            </div>
+                           
 
                             <div class="form-group col-md-4">
                                 <label class="col-md-6 control-label">Purchase Amount</label>
@@ -192,7 +216,7 @@ input[type=number]::-webkit-outer-spin-button {
                                 <label class="col-md-6 control-label">Credit Amount</label>
                                 <div class="col-md-6">
                                     <input type="number" class="form-control" name="limit_amount" placeholder="amount" >
-                                    <p><strong>Credit limit for this supplier is <span id="credit_limit" style="color: red"></span></strong></p>
+                                    {{-- <p><strong>Credit limit for this supplier is <span id="credit_limit" style="color: red"></span></strong></p> --}}
                                 </div>
                             </div>    
 
@@ -279,12 +303,15 @@ input[type=number]::-webkit-outer-spin-button {
                                 </div>
                             </div>
 
-                            <div class="form-group col-md-4">
-                            	<label class="col-md-6 control-label"></label>
+                            <div class="form-group col-md-4" style="display: none;" id="credit_amount">
+                                <label class="col-md-6 control-label">Credit Amount</label>
                                 <div class="col-md-6">
-                                    <input type="submit" class="form-control btn btn-success"  placeholder="placeholder" value="Save">
+                                    <input type="number" class="form-control" name="limit_amount" placeholder="amount" >
+                                    <p><strong>Credit limit for this supplier is <span id="credit_limit" style="color: red"></span></strong></p>
                                 </div>
-                            </div>
+                            </div>    
+
+                            
 
                              <div class="form-group col-md-4">
                                 <label class="col-md-6 control-label">Calculation</label>
@@ -308,6 +335,15 @@ input[type=number]::-webkit-outer-spin-button {
                                 <label class="col-md-6 control-label"></label>
                                 <div class="col-md-6">
                                     <p><strong></strong></p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group col-md-offset-8 pull-right col-md-4">{{-- 
+                                    <label class="col-md-6 control-label"></label> --}}
+                                    <div class="col-md-12">
+                                        <input type="submit" class="form-control btn btn-success"  placeholder="placeholder" value="Save">
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -348,7 +384,7 @@ input[type=number]::-webkit-outer-spin-button {
             $('#total_amount').val(total_amount);
             $('[name="total_strength"]').val(total_purchasing_measure);
             $('[name="unit_purchased"]').val(total_purchasing_measure);
-             $('[name="purchased_kg"]').html('');
+            $('[name="purchased_kg"]').html('');
             for(var i = 1;i<=total_purchasing_measure;i++){
                 $('[name="purchased_kg"]').append(`<option value="`+i+`">`+i+` kg</option>`);
             }
@@ -525,7 +561,6 @@ input[type=number]::-webkit-outer-spin-button {
                }
             });
         }); 
-         
          /*Payment Status*/ 
          $(document).on('change','#payment_status',function (){
             payment_status = $(this).val();
@@ -554,7 +589,6 @@ input[type=number]::-webkit-outer-spin-button {
           $(document).on('keyup','[name="unit_purchased"]',function (){
             unit_entered = parseInt($('[name="unit_purchased"]').val());
             unit_limit = parseInt($('[name="total_strength"]').val());
-
             purchase_unit = $('[name="purchase_unit"] option:selected').val();
              if(purchase_unit == 'gram'){
                  unit_entered = parseInt($('[name="unit_purchased"]').val());
@@ -574,7 +608,6 @@ input[type=number]::-webkit-outer-spin-button {
             }  
          }); 
         $(document).on('click','[name="payment_cash"]',function (){
-
              if($('[name="payment_cash"]').is(":checked")){
                 $('.cash').show('slow');
                 $('[name="cash_recieved"]').prop('required',true);
@@ -597,6 +630,7 @@ input[type=number]::-webkit-outer-spin-button {
                 $('.purchased_gram').show();
                 $('.purchased_kg').show();
                 $('[name="purchased_kg"]').html('');
+                $('[name="purchased_kg"]        ').append(`<option value="0"> None</option>`);
                 for(var i = 1;i<=total_strength;i++){
                     $('[name="purchased_kg"]').append(`<option value="`+i+`">`+i+` kg</option>`);
                 }
@@ -609,8 +643,6 @@ input[type=number]::-webkit-outer-spin-button {
                 strength = $('[name="strength"]').val();
                 $('[name="unit_purchased"]').val(strength);
             }
-
-             
         })
     </script> 
 @endsection
