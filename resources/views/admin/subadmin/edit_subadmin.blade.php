@@ -38,13 +38,12 @@
                                 </div>
                             </div>
                             <input type="hidden" name="user_id" value="{{$user->id}}">
-                            {{-- <div class="form-group col-md-6">
+                            <div class="form-group col-md-6">
                                 <label class="col-md-2 control-label" for="example-email">Password</label>
                                 <div class="col-md-10">
                                     <input type="password"  name="password" value="{{$user->password}}" class="form-control" placeholder="Passowrd"  required="">
                                 </div>
                             </div>
- --}}
                             <div class="form-group col-md-6">
                                 <label class="col-md-2 control-label">Number</label>
                                 <div class="col-md-10">
@@ -60,7 +59,7 @@
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label class="col-md-2 control-label">Joining Date</label>
+                                <label class="col-md-2 control-label">Created Date</label>
                                 <div class="col-md-10">
                                     <input type="date" class="form-control" name="joining_date" placeholder="placeholder" value="{{$user->joining_date}}"  required="">
                                 </div>

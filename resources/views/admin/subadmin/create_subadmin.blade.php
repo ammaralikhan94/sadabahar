@@ -10,7 +10,6 @@
     </div>
     @endif
 
-
     @if ($message = Session::get('error'))
     <div class="alert alert-danger alert-block">
     <button type="button" class="close" data-dismiss="alert">×</button>
@@ -59,9 +58,9 @@
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label class="col-md-2 control-label">Joining Date</label>
+                                <label class="col-md-2 control-label">Created Date</label>
                                 <div class="col-md-10">
-                                    <input type="date" class="form-control" name="joining_date" placeholder="placeholder"  required="">
+                                    <input type="text" class="form-control" name="joining_date" placeholder="placeholder" value="<?php echo date('d/m/Y');?>"  required="" readonly>
                                 </div>
                             </div>
                             
