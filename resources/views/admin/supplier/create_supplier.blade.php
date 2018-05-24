@@ -78,7 +78,7 @@
                                     <select class="form-control" required="" name="payment_mode" id="payment_mode">
                                         <option value="">Select Payment Mode</option>
                                         <option value="cash">Cash</option>
-                                        <option value="credit_limit">Set credit limit</option>
+                                        <option value="credit_limit">Set limit</option>
                                     </select>
                                 </div>
                             </div>
@@ -94,6 +94,15 @@
                                 <label class="col-md-2 control-label">Due Days Cheque limit</label>
                                 <div class="col-md-10">
                                     <input type="number" class="form-control" name="cheque_date_limit" placeholder="In days"  >
+                                </div>
+                            </div>
+
+
+
+                                <div class="form-group col-md-6" style="display: none" id="credit_date_limit" >
+                                <label class="col-md-2 control-label">Due Days Credit limit</label>
+                                <div class="col-md-10">
+                                    <input type="number" class="form-control" name="credit_date_limit" placeholder="In days"  >
                                 </div>
                             </div>
 
@@ -134,16 +143,20 @@
                 var value = $(this).val();
                 if(value == 'credit_limit'){
                     $('#credit_limit').show('slow');
+                    $('#credit_date_limit').show('slow');
                     $('#cheque_date_limit').show('slow');                
                     $('#cheque_amount_limit').show('slow');
                     $('#credit_limit').attr("required", true);
+                    $('#credit_date_limit').attr("required", true);
                     $('#cheque_date_limit').attr("required", true);                
                     $('#cheque_amount_limit').attr("required", true);                        
                 }else{
                     $('#credit_limit').hide('slow');
+                    $('#credit_date_limit').hide('slow');
                     $('#cheque_date_limit').hide('slow');                
                     $('#cheque_amount_limit').hide('slow');
                     $('#credit_limit').attr("required", false);
+                    $('#credit_date_limit').attr("required", false);
                     $('#cheque_date_limit').attr("required", false);                
                     $('#cheque_amount_limit').attr("required", false);   
                 }

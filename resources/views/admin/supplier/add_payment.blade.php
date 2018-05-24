@@ -89,6 +89,13 @@
                                     </div>
                                 </div>
 
+                                 <div class="form-group col-md-6 pcl" style="display: none">
+                                    <label class="col-md-2 control-label">Cheque Image</label>
+                                    <div class="col-md-10">
+                                        <input type="file" name="cheque_image"  class="form-control">
+                                    </div>
+                                </div>
+
                                 <div class="form-group col-md-6">
                                     <label class="col-md-2 control-label"></label>
                                     <div class="col-md-10">

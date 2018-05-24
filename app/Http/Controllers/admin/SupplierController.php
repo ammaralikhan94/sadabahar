@@ -50,6 +50,7 @@ class SupplierController extends Controller
         Supplier_amount_limit::create([
             'supplier_id' => $supplier_id,
             'supplier_amount_limit' => $request->supplier_amount_limit,
+            'credit_date_limit' => $request->credit_date_limit
         ]);
     	return redirect()->back()->with('success' , 'Supplier added successfully !!');
     }
@@ -81,6 +82,7 @@ class SupplierController extends Controller
         ]);
         Supplier_amount_limit::where('supplier_id' , $request->supplier_id)->update([
             'supplier_amount_limit' => $request->supplier_amount_limit,
+            'credit_date_limit' => $request->credit_date_limit
         ]);
         if($request->cheque_status == 'due_date' || $request->cheque_status == 'amount' ){
             supplier_payment::create([

@@ -57,6 +57,18 @@
                     <td><a class="btn btn-primary" href="{{route('edit_inventory' , ['id' => $val->id])}}">Edit</a> <a class="btn btn-danger" href="{{route('delete_inventory' , ['id' => $val->id])}}">Delete</a></td>
                 </tr>
                 @endforeach
+                @foreach($item_charter as $key => $value)
+                    <tr>
+                        <td>{{$value->key + 1}}</td>
+                        <td>{{$value->item_name}}</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>{{$value->purchase_price}}</td>
+                        <td>-</td>
+                        <td>{{($value->payment_status == 0)?'Inactive':'Active'}}</td>
+                        <td><a class="btn btn-primary" href="{{route('edit_inventory' , ['id' => $value->id])}}">Edit</a> <a class="btn btn-danger" href="{{route('delete_inventory' , ['id' => $val->id])}}">Delete</a></td>
+                    </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>

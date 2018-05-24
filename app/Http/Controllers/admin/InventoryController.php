@@ -12,6 +12,7 @@ use App\Inventory;
 use App\Chemical;
 use App\Barrel;
 use App\Notification;
+use App\Item_charter;
 use Auth;
 use DB;
 
@@ -29,7 +30,8 @@ class InventoryController extends Controller
     /*list inventory*/
     public function list_inventory(){
     	$inventory = Inventory::get();
-    	return view('admin.inventory.list_inventory' , compact('inventory'));
+        $item_charter = Item_charter::get();
+    	return view('admin.inventory.list_inventory' , compact('inventory','item_charter'));
     }
     
     /*Insert Inventory*/

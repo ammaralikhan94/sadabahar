@@ -70,11 +70,11 @@ Route::group(['middleware' => 'auth'], function () {
 
 	/*********************************Inventory Stars****************************************/
 	Route::get('/create_items/', ['as' => 'create_items',  'uses' => 'admin\ItemController@create_items']);/*create users*/
-	Route::post('/insert_item/', ['as' => 'insert_item',  'uses' => 'admin\ItemController@insert_item']);/*insert users*/
+	Route::post('/insert_item_type/', ['as' => 'insert_item_type',  'uses' => 'admin\ItemController@insert_item_type']);/*insert users*/
 	Route::get('/list_items/', ['as' => 'list_items',  'uses' => 'admin\ItemController@list_items']);/*list users*/
 	Route::get('/edit_item/{id}', ['as' => 'edit_item',  'uses' => 'admin\ItemController@edit_item']);/*edit users*/
 	Route::post('/update_item', ['as' => 'update_item',  'uses' => 'admin\ItemController@update_item']);/*edit users*/
-	Route::get('/delete_item/{id}', ['as' => 'delete_item',  'uses' => 'admin\ItemController@delete_item']);/*edit users*/
+	Route::get('/delete_item_type/{id}', ['as' => 'delete_item_type',  'uses' => 'admin\ItemController@delete_item_type']);/*edit users*/
 	/*********************************Inventory Ends****************************************/
 
 	/*********************************Barell Inventory Stars****************************************/
@@ -102,6 +102,24 @@ Route::group(['middleware' => 'auth'], function () {
 	/*********************************Invoice Start************************************/
 	Route::get('/invoice/', ['as' => 'invoice',  'uses' => 'admin\SaleController@invoice']);
 	/*********************************Invoice End*************************************/
+
+	/*********************************Inventory_charter Start************************************/
+	Route::get('/create_charter/', ['as' => 'create_charter',  'uses' => 'admin\CharterController@create_charter']);
+	Route::post('/insert_inventory_charter/', ['as' => 'insert_inventory_charter',  'uses' => 'admin\CharterController@insert_inventory_charter']);
+	Route::post('/insert_sub_charter/', ['as' => 'insert_sub_charter',  'uses' => 'admin\CharterController@insert_sub_charter']);
+	Route::post('/get_category/', ['as' => 'get_category',  'uses' => 'admin\CharterController@get_category']);
+	Route::post('/get_subcategory/', ['as' => 'get_subcategory',  'uses' => 'admin\CharterController@get_subcategory']);
+	Route::post('/insert_item/', ['as' => 'insert_item',  'uses' => 'admin\CharterController@insert_item']);
+	Route::post('/get_item/', ['as' => 'get_item',  'uses' => 'admin\CharterController@get_item']);
+	Route::post('/delete_item/', ['as' => 'delete_item',  'uses' => 'admin\CharterController@delete_item']);
+	Route::post('/delete_sub/', ['as' => 'delete_sub',  'uses' => 'admin\CharterController@delete_sub']);
+	/*********************************Inventory_charter End*************************************/
+
+	/*********************************Brand Start*************************************/
+	Route::get('/create_brand/', ['as' => 'create_brand',  'uses' => 'admin\CharterController@create_brand']);/*create brand*/
+	Route::post('/insert_brand/', ['as' => 'insert_brand',  'uses' => 'admin\CharterController@insert_brand']);/*insert brand*/
+	Route::get('/list_brand/', ['as' => 'list_brand',  'uses' => 'admin\CharterController@list_brand']);/*insert brand*/
+	/*********************************Brand End*************************************/
 
 	Route::get('/test', function () {
 		return view('admin.test');

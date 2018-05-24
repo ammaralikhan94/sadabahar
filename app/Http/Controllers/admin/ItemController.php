@@ -14,7 +14,7 @@ class ItemController extends Controller
     }
 
     /*Insert Item Form*/
-    public function insert_item(Request $request){
+    public function insert_item_type(Request $request){
     	Item_purchase_type::create([
     		'item_name' => $request->item_name,
     		'item_type' => $request->item_type,
@@ -46,8 +46,10 @@ class ItemController extends Controller
     }
 
     /*Delete item*/
-    public function delete_item($id){
+    public function delete_item_type($id){
     	Item_purchase_type::where('id' , $id)->delete();
     	return redirect()->back()->with('success' , 'Item Purchase Type deleted  added successfully !');
     }
+
+    
 }

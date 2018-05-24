@@ -89,6 +89,15 @@
                             </div>
                             {{-- Payment Amount Limit --}}
 
+                             {{-- Payment Amount Limit --}}
+                            <div class="form-group col-md-6" id="credit_due_date" <?php  if($supplier->payment_mode == 'credit_limit'){echo '';}else{?> style="display: none"<?php }?>    id="credit_limit" >
+                                <label class="col-md-2 control-label">credit due date</label>
+                                <div class="col-md-10">
+                                    <input type="numebr" class="form-control" name="credit_due_date" value="{{$supplier_amount_limit->credit_date_limit}}"  >
+                                </div>
+                            </div>
+                            {{-- Payment Amount Limit --}}
+
 
                             {{-- Payment Mode --}}
                             <div class="form-group col-md-6" id="cheque_due_date"   <?php  if($supplier->payment_mode == 'credit_limit'){echo '';}else{?> style="display: none"<?php }?>  >
@@ -158,14 +167,17 @@
                     $('#cheque_due_date').show('slow');
                     $('#cheque_amount_limit').show('slow');
                     $('#credit_limit').hide('slow');
+                    $('#credit_due_date').hide('slow');
                 }
                 if(value == 'credit_limit'){
                     $('#credit_limit').show('slow');
+                    $('#credit_due_date').show('slow');
                     $('#cheque_due_date').hide('slow');
                     $('#cheque_amount_limit').hide('slow');
                 }
                 if(value == 'cash'){
                     $('#credit_limit').hide('slow');
+                    $('#credit_due_date').hide('slow');
                     $('#cheque_due_date').hide('slow');
                     $('#cheque_amount_limit').hide('slow');
                 }

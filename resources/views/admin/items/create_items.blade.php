@@ -21,7 +21,7 @@ Add - Inventory
             <h4 class="m-t-0 header-title"><b>Create Item Type</b></h4>
             <div class="row">
                 <div class="col-md-12">
-                    <form class="form-horizontal" action="{{route('insert_item')}}" method="post">
+                    <form class="form-horizontal" action="{{route('insert_item_type')}}" method="post">
                         {{csrf_field()}}
                         <div class="form-group col-md-6">
                             <label class="col-md-2 control-label">Item Name</label>

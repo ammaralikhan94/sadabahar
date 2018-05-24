@@ -102,6 +102,19 @@
                     </li>
                 </ul>       
             </li> 
+            <li class="has-submenu">
+             <a href="#"><i class="fa  fa-bitbucket"></i>Inventory Charter</a>
+                <ul class="submenu megamenu">
+                    <li>
+                        <ul>
+                            <li><a href="{{route('create_charter')}}"><i class="fa  fa-bitbucket"></i>Inventory Charter</a></li>
+                            <li><a href="{{route('create_brand')}}"><i class="fa  fa-bitbucket"></i>Add Brand</a></li>
+                            <li><a href="{{route('list_brand')}}"><i class="fa  fa-bitbucket"></i>List Brand</a></li>
+                            {{-- <li><a href="{{route('list_inventory')}}"><i class="fa  fa-list  "></i>  List Inventory</a></li> --}}
+                        </ul>
+                    </li>
+                </ul>       
+            </li> 
         </ul>
         <!-- End navigation menu        -->
     </div>

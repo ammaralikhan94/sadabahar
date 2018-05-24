@@ -1,6 +1,6 @@
 @extends('layouts.admin_layout')
 @section('title')
-    Add - Chemical
+    Add - Brand
 @endsection
 @section('content')
 @if ($message = Session::get('success'))
@@ -18,15 +18,15 @@
 <div class="row">
         <div class="col-sm-12">
             <div class="card-box">
-                <h4 class="m-t-0 header-title"><b>Create Chemical</b></h4>
+                <h4 class="m-t-0 header-title"><b>Create Brand</b></h4>
                 <div class="row">
                     <div class="col-md-12">
-                        <form class="form-horizontal" action="{{route('insert_chemical')}}" method="post">
+                        <form class="form-horizontal" action="{{route('insert_brand')}}" method="post">
                             {{csrf_field()}}
                             <div class="form-group col-md-6">
-                                <label class="col-md-2 control-label">Chemical Name</label>
+                                <label class="col-md-2 control-label">Brand Name</label>
                                 <div class="col-md-10">
-                                    <input type="text" class="form-control" name="chemical_name" required="">
+                                    <input type="text" class="form-control" name="brand_name" required="">
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
