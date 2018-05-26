@@ -241,7 +241,7 @@
                     'parent_id' : parent_id
                },
                success:function(data){
-                    $('#sub_select').append(`<option value='`+category_id+`'>`+category_name+`</option>`);
+                    $('#sub_select').append(`<option value='`+data+`'>`+category_name+`</option>`);
                     $('#sub_select').css({"border-color" : "green","border" : "2px solid green"}); 
                     $('#sub_name').val('');
                     setTimeout(function(){$('#sub_select').css("border-color", "grey"); }, 1000);
