@@ -18,6 +18,17 @@ input[type=number]::-webkit-outer-spin-button {
     padding: 5px;
     color: #fff;
 }
+
+hr{
+        margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+.table-plus{
+    padding: 10px;
+    text-align: right;
+}
 </style>
 @endsection
 @section('content')
@@ -41,22 +52,22 @@ input[type=number]::-webkit-outer-spin-button {
                 <!-- <a class="btn btn-success pull-right" href="{{route('create_inventory')}}" target="_blank">Add More Purchase</a> -->
                 <div class="new-purchase">
                     <div class="col-md-3">
-                        <h4 class="m-t-0 header-title"><b>Create Purchase</b></h4>
+                        <h4 class="m-t-0 header-title" style="margin-top: 10px !important;"><b>Create Purchase</b></h4>
                     </div>
-                    <div class="col-md-2">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add  Item Type</button>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-danger pull-right" data-toggle="modal" data-target="#myModal">Add  Item Type</button>
                     </div>
-                    <div class="col-md-5">
-                        <div class="col-md-4">
-                            <h4 class="m-t-0 header-title"><b>Purchase Order No</b></h4>
+                    <div class="col-md-5 pull-right">
+                        <div class="col-md-5">
+                            <h4 class="m-t-0 header-title" style="margin-top: 10px !important; text-align: right;"><b>Purchase Order No</b></h4>
                         </div>
                         <div class="col-md-2">
                             <input type="text" class="form-control pull-right" name="invoice_number" value="{{$invoice_number}}" readonly="">
                         </div>
                         <div class="col-md-2">
-                            <h4 class="m-t-0 header-title"><b>D.O.P</b></h4>
+                            <h4 class="m-t-0 header-title" style="margin-top: 10px !important;text-align: right;"><b>D.O.P</b></h4>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <input type="text" class="form-control pull-right" name="dop" value="{{date('d-m-Y')}}">
                         </div>
                     </div>
@@ -93,33 +104,33 @@ input[type=number]::-webkit-outer-spin-button {
 
                             <div class="col-md-6">
                                 <div class="card-box clearfix">                                                        
-                                    <div class="form-group col-md-3">
-                                        <label class="col-md-4 control-label">Scode</label>
-                                        <div class="col-md-8">
-                                            <input type="text" class="form-control" name="scode" id="scode" placeholder="Scode"  required="">
+                                    <div class="form-group col-md-4">
+                                        <!-- <label class="col-md-4 control-label">Scode</label> -->
+                                        <div class="col-md-12">
+                                            <input type="text" class="form-control" name="scode" id="scode" placeholder="scode"  required="">
                                         </div>                                
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label class="col-md-3 control-label">Name</label>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" name="name" id="name" placeholder="Name"  required="">
+                                        <!-- <label class="col-md-3 control-label">Name</label> -->
+                                        <div class="col-md-12">
+                                            <input type="text" class="form-control" name="name" id="name" placeholder="Full Name"  required="">
                                         </div>                                
                                     </div>
-                                    <div class="form-group col-md-5">
-                                        <label class="col-md-7 control-label">Company Name</label>
-                                        <div class="col-md-5">
+                                    <div class="form-group col-md-5" style="width: 40%">
+                                        <!-- <label class="col-md-7 control-label">Company Name</label> -->
+                                        <div class="col-md-12">
                                             <input type="text" class="form-control" name="company_name" id="company_name" placeholder="Company Name"  required="">
                                         </div>                                
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <label class="col-md-4 control-label">Phone No</label>
-                                        <div class="col-md-8">
+                                    <div class="form-group col-md-12">
+                                        <!-- <label class="col-md-4 control-label">Phone No</label> -->
+                                        <div class="col-md-12">
                                             <input type="text" class="form-control" name="phone_no" id="phone_no" placeholder="Phone No"  required="">
                                         </div>                                
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <label class="col-md-2 control-label">Address</label>
-                                        <div class="col-md-10">
+                                        <!-- <label class="col-md-2 control-label">Address</label> -->
+                                        <div class="col-md-12">
                                             <input type="text" class="form-control" name="address" id="address" placeholder="Address"  required="">
                                         </div>                                
                                     </div>
@@ -128,40 +139,51 @@ input[type=number]::-webkit-outer-spin-button {
                             </div>
 
                             <div class="col-md-6">
-                                <div class="card-box clearfix">                                         
-                                    <div class="form-group col-md-6">
-                                        <label class="col-md-7 control-label">Credit Balance Limit</label>
-                                        <div class="col-md-5">
-                                            <input type="number" class="form-control" name="credit_balance_limit" id="credit_balance_limit" placeholder="Credit balance limit"  required="">
-                                        </div>                                
+                                <div class="card-box clearfix" style="padding: 13px;">                                         
+                                    <div class="col-md-12">
+                                        <h4 class="m-t-0 header-title" style="margin-top: 10px !important;"><b>Credit Limit</b></h4>
+                                        <div class="form-group col-md-6">
+                                            <!-- <label class="col-md-7 control-label">Credit Balance Limit</label> -->
+                                            <div class="col-md-12">
+                                                <input type="number" class="form-control" name="credit_balance_limit" id="credit_balance_limit" placeholder="Credit balance limit"  required="">
+                                            </div>                                
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <!-- <label class="col-md-5 control-label">Credit Balance</label> -->
+                                            <div class="col-md-12">
+                                                <input type="number" class="form-control" name="credit_balance" id="credit_balance" placeholder="Credit Balance"  required="">
+                                            </div>                                
+                                        </div>
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <label class="col-md-5 control-label">Credit Balance</label>
-                                        <div class="col-md-7">
-                                            <input type="number" class="form-control" name="credit_balance" id="credit_balance" placeholder="Credit Balance"  required="">
-                                        </div>                                
-                                    </div>
-                                     <div class="form-group col-md-6">
-                                        <label class="col-md-6 control-label">PD Cheque Limit</label>
-                                        <div class="col-md-6">
-                                            <input type="number" class="form-control amount" name="pd_cheque_limit" id="pd_cheque_limit" placeholder="Date Cheque Limit"  required="">
-                                        </div>                                
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label class="col-md-7 control-label">PD Cheque Balance</label>
-                                        <div class="col-md-5">
-                                            <input type="number" class="form-control amount" name="pd_cheque_balance" id="pd_cheque_balance" placeholder="PD Cheque Balance<"  required="">
-                                        </div>                                
-                                    </div>
+                                     <div class="col-md-12">
+                                        <h4 class="m-t-0 header-title" style="margin-top: 10px !important;"><b>Post-dated Cheque Limit</b></h4>
+                                         <div class="form-group col-md-6">
+                                            <!-- <label class="col-md-6 control-label">PD Cheque Limit</label> -->
+                                            <div class="col-md-12">
+                                                <input type="number" class="form-control amount" name="pd_cheque_limit" id="pd_cheque_limit" placeholder="Post-dated Cheque Limit"  required="">
+                                            </div>                                
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <!-- <label class="col-md-7 control-label">PD Cheque Balance</label> -->
+                                            <div class="col-md-12">
+                                                <input type="number" class="form-control amount" name="pd_cheque_balance" id="pd_cheque_balance" placeholder="Post-dated Cheque Balance"  required="">
+                                            </div>                                
+                                        </div>
+                                     </div>
                                 
                                 </div>
                             </div>
                             <div class="col-sm-12">
-                                <div class="card-box">
-                                    <div class="row">                                                                                    
+                                <div class="card-box" style="padding: 0px 20px 0px 20px;">
+                                    <div class="row">    
+                                    <div class="col-md-12">
+                                         <div class="table-plus">
+                                             <button type="button" id="submit_parent" class="btn btn-success fa fa-plus" > </button>
+                                         </div>
+                                    </div>                                                                               
                                         <div class="p-20">
                                             <table class="table m-0">                                                    
-                                                <thead>
+                                                <thead style="background-color: #ccc;">
                                                     <tr>
                                                         <th>S.No</th>
                                                         <th>Item Code</th>
@@ -220,8 +242,6 @@ input[type=number]::-webkit-outer-spin-button {
                                                         <td><input type="text"  class="form-control calculate exc_tax" name="exc_tax[]"></td>
                                                         <td><input type="text"  class="form-control calculate inc_code" name="inc_code[]"></td>
                                                     </tr>
-                                                </tbody>
-                                                <thead>
                                                     <tr>
                                                        <th scope="row">3</th>
                                                         <td><input type="text" id="code_3" class="form-control code" name="item_code[]"></td>
@@ -245,7 +265,7 @@ input[type=number]::-webkit-outer-spin-button {
                                                         <td><input type="text"   class="form-control calculate exc_tax" name="exc_tax[]"></td>
                                                         <td><input type="text"   class="form-control calculate inc_code" name="inc_code[]"></td>
                                                     </tr>
-                                                </thead>
+                                                </tbody>
                                             </table>
                                         </div>         
                                         <h3 class="pull-right" id="total_rs" style="margin-right: 60px">Amount : </h1>

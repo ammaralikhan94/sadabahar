@@ -15,6 +15,26 @@
                 <strong>{{ $message }}</strong>
         </div>
     @endif
+
+    <style type="text/css">
+        
+        .fa-plus, .fa-trash{
+            margin-top: 28px;
+        }
+        hr {
+            margin-top: 13px !important;
+            margin-bottom: 20px;
+            border: 0;
+            border-top: 1px solid #eee;
+        }
+        input, select{
+            margin-bottom: 10px;
+        }
+
+        label{
+            margin-top: 10px;
+        }
+    </style>
     <div class="row">
         <div class="col-sm-12">
             <div class="card-box">            
@@ -26,7 +46,7 @@
                             </div>
                             <div class="col-md-6">
                                 {{-- <button class="btn btn-success fa fa-plus pull-right"></button> --}}
-                                <button class="btn btn-danger fa fa-trash pull-right"></button>
+                                
                             </div>
                             <div class="col-md-12">
                                 <hr>
@@ -42,16 +62,16 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-6">                                
-                                <div class="col-md-4">
+                                <div class="col-md-2">
                                     <label>Code</label>
                                     <input type="text" class="form-control amount" name="category_id" id="category_id" placeholder="Category ID" value="{{$count+1}}"  required="" readonly="">
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-8">
                                     <label>Category Name</label>
                                     <input type="text" class="form-control amount" name="category_name" id="category_name" placeholder="Category Name"  required="">
                                 </div>
                                 <div class="col-md-2">
-                                    <button type="button" id="submit_parent" class="btn btn-success fa fa-plus"> </button>
+                                    <button type="button" id="submit_parent" class="btn btn-success fa fa-plus" > </button><button class="btn btn-danger fa fa-trash pull-right"></button>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -66,7 +86,7 @@
                             </div>
                             <div class="col-md-6">
                                 {{-- <button class="btn btn-success fa fa-plus pull-right"></button> --}}
-                                <button type="button" class="btn btn-danger fa fa-trash pull-right" id="delete_sub"></button>
+                                <!-- <button type="button" class="btn btn-danger fa fa-trash pull-right" id="delete_sub"></button> -->
                             </div>
                             <div class="col-md-12">
                                 <hr>
@@ -78,16 +98,16 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-6">                                
-                                <div class="col-md-4">
+                                <div class="col-md-2">
                                     <label>Code</label>
                                     <input type="text" class="form-control" name="parent_id" id="parent_id" placeholder="Category ID"  required="" readonly="">
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-8">
                                     <label>Sub Category Name</label>
                                     <input type="text" class="form-control" name="name" id="sub_name" placeholder="Category Name"  required="">
                                 </div>
                                 <div class="col-md-2">
-                                    <button class="btn btn-success fa fa-plus" id="submit_child"></button>
+                                    <button class="btn btn-success fa fa-plus" id="submit_child"></button><button type="button" class="btn btn-danger fa fa-trash pull-right" id="delete_sub"></button>
                                 </div>
                             </div>
                             {{-- PARENT INVENTORY END --}}
@@ -99,7 +119,7 @@
                             </div>
                             <div class="col-md-6">
                                 {{-- <button class="btn btn-success fa fa-plus pull-right"></button> --}}
-                                <button type="button" class="btn btn-danger fa fa-trash pull-right" id="delete_item"></button>
+                                <button type="button" class="btn btn-danger fa fa-trash pull-right" id="delete_item" style="margin-top: 0px !important"></button>
                             </div>
                             <div class="col-md-12">
                                 <hr>
@@ -120,13 +140,13 @@
                                 <div class="form-group">    
                                     <label class="col-md-3 control-label">Item Name</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control amount" name="item_name" id="item_name" placeholder="Item amount"  required="">
+                                        <input type="text" class="form-control amount" name="item_name" id="item_name" placeholder="Item Name"  required="">
                                     </div>                                    
                                 </div>
                                 <div class="form-group">    
                                     <label class="col-md-3 control-label">Item Description</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control amount" name="item_description" id="item_description" placeholder="Item amount"  required="">
+                                        <input type="text" class="form-control amount" name="item_description" id="item_description" placeholder="Item Description"  required="">
                                     </div>                                    
                                 </div>
                                 <div class="form-group">    
@@ -146,8 +166,8 @@
                                     <div class="col-md-3">
                                         <input type="text" class="form-control amount" name="purchase_price" id="purchase_price" placeholder="Purchase Price"  required="">
                                     </div>        
-                                    <label class="col-md-3 control-label">Sale Price</label>
-                                    <div class="col-md-3">
+                                    <label class="col-md-2 control-label">Sale Price</label>
+                                    <div class="col-md-4">
                                         <input type="text" class="form-control amount" name="selling_price" id="selling_price" placeholder="Sale Price"  required="">
                                     </div>                               
                                 </div>
@@ -323,6 +343,7 @@
                             setTimeout(function(){$('#item').css("border-color", "grey"); }, 1000);
                             }    
                         }
+                        location.reload();
                 });
             });
 
