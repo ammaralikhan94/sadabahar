@@ -31,12 +31,12 @@ class CharterController extends Controller
 
     /*Sub category Inventory*/
     public function insert_sub_charter(Request $request){
-    	Sub_category_charter::create([
+    	$id = Sub_category_charter::create([
     		'parent_id' => $request->parent_id,
     		'name' => $request->category_name
-    	]);
+    	])->id;
     	$count = Sub_category_charter::count();
-    	echo json_encode($count+1);
+    	echo json_encode($id);
     }
 
     /*Get sub category from parent category*/

@@ -31,6 +31,13 @@
                                     <input type="text" class="form-control" name="name" required="">
                                 </div>
                             </div>
+
+                            <div class="form-group col-md-6">
+                                <label class="col-md-2 control-label">Company Name</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control" name="company_name" required="">
+                                </div>
+                            </div>
                     
                             <div class="form-group col-md-6">
                                 <label class="col-md-2 control-label">Number</label>

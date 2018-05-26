@@ -121,6 +121,14 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/list_brand/', ['as' => 'list_brand',  'uses' => 'admin\CharterController@list_brand']);/*insert brand*/
 	/*********************************Brand End*************************************/
 
+	/**********************Get Suggestion**************/
+	Route::get('/get_suggestion/', ['as' => 'get_suggestion',  'uses' => 'admin\InventoryController@get_suggestion']);
+	Route::get('/get_suggestion_name/', ['as' => 'get_suggestion_name',  'uses' => 'admin\InventoryController@get_suggestion_name']);
+	Route::post('/get_ajax_chemical_name/', ['as' => 'get_ajax_chemical_name',  'uses' => 'admin\InventoryController@get_ajax_chemical_name']);
+	Route::post('/get_ajax_chemical_code/', ['as' => 'get_ajax_chemical_code',  'uses' => 'admin\InventoryController@get_ajax_chemical_code']);
+	/**********************Get Suggestion END**************/
+	Route::post('/insert-item-type/', ['as' => 'insert-item-type',  'uses' => 'admin\ItemController@insert_item_type_ajax']);
+
 	Route::get('/test', function () {
 		return view('admin.test');
 	});

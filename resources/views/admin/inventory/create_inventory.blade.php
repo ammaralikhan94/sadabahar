@@ -3,6 +3,7 @@
     Add - Purchase
 @endsection
 @section('customCss')
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style type="text/css">
     input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
@@ -33,6 +34,7 @@ input[type=number]::-webkit-outer-spin-button {
                 <strong>{{ $message }}</strong>
         </div>
     @endif
+    <form class="form-horizontal" action="{{route('insert_inventory')}}" method="post">
 <div class="row">
         <div class="col-sm-12">
             <div class="card-box">
@@ -42,23 +44,20 @@ input[type=number]::-webkit-outer-spin-button {
                         <h4 class="m-t-0 header-title"><b>Create Purchase</b></h4>
                     </div>
                     <div class="col-md-2">
-                        <h4 class="m-t-0 header-title pull-right bg-red"><b>Add Supplier</b></h4>
-                    </div>
-                    <div class="col-md-2">
-                        <h4 class="m-t-0 header-title pull-left bg-red"><b>Add New Item</b></h4>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add  Item Type</button>
                     </div>
                     <div class="col-md-5">
                         <div class="col-md-4">
                             <h4 class="m-t-0 header-title"><b>Purchase Order No</b></h4>
                         </div>
                         <div class="col-md-2">
-                            <input type="text" class="form-control pull-right" name="purchase-order-no">
+                            <input type="text" class="form-control pull-right" name="invoice_number" value="{{$invoice_number}}" readonly="">
                         </div>
                         <div class="col-md-2">
                             <h4 class="m-t-0 header-title"><b>D.O.P</b></h4>
                         </div>
                         <div class="col-md-4">
-                            <input type="text" class="form-control pull-right" name="purchase-order-no">
+                            <input type="text" class="form-control pull-right" name="dop" value="{{date('d-m-Y')}}">
                         </div>
                     </div>
                 </div>
@@ -77,9 +76,8 @@ input[type=number]::-webkit-outer-spin-button {
                 <div class="row">
                     <div class="col-md-12">
                         
-                        <form class="form-horizontal" action="{{route('insert_inventory')}}" method="post">
+                        
                             {{csrf_field()}}
-
 
                             <div class="form-group col-md-12">
                                 <label class="col-md-1 control-label">Supplier</label>
@@ -98,37 +96,31 @@ input[type=number]::-webkit-outer-spin-button {
                                     <div class="form-group col-md-3">
                                         <label class="col-md-4 control-label">Scode</label>
                                         <div class="col-md-8">
-                                            <input type="number" class="form-control amount" name="chemical_amount" id="chemical_amount" placeholder="Item amount"  required="">
+                                            <input type="text" class="form-control" name="scode" id="scode" placeholder="Scode"  required="">
                                         </div>                                
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="col-md-3 control-label">Name</label>
                                         <div class="col-md-9">
-                                            <input type="number" class="form-control amount" name="chemical_amount" id="chemical_amount" placeholder="Item amount"  required="">
+                                            <input type="text" class="form-control" name="name" id="name" placeholder="Name"  required="">
                                         </div>                                
                                     </div>
                                     <div class="form-group col-md-5">
                                         <label class="col-md-7 control-label">Company Name</label>
                                         <div class="col-md-5">
-                                            <input type="number" class="form-control amount" name="chemical_amount" id="chemical_amount" placeholder="Item amount"  required="">
+                                            <input type="text" class="form-control" name="company_name" id="company_name" placeholder="Company Name"  required="">
                                         </div>                                
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label class="col-md-4 control-label">Phone No</label>
                                         <div class="col-md-8">
-                                            <input type="number" class="form-control amount" name="chemical_amount" id="chemical_amount" placeholder="Item amount"  required="">
-                                        </div>                                
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label class="col-md-4 control-label">Mobile No</label>
-                                        <div class="col-md-8">
-                                            <input type="number" class="form-control amount" name="chemical_amount" id="chemical_amount" placeholder="Item amount"  required="">
+                                            <input type="text" class="form-control" name="phone_no" id="phone_no" placeholder="Phone No"  required="">
                                         </div>                                
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label class="col-md-2 control-label">Address</label>
                                         <div class="col-md-10">
-                                            <input type="number" class="form-control amount" name="chemical_amount" id="chemical_amount" placeholder="Item amount"  required="">
+                                            <input type="text" class="form-control" name="address" id="address" placeholder="Address"  required="">
                                         </div>                                
                                     </div>
                                 
@@ -140,31 +132,30 @@ input[type=number]::-webkit-outer-spin-button {
                                     <div class="form-group col-md-6">
                                         <label class="col-md-7 control-label">Credit Balance Limit</label>
                                         <div class="col-md-5">
-                                            <input type="number" class="form-control amount" name="chemical_amount" id="chemical_amount" placeholder="Item amount"  required="">
+                                            <input type="number" class="form-control" name="credit_balance_limit" id="credit_balance_limit" placeholder="Credit balance limit"  required="">
                                         </div>                                
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label class="col-md-5 control-label">Credit Balance</label>
                                         <div class="col-md-7">
-                                            <input type="number" class="form-control amount" name="chemical_amount" id="chemical_amount" placeholder="Item amount"  required="">
+                                            <input type="number" class="form-control" name="credit_balance" id="credit_balance" placeholder="Credit Balance"  required="">
                                         </div>                                
                                     </div>
                                      <div class="form-group col-md-6">
                                         <label class="col-md-6 control-label">PD Cheque Limit</label>
                                         <div class="col-md-6">
-                                            <input type="number" class="form-control amount" name="chemical_amount" id="chemical_amount" placeholder="Item amount"  required="">
+                                            <input type="number" class="form-control amount" name="pd_cheque_limit" id="pd_cheque_limit" placeholder="Date Cheque Limit"  required="">
                                         </div>                                
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label class="col-md-7 control-label">PD Cheque Balance</label>
                                         <div class="col-md-5">
-                                            <input type="number" class="form-control amount" name="chemical_amount" id="chemical_amount" placeholder="Item amount"  required="">
+                                            <input type="number" class="form-control amount" name="pd_cheque_balance" id="pd_cheque_balance" placeholder="PD Cheque Balance<"  required="">
                                         </div>                                
                                     </div>
                                 
                                 </div>
                             </div>
-                        </form>
                             <div class="col-sm-12">
                                 <div class="card-box">
                                     <div class="row">                                                                                    
@@ -174,7 +165,9 @@ input[type=number]::-webkit-outer-spin-button {
                                                     <tr>
                                                         <th>S.No</th>
                                                         <th>Item Code</th>
-                                                        <th width="50%">Descrption</th>
+                                                        <th width="20%">Descrption</th>
+                                                        <th>Measurment</th>
+                                                        <th width="10%">Storage Type</th>
                                                         <th>Quantity</th>
                                                         <th>unit</th>
                                                         <th>Rate</th>
@@ -185,39 +178,78 @@ input[type=number]::-webkit-outer-spin-button {
                                                 <tbody>
                                                     <tr>
                                                         <th scope="row">1</th>
-                                                        <td>Mark</td>
-                                                        <td>Otto</td>
-                                                        <td>@mdo</td>
-                                                        <td>Mark</td>
-                                                        <td>Otto</td>
-                                                        <td>@mdo</td>
-                                                        <td>@mdo</td>
+                                                        <td><input type="text" id="code_1" class="form-control code" name="item_code[]"></td>
+                                                        <td><input type="text" id="name_1" class="form-control name" name="description[]"></td>
+                                                        <td>
+                                                            <select name="measurment[]" class="form-control">
+                                                                <option>Select Mesurement</option>
+                                                                <option value="kg">Kg</option>
+                                                                <option value="liter">Liter</option>
+                                                                <option value="quantity">Quantity</option>
+                                                            </select>
+                                                        </td>
+                                                        <td><select name="storage_type[]" class="form-control add_item_type">
+                                                            @foreach($item_type as $key => $val)
+                                                                <option value="{{$val->item_name}}">{{$val->item_name}}</option>
+                                                            @endforeach
+                                                        </select></td>
+                                                        <td><input type="number" id="quantity_1" class="form-control quantity" name="quantity[]"></td>
+                                                        <td><input type="text"   id="unit_1" class="form-control unit" name="unit[]"></td>
+                                                        <td><input type="number" id="rate_1" class="form-control rate calculate" name="rate[]"></td>
+                                                        <td><input type="text"  class="form-control calculate exc_tax" name="exc_tax[]"></td>
+                                                        <td><input type="text"  class="form-control calculate inc_code" name="inc_code[]"></td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">2</th>
-                                                        <td>Mark</td>
-                                                        <td>Otto</td>
-                                                        <td>@mdo</td>
-                                                        <td>Mark</td>
-                                                        <td>Otto</td>
-                                                        <td>@mdo</td>
-                                                        <td>@mdo</td>
+                                                        <td><input type="text" id="code_2" class="form-control code" name="item_code[]"></td>
+                                                        <td><input type="text" id="name_2" class="form-control name" name="description[]"></td>
+                                                        <td><select name="measurment[]" class="form-control">
+                                                            <option>Select Mesurement</option>
+                                                            <option value="kg">Kg</option>
+                                                            <option value="liter">Liter</option>
+                                                            <option value="quantity">Quantity</option>
+                                                        </select></td>
+                                                         <td><select name="storage_type[]" class="form-control add_item_type">
+                                                           @foreach($item_type as $key => $val)
+                                                                <option value="{{$val->item_name}}">{{$val->item_name}}</option>
+                                                            @endforeach
+                                                        </select></td>
+                                                        <td><input type="number"  id="quantity_2" class="form-control quantity" name="quantity[]"></td>
+                                                        <td><input type="text"    id="unit_2"     class="form-control unit" name="unit[]"></td>
+                                                        <td><input type="number"    id="rate_2"     class="form-control calculate" name="rate[]"></td>
+                                                        <td><input type="text"  class="form-control calculate exc_tax" name="exc_tax[]"></td>
+                                                        <td><input type="text"  class="form-control calculate inc_code" name="inc_code[]"></td>
                                                     </tr>
                                                 </tbody>
                                                 <thead>
                                                     <tr>
-                                                        <th>3</th>
-                                                        <th>M-983</th>
-                                                        <th width="50%"></th>
-                                                        <th></th>
-                                                        <th></th>
-                                                        <th>Total</th>
-                                                        <th>1,600/-</th>
-                                                        <th>2,300/-</th>
+                                                       <th scope="row">3</th>
+                                                        <td><input type="text" id="code_3" class="form-control code" name="item_code[]"></td>
+                                                        <td><input type="text" id="name_3" class="form-control name" name="description[]"></td>
+                                                        <td>
+                                                            <select name="measurment[]" class="form-control">
+                                                                <option>Select measurment</option>
+                                                                <option value="kg">Kg</option>
+                                                                <option value="liter">Liter</option>
+                                                                <option value="quantity">Quantity</option>
+                                                            </select>
+                                                        </td>
+                                                         <td><select name="storage_type[]" class="form-control add_item_type">
+                                                            @foreach($item_type as $key => $val)
+                                                                <option value="{{$val->item_name}}">{{$val->item_name}}</option>
+                                                            @endforeach
+                                                        </select></td>
+                                                        <td><input type="number" id="quantity_3" class="form-control quantity" name="quantity[]"></td>
+                                                        <td><input type="text"   id="unit_3"  class="form-control unit" name="unit[]"></td>
+                                                        <td><input type="number"   id="rate_3"  class="form-control rate calculate" name="rate[]"></td>
+                                                        <td><input type="text"   class="form-control calculate exc_tax" name="exc_tax[]"></td>
+                                                        <td><input type="text"   class="form-control calculate inc_code" name="inc_code[]"></td>
                                                     </tr>
                                                 </thead>
                                             </table>
-                                        </div>                                        
+                                        </div>         
+                                        <h3 class="pull-right" id="total_rs" style="margin-right: 60px">Amount : </h1>
+                                        <h3 class="pull-right" id="tax_rs" style="margin-right: 200px">Tax Rs : </h1>                               
                                     </div>
                                 </div>
                             </div>
@@ -226,59 +258,295 @@ input[type=number]::-webkit-outer-spin-button {
                                     <div class="form-group col-md-12">
                                         <label class="col-md-5 control-label">Carriage and Freight</label>
                                         <div class="col-md-7">
-                                            <input type="number" class="form-control amount" name="chemical_amount" id="chemical_amount" placeholder="Item amount"  required="">
+                                            <input type="number" class="form-control amount" name="carriage" id="carriage" placeholder="Carriage"  required="">
                                         </div>                                
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label class="col-md-5 control-label">Net Total</label>
                                         <div class="col-md-7">
-                                            <input type="number" class="form-control amount" name="chemical_amount" id="chemical_amount" placeholder="Item amount"  required="">
+                                            <input type="number" class="form-control amount" name="net_total" id="net_total" placeholder="Net total"  required="">
                                         </div>                                
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label class="col-md-5 control-label">Payment Method</label>
                                         <div class="col-md-7">
                                             <div class="checkbox radio-inline">
-                                                <input id="checkbox0" type="checkbox">
+                                                <input  type="checkbox" name="payment_credit">
                                                 <label for="checkbox0">
                                                     Credit
                                                 </label>
                                             </div>
                                             <div class="checkbox radio-inline">
-                                                <input id="checkbox0" type="checkbox">
+                                                <input  type="checkbox" name="payment_cash">
                                                 <label for="checkbox0">
                                                     Cash
                                                 </label>
                                             </div>
                                             <div class="checkbox radio-inline">
-                                                <input id="checkbox0" type="checkbox">
+                                                <input  type="checkbox" name="payment_cheque" id="pdc">
                                                 <label for="checkbox0">
                                                     Post Dated Cheque
                                                 </label>
                                             </div>
                                         </div>                                
                                     </div>
-                                    <div class="form-group col-md-12">
-                                        <label class="col-md-5 control-label">Amount Paid</label>
+                                     <div class="form-group col-md-12 credit_amount_field" style="display: none;">
+                                        <label class="col-md-5 control-label">Amount Credit</label>
                                         <div class="col-md-7">
-                                            <input type="number" class="form-control amount" name="chemical_amount" id="chemical_amount" placeholder="Item amount"  required="">
+                                            <input type="number" class="form-control amount" name="amount_credit" id="amount_credit" placeholder="Credit Amount"  required="">
                                         </div>                                
                                     </div>
-                                    <div class="form-group col-md-12">
-                                        <label class="col-md-5 control-label">Balance</label>
+                                    <div class="form-group col-md-12 credit_amount_field"  style="display: none;">
+                                        <label class="col-md-5 control-label">Credit Date Limit</label>
                                         <div class="col-md-7">
-                                            <input type="number" class="form-control amount" name="chemical_amount" id="chemical_amount" placeholder="Item amount"  required="">
+                                            <input type="date" class="form-control amount" name="credit_date_limit" id="credit_date_limit" placeholder="Credit Date Limit"  required="">
                                         </div>                                
                                     </div>
+                                    <div class="form-group col-md-12" id="cash_recieved" style="display: none;">
+                                        <label class="col-md-5 control-label">Cash Recieved</label>
+                                        <div class="col-md-7">
+                                            <input type="number" class="form-control amount" name="cash_recieved" id="cash_recieved" placeholder="Cash Recieved"  required="">
+                                        </div>                                  
+                                    </div>
+                                    {{-- *************************POST DATE CHEQUE ************************ --}}
+                                    <div class="form-group col-md-12 show_post_cheques"  style="display: none;">
+                                        <label class="col-md-5 control-label">Cheque Number</label>
+                                        <div class="col-md-7">
+                                            <input type="number" class="form-control" name="cheque_number"  placeholder="Cheque Number"  required="">
+                                        </div>                                
+                                    </div>
+                                    <div class="form-group col-md-12 show_post_cheques"  style="display: none;">
+                                        <label class="col-md-5 control-label">Cheque Image</label>
+                                        <div class="col-md-7">
+                                            <input type="file" class="form-control" name="cheque_image"  placeholder="Cheque Image"  required="">
+                                        </div>                                
+                                    </div>
+                                    <div class="form-group col-md-12 show_post_cheques"  style="display: none;">
+                                        <label class="col-md-5 control-label">Cheque Amount</label>
+                                        <div class="col-md-7">
+                                            <input type="number" class="form-control" name="cheque_amount" id="cheque_amount" placeholder="Cheque Amount"  required="">
+                                        </div>                                
+                                    </div>
+                                    <div class="form-group col-md-12 show_post_cheques"  style="display: none;">
+                                        <label class="col-md-5 control-label">cheque Date Limit</label>
+                                        <div class="col-md-7">
+                                            <input type="date" class="form-control amount" name="limit_cheque_date" id="limit_cheque_date"  placeholder="Limit cheque date"  required="">
+                                        </div>                                
+                                    </div>
+                                    {{-- *************************POST DATE CHEQUE ************************ --}}
+                                    <input type="Submit" value="Submit" class="btn btn-success pull-right">
                                 </div>
                             </div>
-                        
+
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    {{-- Modal for new item --}}
+        <div class="modal" id="myModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <!-- Modal Header -->
+              <div class="modal-header">
+                <h4 class="modal-title">Add Item </h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+              <!-- Modal body -->
+              <div class="modal-body">
+               <div class="row">
+            <div class="col-sm-12">
+                <div class="card-box">
+                    <h4 class="m-t-0 header-title"><b>Create Item Type</b></h4>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form class="form-horizontal" action="{{route('insert_item_type')}}" method="post">
+                                {{csrf_field()}}
+                                <div class="form-group col-md-12">
+                                    <label class="col-md-2 control-label">Item Name</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" name="item_name" id="item_name" required="">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label class="col-md-2 control-label">Item purchase type</label>
+                                    <div class="col-md-10">
+                                        <select class="form-control" name="item_purchase_type" id="item_purchase_type">
+                                            <option value="liter">Liter</option>
+                                            <option value="kg">Kg</option>
+                                            <option value="quantity">Quantity</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label class="col-md-2 control-label">Item strength</label>
+                                    <div class="col-md-10">
+                                        <input type="number" class="form-control" name="item_type" id="item_type"  required="">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="col-md-2 control-label"></label>
+                                    <div class="col-md-10">
+                                        <button id="save_item" type="button" class="form-control btn btn-success"  placeholder="placeholder">Save</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</div>
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" id="close_modal" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+    {{-- Modal for new item --}}
 @section('customScript')
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    var sum =  0;
+    var tax =  0; 
+    var total_max = 0 ;
+    $(document).on('keyup','.unit',function (){
+        id = $(this).attr('id');
+        
+        id = id.substring(5);
+        quantity = parseInt($('#quantity_'+id).val());
+        unit = parseInt($('#unit_'+id).val());
+        rate = quantity * unit;
+        $('#rate_'+id).val(rate);  
+        sum = 0; 
+         $('[name="rate[]"]').each(function(){
+            amount = $(this).val();
+            if(amount != ''){
+                sum =  parseInt(amount) + sum;    
+            }
+        });
+        $('#total_rs').html('');
+        $('#total_rs').html('Total Rs:  '+sum);
+        $('#net_total').val(sum);
+        total = sum;
+    });
+
+    /******/
+    $(document).on('keyup','[name="exc_tax[]"]',function (){
+        tax = 0;
+        $('[name="exc_tax[]"]').each(function(){
+            amount = $(this).val();
+            if(amount != ''){
+                tax =  parseInt(amount) + parseInt(tax);    
+            }
+        });
+        $('#tax_rs').html('');
+        $('#tax_rs').html(`Tax Rs:  `+tax);
+         $('[name="inc_code[]"]').each(function(){
+            amount = $(this).val();
+            if(amount != ''){
+                tax =  parseInt(amount) + parseInt(tax);    
+            }
+        });
+        $('#tax_rs').html('');
+        $('#tax_rs').html(`Tax Rs:  `+tax);
+        $('#net_total').val(parseInt(tax)+parseInt(sum));
+    });
+    /******/
+    /******/
+    $(document).on('keyup','[name="inc_code[]"]',function (){
+        tax = 0;
+        $('[name="inc_code[]"]').each(function(){
+            amount = $(this).val();
+            if(amount != ''){
+                tax =  parseInt(amount) + parseInt(tax);    
+            }
+        });
+        $('#tax_rs').html('');
+        $('#tax_rs').html(`Tax Rs:  `+tax);
+        $('[name="exc_tax[]"]').each(function(){
+            amount = $(this).val();
+            if(amount != ''){
+                tax =  parseInt(amount) + parseInt(tax);    
+            }
+        });
+        $('#tax_rs').html('');
+        $('#tax_rs').html(`Tax Rs:  `+tax);
+        $('#net_total').val(parseInt(tax)+parseInt(sum));
+    }); 
+    /******/
+    $(document).on('focusout',function (){
+        total_rupees = parseInt(sum)+parseInt(tax)
+        carriage = $('#carriage').val();
+        sum_of_product = parseInt(total_rupees) + parseInt(carriage)
+        total = sum_of_product;
+        $('#net_total').val(parseInt(tax)+parseInt(sum));
+    });
+    /******/
+   
+    /******/
+    $(document).on('focusout','.code',function(){
+        id = $(this).attr('id');
+        id = id.substring(5);
+        item_code = $('#code_'+id).val();
+        $.ajax({
+               type:'POST',
+               url:'{{route('get_ajax_chemical_name')}}',
+               data:{
+                    "_token": "{{ csrf_token() }}",
+                    'item_code' : item_code
+               },
+               success:function(data){
+                data = JSON.parse(data);
+                   $('#name_'+id).val(data);
+               }
+            });
+    });
+
+    $(document).on('focusout','.name',function(){
+        id = $(this).attr('id');
+        id = id.substring(5);
+        item_name = $('#name_'+id).val();
+        $.ajax({
+               type:'POST',
+               url:'{{route('get_ajax_chemical_code')}}',
+               data:{
+                    "_token": "{{ csrf_token() }}",
+                    'item_name' : item_name
+               },
+               success:function(data){
+                data = JSON.parse(data);
+                 if(data == null){
+                    return false;
+                }
+                   $('#code_'+id).val(data);
+               }
+            });
+    });
+
+    $('.code').autocomplete({
+        source : '{{route('get_suggestion')}}',
+        minlength:1,
+        autoFocus:true,
+        select:function(e,ui){
+            source : ui;
+        }
+    });
+
+    $('.name').autocomplete({
+        source : '{{route('get_suggestion_name')}}',
+        minlength:1,
+        autoFocus:true,
+        select:function(e,ui){
+            source : ui;
+        }
+    });
+
+
+  </script>
     <script type="text/javascript">
         $(document).on('keyup','.amount' , function (){
             chemical_amount = $('#chemical_amount').val();
@@ -291,32 +559,8 @@ input[type=number]::-webkit-outer-spin-button {
             $('#calculation_detail').html('<strong>'+chemical_amount+' * '+quantity+' = '+total_amount+' rs </strong><br><strong>Total '+purchasing_type+' = '+total_purchasing_measure+'</strong>');
             $('#total_amount').val(total_amount);
             $('[name="total_strength"]').val(total_purchasing_measure);
-            /*$('[name="unit_purchased"]').val(total_purchasing_measure);
-             $('[name="purchased_kg"]').html('');
-            for(var i = 1;i<=total_purchasing_measure;i++){
-                $('[name="purchased_kg"]').append(`<option value="`+i+`">`+i+` kg</option>`);
-            }*/
         });
-            
-        $(document).on('keyup','.quantity' , function (){
-            chemical_amount = $('#chemical_amount').val();
-            quantity   = $('.quantity').val();
-            purchasing_type = $('#purchasing_type').val();
-            get_item_quantity = $('#get_item_quantity').val();
-            total_amount    = parseInt(quantity *  chemical_amount);
-            $('#total_amount').val(total_amount);
-            total_purchasing_measure = parseInt(get_item_quantity *   quantity);
-            $('#calculation_detail').html('<strong>'+chemical_amount+' * '+quantity+' = '+total_amount+' rs </strong><br><strong>Total '+purchasing_type+' = '+total_purchasing_measure+'</strong>');
-            $('#total_amount').val(total_amount);
-            $('[name="total_strength"]').val(total_purchasing_measure);
-            $('[name="unit_purchased"]').val(total_purchasing_measure);
-             $('[name="purchased_kg"]').html('');
-            for(var i = 1;i<=total_purchasing_measure;i++){
-                $('[name="purchased_kg"]').append(`<option value="`+i+`">`+i+` kg</option>`);
-            }
-            alert('please select weigth again');
-        });
-
+    
         /*Ajax Getting item detail */
         $(document).on('change','[name="item_name"]',function (){
             option = $(this).val();
@@ -357,17 +601,23 @@ input[type=number]::-webkit-outer-spin-button {
         $(document).on('click','[name="payment_credit"]',function (){
             option = $(this).val();
             $("select[name='payment_status']").find("option[value='due']").attr("selected",true);
-                $('.due').show('slow');
-                $('[name="due_date"]').prop('required',true);
-                $('[name="due_amount"]').prop('required',true);
             if($('[name="payment_credit"]').is(":checked")){
-                $('#credit_amount').show('slow');
+                balance_credit = $('#credit_balance').val();
+                if(balance_credit == 0){
+                   balance_credit=  $('#credit_balance_limit').val();
+                   $('#amount_credit').attr('max',balance_credit);
+                }else{
+                    $('#amount_credit').attr('max',balance_credit);
+                }
+                $('.credit_amount_field').show('slow');
+                $('#amount_credit').prop('required',false);
+                $('#credit_date_limit').prop('required',false);
                 total_amount = $('[name="total_amount"]').val();
                 cash_recieved = $('[name="cash_recieved"]').val();
                 credit_amount = parseInt(total_amount -   cash_recieved);
                 $('[name="limit_amount"]').val(credit_amount);
             }else{
-                 $('#credit_amount').hide('slow');
+                 $('.credit_amount_field').hide('slow');
             }
 
             if($('#pdc').is(":checked")){
@@ -376,13 +626,12 @@ input[type=number]::-webkit-outer-spin-button {
                     alert('please select supplier first');
                     return false;
                 }
+                alert();
                 $('.show_post_cheques').show('slow');
                 $('[name="cheque_number"]').prop('required',true);
                 $('[name="cheque_image"]').prop('required',true);
                 $('[name="limit_cheque_date"]').prop('required',true);
                 $('[name="cheque_amount"]').prop('required',true);
-
-                
                  $.ajax({
                    type:'POST',
                    url:'{{route('get-cheque-limit')}}',
@@ -424,8 +673,7 @@ input[type=number]::-webkit-outer-spin-button {
                     return false;
                 }
                 $('.show_post_cheques').show('slow');
-               
-                 $('[name="cheque_number"]').prop('required',true);
+                $('[name="cheque_number"]').prop('required',true);
                 $('[name="cheque_image"]').prop('required',true);
                 $('[name="limit_cheque_date"]').prop('required',true);
                 $('[name="cheque_number"]').prop('required',true);
@@ -439,7 +687,7 @@ input[type=number]::-webkit-outer-spin-button {
                    },
                    success:function(data){
                         data = JSON.parse(data);
-                        
+                        console.log(data);
                         var someDate = new Date();
                         var numberOfDaysToAdd = parseInt(data.cheque_date_limit);
                         datee = someDate.setDate(someDate.getDate() + numberOfDaysToAdd); 
@@ -448,7 +696,6 @@ input[type=number]::-webkit-outer-spin-button {
                         var y = someDate.getFullYear();
                         date_limit = someFormattedDate = y + '-'+ mm + '-'+ dd;
                         $('#limit_cheque_date').attr('max',date_limit);
-                        $('[name="due_date"]').attr('max' ,date_limit);
                    }
                 });
             }else{
@@ -467,8 +714,6 @@ input[type=number]::-webkit-outer-spin-button {
             }
         });
 
-
-
         /*Get selected supplier credit limit*/
          $(document).on('change','[name="supplier"]',function (){
             supplier = $(this).val();
@@ -481,13 +726,28 @@ input[type=number]::-webkit-outer-spin-button {
                },
                success:function(data){
                  data = JSON.parse(data);
-                 $('#credit_limit').html(data.supplier_amount_limit);
+                 console.log(data);
+                 $('#scode').val(data['supplier'].id);
+                 $('#name').val(data['supplier'].name);
+                 $('#company_name').val(data['supplier'].company_name);
+                 $('#phone_no').val(data['supplier'].phone_number);
+                 $('#address').val(data['supplier'].address);
+                 $('#credit_balance_limit').val(data['supplier_amount'].supplier_amount_limit);
+                 $('#credit_balance').val(data.remaining_credit);
+                 $('#pd_cheque_limit').val(data['supplier_amount'].supplier_amount_limit);
+                 $('#pd_cheque_balance').val(data.remaining_cheque);
                  $('[name="limit_amount"]').attr('max' , data.supplier_amount_limit);
-                 
+                 var someDate = new Date();
+                 var numberOfDaysToAdd = parseInt(data['supplier_amount'].credit_date_limit);
+                 datee = someDate.setDate(someDate.getDate() + numberOfDaysToAdd); 
+                 var dd =( '0' + ( someDate.getDate()+1) ).slice( -2 );
+                 var mm = ( '0' + (someDate.getMonth()+1) ).slice( -2 );
+                 var y = someDate.getFullYear();
+                 date_limit = someFormattedDate = y + '-'+ mm + '-'+ dd;
+                  $('#credit_date_limit').attr('max',date_limit);
                }
             });
-        }); 
-         
+        });
          /*Payment Status*/ 
          $(document).on('change','#payment_status',function (){
             payment_status = $(this).val();
@@ -536,13 +796,17 @@ input[type=number]::-webkit-outer-spin-button {
             }  
          }); 
         $(document).on('click','[name="payment_cash"]',function (){
-
              if($('[name="payment_cash"]').is(":checked")){
-                $('.cash').show('slow');
+                $('#cash_recieved').show('slow');
                 $('[name="cash_recieved"]').prop('required',true);
-                
+                $('[name="amount_credit"]').prop('required',false);
+                $('[name="credit_date_limit"]').prop('required',false);
+                $('[name="cheque_number"]').prop('required',false);
+                $('[name="cheque_image"]').prop('required',false);
+                $('[name="cheque_amount"]').prop('required',false);
+                $('[name="limit_cheque_date"]').prop('required',false);
              }else{
-                $('.cash').hide('slow');
+                $('#cash_recieved').hide('slow');
                 $('[name="cash_recieved"]').prop('required',false);
              }
         });
@@ -571,9 +835,31 @@ input[type=number]::-webkit-outer-spin-button {
                 strength = $('[name="strength"]').val();
                 $('[name="unit_purchased"]').val(strength);
             }
-
-             
-        })
+        });
+        $(document).on('click','#save_item',function(){
+            item_type = $('#item_type').val();
+            item_name = $('#item_name').val();
+            item_purchase_type =  $('#item_purchase_type :selected').val();
+            $.ajax({
+               type:'POST',
+               url:'{{route('insert-item-type')}}',
+               data:{
+                    "_token": "{{ csrf_token() }}",
+                    'item_type' : item_type,
+                    'item_name' : item_name,
+                    'item_purchase_type' : item_purchase_type
+               },
+               success:function(data){
+                data = JSON.parse(data);
+                html = `<option value='`+item_name+`'>`+item_name+`<option>`;
+                item_type = $('#item_type').val('');
+                item_name = $('#item_name').val('');
+                $('.add_item_type').append(html);
+                item_purchase_type =  $('#item_purchase_type :selected').val('');
+                 $('#close_modal').trigger('click');
+               }
+            });
+        });
     </script> 
 @endsection
 @endsection

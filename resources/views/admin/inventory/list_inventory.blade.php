@@ -40,7 +40,7 @@
                     <th>Quantity</th>
                     <th>Total Amount</th>
                     <th>Payment Mode</th>
-                    <th>Payment Status</th>
+                    <th>Status</th>
                     <th>Action</th>
                 </tr>
                 </thead>
@@ -48,11 +48,11 @@
                     @foreach($inventory as $key => $val)
                 <tr>
                     <td>{{$val->key + 1}}</td>
-                    <td>{{$val->get_chemical['chemical_name']}}</td>
                     <td>{{$val->item_name}}</td>
+                    <td>{{$val->storage_type}}</td>
                     <td>{{$val->quantity}}</td>
-                    <td>{{$val->total_amount}}</td>
-                    <td>{{($val->payment_cash == 1)?'Cash':''}}   {{($val->payment_credit == 1)?'Credit':''}}  {{($val->payment_cheque == 1)?'Cheque':''}}</td>
+                    <td>{{$val->net_total}}</td>
+                    <td>{{(isset($val->payment_cash) &&  $val->payment_cash == 'on')?'Cash':''}}{{(isset($val->payment_cheque) && $val->payment_cheque == 'on')?'Cheque':''}}{{(isset($val->payment_credit) &&  $val->payment_credit == 'on')?'Cash':''}}</td>
                     <td>{{$val->payment_status}}</td>
                     <td><a class="btn btn-primary" href="{{route('edit_inventory' , ['id' => $val->id])}}">Edit</a> <a class="btn btn-danger" href="{{route('delete_inventory' , ['id' => $val->id])}}">Delete</a></td>
                 </tr>

@@ -15,12 +15,21 @@ class ItemController extends Controller
 
     /*Insert Item Form*/
     public function insert_item_type(Request $request){
+        Item_purchase_type::create([
+            'item_name' => $request->item_name,
+            'item_type' => $request->item_type,
+            'item_purchase_type' => $request->item_purchase_type
+        ]);
+        return redirect()->back()->with('success' , 'Item Purchase Type added successfully !');
+    }
+
+    public function insert_item_type_ajax(){
     	Item_purchase_type::create([
-    		'item_name' => $request->item_name,
-    		'item_type' => $request->item_type,
-    		'item_purchase_type' => $request->item_purchase_type
+    		'item_name' => $_POST['item_name'],
+    		'item_type' => $_POST['item_type'],
+    		'item_purchase_type' => $_POST['item_purchase_type']
     	]);
-    	return redirect()->back()->with('success' , 'Item Purchase Type added successfully !');
+    	return json_encode(true);
     }
 
     /*list Add purchase types*/

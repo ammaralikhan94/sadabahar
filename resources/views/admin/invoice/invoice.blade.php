@@ -14,6 +14,9 @@ input[type=number]::-webkit-outer-spin-button {
 </style>
 @endsection
 @section('content')
+{{-- @php 
+  var_dump($purchase_item);die;
+@endphp --}}
   <div class="row">
     <div class="col-md-12">
       <div class="panel panel-default">
@@ -23,9 +26,9 @@ input[type=number]::-webkit-outer-spin-button {
                       <h4 class="text-right"><strong>SADABAHAR</strong></h4>
                   </div>
                   <div class="pull-right">
-                     {{--  <h4>Invoice # <br>
-                          <strong>2015-04-23654789</strong>
-                      </h4> --}}
+                     <h4>Invoice # <br>
+                          <strong>{{$invoice}}</strong>
+                      </h4>
                   </div>
               </div>
               <hr>
@@ -39,11 +42,9 @@ input[type=number]::-webkit-outer-spin-button {
                             </address>
                       </div>
                       <div class="pull-right m-t-30">
-                          <p><strong>Date: </strong> {{$sale_item[0]['created_at']}}</p><br>
-                          <p><strong>Customer: </strong> {{App\Customer::where('id',$sale_item[0]['customer'])->value('name')}} </p><br>
-                          <p><strong>Payment Type: </strong> {{($sale_item[0]['payment_cash'] == 1)?'Cash':''}}{{($sale_item[0]['payment_cheque'] == 1)?'Cheque':''}}{{($sale_item[0]['payment_credit'] == 1)?'Cash':''}}</p><br>
-                          
-                          
+                          <p><strong>Date: </strong> {{date('d-m-Y')}}</p><br>
+                          <p><strong>Supplier: </strong> {{App\Supplier::where('id',$purchase_item[0]['supplier'])->value('name')}} </p><br>
+                          <p><strong>Payment Type: </strong> {{(isset($purchase_item[0]['payment_cash']) &&  $purchase_item[0]['payment_cash'] == 'on')?'Cash':''}}{{(isset($purchase_item[0]['payment_cheque']) && $purchase_item[0]['payment_cheque'] == 'on')?'Cheque':''}}{{(isset($purchase_item[0]['payment_credit']) &&  $purchase_item[0]['payment_credit'] == 'on')?'Cash':''}}</p><br>
                       </div>
                   </div>
               </div>
@@ -53,34 +54,32 @@ input[type=number]::-webkit-outer-spin-button {
                       <div class="table-responsive">
                           <table class="table m-t-30">
                               <thead>
-                                  <th>Sale Id</th>
-                                  <th>Product</th>
+                                  <th>Item code</th>
+                                  <th>Item Name</th>
                                   <th>Storage Type</th>
-                                  <th>Barell Measure</th>
-                                  <th>Unit purchased</th>
-                                  <th>Unit Cost</th>
+                                  <th>Item Measure</th>
+                                  <th>Per Unit Price</th>
+                                  <th>Purchase Quantity</th>
+                                  <th>Purchase Cost</th>
+                                  <th>Excluding Tax</th>
+                                  <th>Including Tax</th>
                               </tr></thead>
                               <tbody>
-                                @foreach($sale_item as $key =>$val)
-                                  @php  $sale_price = explode(',', $val->sale_price);
-                                        $product = count($sale_price);
-                                        $chemical_barrel = explode(',', $val->chemical_barrel);
-                                        $sale_unit = explode(',', $val->sale_unit);
-                                        $barrel_measure = explode(',', $val->barrel_measure);
-                                         @endphp
-                                  @for($i=0 ; $i<$product ;$i++)
+                                @foreach($purchase_item as $key => $val)
                                     <tr>
-                                        <td>{{$i+1}}</td>
-                                        <td>{{$val->get_chemical['chemical_name']}}</td>
-                                        <td>{{$chemical_barrel[$i]}}</td>
-                                        <td>{{$barrel_measure[$i]}}</td>
-                                        <td>{{$sale_unit[$i]}}</td>
-                                        <td>{{$sale_price[$i]}}</td>
-                                        @php  $total_price[] = $sale_price[$i];@endphp
+                                        <td>{{$val->item_code}}</td>
+                                        <td>{{$val->item_name}}</td>
+                                        <td>{{$val->storage_type}}</td>
+                                        <td>{{$val->purchasing_type}}</td>
+                                        <td>{{$val->purchase_unit}}</td>
+                                        <td>{{$val->quantity}}</td>
+                                        <td>{{$val->unit_purchased}}</td>
+                                        <td>{{$val->exc_tax}}</td>
+                                        <td>{{$val->inc_code}}</td>
                                     </tr>
-                                  @endfor
-                                  @php $cash_recieved = $val->cash_recieved; @endphp
-                                @endforeach                                     
+                                @endforeach
+                                 {{--  @php $cash_recieved = $val->cash_recieved; @endphp --}}
+                                                                   
                               </tbody>
                           </table>
                       </div>
@@ -88,14 +87,38 @@ input[type=number]::-webkit-outer-spin-button {
               </div>
               <div class="row" style="border-radius: 0px;">
                   <div class="col-md-3 col-md-offset-9">
-                      <p class="text-right"><b>Sub-total:</b> {{array_sum($total_price)}} </p>
-                     
+                    @php 
+                      if(isset($purchase_item[0]['payment_cash']) && !empty($purchase_item[0]['payment_cash'])){
+                    @endphp
+                      <p class="text-right"><b>Cash Recieved:</b> {{$purchase_item[0]['cash_recieved']}} </p><br>
+                      @php }@endphp 
+                      @php 
+                      if(isset($purchase_item[0]['payment_cheque']) && !empty($purchase_item[0]['payment_cheque'])){
+                    @endphp
+                      <p class="text-right"><b>Cheque Payment:</b> {{$purchase_item[0]['cheque_amount']}} </p><br>
+                      @php }@endphp 
+                      @php 
+                      if(isset($purchase_item[0]['credit_limit']) && !empty($purchase_item[0]['credit_limit'])){
+                    @endphp
+                      <p class="text-right"><b>Credit Cash Recieved:</b> {{$purchase_item[0]['credit_limit']}} </p><br>
+                      @php }@endphp 
+                      @php 
+                      if($purchase_item[0]['carriage'] == ''){
+                      @endphp
+                      <p class="text-right"><b>Carriage:</b> {{$purchase_item[0]['carriage']}} </p><br>
+                      <p class="text-right"><b>Sub-total:</b> {{$purchase_item[0]['net_total']}} </p>
+                      @php }else{@endphp
+                      <p class="text-right"><b>Sub-total:</b> {{$purchase_item[0]['net_total'] + $purchase_item[0]['carriage']}} </p>
+                      @php }@endphp 
                       <hr>
                       
                   </div>
               </div>
               <hr>
               <div class="hidden-print">
+                 <div class="pull-right" style="margin-left: 10px">
+                      <a href="{{route('dashboard')}}" class="btn btn-inverse waves-effect waves-light">Close</i></a>
+                  </div>
                   <div class="pull-right">
                       <a href="javascript:window.print()" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-print"></i></a>
                   </div>

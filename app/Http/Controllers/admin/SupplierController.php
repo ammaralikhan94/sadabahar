@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Supplier;
 use App\User;
-use App\supplier_payment;
+use App\Supplier_payment;
 use App\Supplier_cheques;
-use App\supplier_amount_limit;
+use App\Supplier_amount_limit;
 use App\Inventory;
 
 class SupplierController extends Controller
@@ -33,15 +33,10 @@ class SupplierController extends Controller
     		'name' => $request->name,
     		'phone_number' => $request->phone_number,
     		'address' => $request->address,
+            'company_name'=>$request->company_name,
     		'cheque_status' => $request->cheque_status,
             'payment_mode' => $request->payment_mode
     	])->id;
-        /*supplier_payment::create([
-            'supplier_id' => $supplier_id,
-            'due_date' => $request->due_date,
-            'due_amount' =>  $request->due_amount,
-            'status' => $request->cheque_status
-        ]);*/
         Supplier_cheques::create([
             'supplier_id' => $supplier_id,
             'cheque_date_limit' => $request->cheque_date_limit,
@@ -58,7 +53,7 @@ class SupplierController extends Controller
     public function edit_supplier($id)
     {
     	$supplier  = Supplier::find($id);
-        $supplier_payment  = supplier_payment::orderBy('id', 'desc')->where('supplier_id', $id )->first();
+        $supplier_payment  = Supplier_payment::orderBy('id', 'desc')->where('supplier_id', $id )->first();
         $Supplier_cheques  = Supplier_cheques::orderBy('id', 'desc')->where('supplier_id', $id )->first();
         $supplier_amount_limit  = supplier_amount_limit::orderBy('id', 'desc')->where('supplier_id', $id )->first();
     	return view('admin.supplier.edit_supplier' , compact('supplier','supplier_payment' , 'supplier_amount_limit' , 'Supplier_cheques'));
@@ -67,11 +62,11 @@ class SupplierController extends Controller
     public function update_supplier(Request $request)
     {   
         
-        
     	Supplier::where('id' , $request->supplier_id)->update([
             'name' => $request->name,
-    		'phone_number' => $request->phone_number,
-    		'address' => $request->address,
+    		'phone_number'  => $request->phone_number,
+            'company_name'  => $request->company_name,
+    		'address'       => $request->address,
     		'cheque_status' => $request->cheque_status,
             'payment_mode'  => $request->payment_mode
         ]);
@@ -82,10 +77,10 @@ class SupplierController extends Controller
         ]);
         Supplier_amount_limit::where('supplier_id' , $request->supplier_id)->update([
             'supplier_amount_limit' => $request->supplier_amount_limit,
-            'credit_date_limit' => $request->credit_date_limit
+            'credit_date_limit' => $request->credit_due_date
         ]);
         if($request->cheque_status == 'due_date' || $request->cheque_status == 'amount' ){
-            supplier_payment::create([
+            Supplier_payment::create([
                 'due_date' => $request->due_date,
                 'due_amount' =>  $request->due_amount,
                 'status' => $request->cheque_status
@@ -95,7 +90,7 @@ class SupplierController extends Controller
     }
 
     public function supplier_payment($id){
-        /*$supplier_payment  = supplier_payment::orderBy('id', 'desc')->where('supplier_id', $id )->get();*/
+        /*$supplier_payment  = Supplier_payment::orderBy('id', 'desc')->where('supplier_id', $id )->get();*/
         $supplier_payment = Inventory::orderBy('id', 'desc')->where('supplier',$id)->get();
         
         return view('admin.supplier.payment_supplier' ,compact('supplier_payment'));

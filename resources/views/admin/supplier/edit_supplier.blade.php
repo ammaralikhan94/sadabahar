@@ -31,6 +31,13 @@
                                     <input type="text" class="form-control" name="name" value="{{$supplier->name}}" required="">
                                 </div>
                             </div>
+
+                            <div class="form-group col-md-6">
+                                <label class="col-md-2 control-label">Company Name</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control" name="company_name" value="{{$supplier->company_name}}" required="">
+                                </div>
+                            </div>
                            
                             <input type="hidden" name="supplier_id" value="{{$supplier->id}}">
                             {{-- <div class="form-group col-md-6">

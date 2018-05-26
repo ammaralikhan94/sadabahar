@@ -13,6 +13,7 @@ use App\Chemical;
 use App\Barrel;
 use App\Notification;
 use App\Item_charter;
+use App\Invoice_number;
 use Auth;
 use DB;
 
@@ -23,127 +24,68 @@ class InventoryController extends Controller
     	$item_type = Item_purchase_type::get();
     	$supplier  = Supplier::get();
         $chemical  = Chemical::get();
-    	return view('admin.inventory.create_inventory' , compact('item_type','supplier','chemical'));
+        $invoice_number = Invoice_number::count();
+        $invoice_number = $invoice_number +1;
+        return view('admin.inventory.create_inventory' , compact('item_type','supplier','chemical','invoice_number'));
     }
 
 
     /*list inventory*/
     public function list_inventory(){
-    	$inventory = Inventory::get();
+        $inventory = Inventory::get();
         $item_charter = Item_charter::get();
     	return view('admin.inventory.list_inventory' , compact('inventory','item_charter'));
     }
     
     /*Insert Inventory*/
     public function insert_inventory(Request $request){
-
-        if(isset($_POST['purchase_unit']) == 'kg' && isset($_POST['purchased_kg'])){
-            if($_POST['purchased_gram'] == '500'){
-                  $kg = floatval($_POST['purchased_kg']+0.5);
+        $count = count($_POST['item_code']);
+        for($i = 0 ; $i<$count; $i++){
+            if($_POST['item_code'][$i] != '' ){
+                $item_code = $_POST['item_code'][$i];
+                $description = $_POST['description'][$i];
+                $measurment = $_POST['measurment'][$i];
+                $storage_type = $_POST['storage_type'][$i];
+                $quantity = $_POST['quantity'][$i];
+                $unit = $_POST['unit'][$i];
+                $rate = $_POST['rate'][$i];
+                $exc_tax = $_POST['exc_tax'][$i];
+                $inc_code = $_POST['inc_code'][$i];
+               
+                $inventory_id = Inventory::create([
+                'supplier'=> $request->supplier,
+                'carriage'=> $request->carriage,
+                'net_total' => $request->net_total,
+                'payment_cash' => $request->payment_cash,
+                'payment_credit' => $request->payment_credit,
+                'payment_cheque' => $request->payment_cheque,
+                'cash_recieved' => $request->cash_recieved,
+                'cheque_number' => $request->cheque_number,
+                'cheque_image' => $request->cheque_image,
+                'cheque_amount' => $request->cheque_amount,
+                'limit_cheque_date' => $request->limit_cheque_date,
+                'item_code'=>$item_code,
+                'dop' => '25-5-2018',
+                'item_name' => $description,
+                'purchasing_type' => $measurment,
+                'storage_type' => $storage_type,
+                'invoice_number' => $request->invoice_number,
+                'quantity' => $quantity,
+                'purchase_unit' => $unit,
+                'unit_purchased' => $rate,
+                'exc_tax' => $exc_tax,
+                'inc_code' => $inc_code
+            ])->id;
+                Invoice_number::insert([
+                    'inventory_id' =>  $inventory_id,
+                    'invoice_number' => $request->invoice_number
+                ]);
             }
-            if($_POST['purchased_gram'] == '250'){
-                  (float) $kg = $_POST['purchased_kg']+0.25;
-            }
-            if($_POST['purchased_gram'] == '750'){
-                  $kg = $_POST['purchased_kg']+0.75;
-            }
-            if($_POST['purchased_gram'] == '1000'){
-                  $kg = $_POST['purchased_kg']+1;
-            }elseif($_POST['purchased_gram'] != '500' && $_POST['purchased_gram'] !='250' && $_POST['purchased_gram'] !='750' && $_POST['purchased_gram'] != '1000'){
-                     $kg = $_POST['purchased_kg'];
-                }  
-        }else{
-            $kg = '0';
         }
-        
-        if(!isset($_POST['payment_cash']) && !isset($_POST['payment_credit']) && !isset($_POST['payment_cheque']) ){
-            return redirect()->back()->with('error' , 'Select Payment Please !');
-        }
-        $total_quantity = $request->quantity * $request->total_quantity;
-        
-    	$inventory_id = Inventory::create([
-    		'item_name' => $request->item_name,
-            'dop' => $request->dop,
-            'chemical_amount' => $request->chemical_amount,
-            'quantity' => $request->quantity,
-            'total_amount' => $request->total_amount,   
-            'supplier' => $request->supplier,
-            'limit_amount' => $request->limit_amount,
-            'added_by' => $request->added_by,
-            'cheque_number' => $request->cheque_number,
-            'cheque_image' => $request->cheque_image,
-            'cheque_amount' => $request->cheque_amount,
-            'limit_cheque_date' => $request->limit_cheque_date,
-            'payment_status' => $request->payment_status,
-            'due_date' => $request->due_date,
-            'chemical_name' => $request->chemical_name,
-            'payment_cash' => $request->payment_cash,
-            'payment_credit' => $request->payment_credit,
-            'payment_cheque' => $request->payment_cheque,
-            'due_amount' => $request->due_amount,
-            'purchasing_type' => $request->purchasing_type,
-            'cash_recieved' => $request->cash_recieved,
-            'total_quantity' => $total_quantity,
-            'purchase_amount' => $request->purchase_amount,
-            'purchase_unit'  =>$request->purchase_unit,
-            'purchased_gram' => $request->purchased_gram,
-            'unit_purchased' => $kg
-    	])->id;
-        $check_previous_barrel = Barrel::where('barrel_type', $request->item_name)->where('chemical_name',$request->chemical_name)->first();
-        if($check_previous_barrel != '' ){
-            $total_barrel = $request->quantity + $check_previous_barrel->total_barrel;
-            if($request->purchase_unit == 'gram'){
-                $purchased_unit= $kg / 1000;
-                $remaining_volume =  $request->strength - $purchased_unit ;
-                $purchased_unit = $purchased_unit + $check_previous_barrel->current_volume;
-                $remaining_volume = $remaining_volume + $check_previous_barrel->remaining_volume;
-                $total_volume = $request->strength + $check_previous_barrel->total_volume;
-            }if($request->purchase_unit == 'kg' || $request->purchase_unit == 'quantity'){
-                
-                $remaining_volume =  $request->strength - $check_previous_barrel->current_volume;
-                
-                $purchased_unit = $kg+ $check_previous_barrel->unit_purchased;
-                $remaining_volume = $remaining_volume + $check_previous_barrel->remaining_volume;
-                $total_volume = $request->strength + $check_previous_barrel->total_volume;
-
-            }
-            
-            Barrel::where('id',$check_previous_barrel->id)->update([
-                'total_barrel'   => $total_barrel,
-                'remaining_volume' => $remaining_volume,
-                'current_volume' =>  $purchased_unit,
-                'unit_purchased' =>  $purchased_unit,
-                'total_volume' =>  $total_volume,     
-            ]);
-        }else{
-           if($request->purchase_unit == 'gram'){
-                $purchased_unit=  $kg/ 1000;
-                $remaining_volume =  $request->strength - $purchased_unit ;
-           }if($request->purchase_unit == 'kg' || $request->purchase_unit == 'quantity' || $request->purchase_unit == 'liter'){
-            
-                $purchased_unit =  $kg;    
-                $remaining_volume = $request->strength -  $kg;
-           }
-            
-            Barrel::create([
-                'barrel_type' => $request->item_name,
-                'barrel_strength' => $request->strength,
-                'barrel_measure' => $request->purchasing_type,
-                'chemical_name' => $request->chemical_name,
-                'empty_barrel'  => 0,
-                'remaining_volume' => $remaining_volume,
-                'fully_occupied_barrel' =>  $request->quantity,
-                'total_barrel'   => $request->quantity,
-                'item_purchase_type' => 'new' , 
-                'current_volume' =>  $purchased_unit,
-                'current_unit' =>$request->purchasing_type,
-                'purchase_unit'  => $request->purchase_unit,
-                'unit_purchased' => $purchased_unit,
-                'total_volume' => $request->strength,
-                'added_by'     => Auth::user()->id     
-            ]);
-        }
-    	return redirect()->back()->with(array('success' => 'Item successfully added , If you want to delete the item click on the button below' , 'id' => $inventory_id));
+        $purchase_item = Inventory::where('invoice_number',$request->invoice_number)->get();
+        $invoice = $request->invoice_number;
+        return view('admin.invoice.invoice',compact('purchase_item','invoice'));
+    	/*return redirect()->back()->with(array('success' => 'Item successfully added , If you want to delete the item click on the button below' , 'id' => $inventory_id));*/
     }
 
 	/*Ajax call for getting type*/
@@ -160,8 +102,18 @@ class InventoryController extends Controller
 
 	/*Ajax call for getting supplier limit*/
 	public function get_credit_limit(){
-		$supplier_amount = Supplier_amount_limit::where('supplier_id' , $_POST['supplier'])->first();
-		return json_encode($supplier_amount);
+		$supplier_amount  = Supplier_amount_limit::where('supplier_id' , $_POST['supplier'])->first();
+        $credit_cash      = Inventory::where('supplier' , $_POST['supplier'])->get();
+        $supplier_cheques = Supplier_cheques::where('supplier_id' , $_POST['supplier'])->first();
+        $supplier = Supplier::find($_POST['supplier']);
+        $cheque_limit  = $supplier_cheques->cheque_limit_amount;
+        $remaining_credit = 0;
+        $remaining_cheque = 0;
+        foreach ($credit_cash as $key => $value) {
+            $remaining_credit = $supplier_amount->supplier_amount_limit - $value->cash_recieved;
+            $remaining_cheque = $value->cheque_amount - $cheque_limit;
+        }
+		return json_encode(array('supplier_amount' => $supplier_amount, 'remaining_credit' => $remaining_credit , 'remaining_cheque' => $remaining_cheque , 'cheque_limit' => $cheque_limit, 'supplier' => $supplier));
 	}
 
 	/*Ajax for getting cheque limit of supplier*/
@@ -182,32 +134,7 @@ class InventoryController extends Controller
 	/*Update Inventory*/
 	public function update_inventory(Request $request){
 		$inventory_id = $_POST['inventory'];
-        /*$total_quantity = $request->quantity * $request->total_quantity;
-		Inventory::where('id',$inventory_id)->update([
-    		'item_name' => $request->item_name,
-            'dop' => $request->dop,
-            'chemical_amount' => $request->chemical_amount,
-            'quantity' => $request->quantity,
-            'total_amount' => $request->total_amount,
-            'supplier' => $request->supplier,
-            'limit_amount' => $request->limit_amount,
-            'added_by' => $request->added_by,
-            'cheque_number' => $request->cheque_number,
-            'cheque_image' => $request->cheque_image,
-            'cheque_amount' => $request->cheque_amount,
-            'limit_cheque_date' => $request->limit_cheque_date,
-            'payment_status' => $request->payment_status,
-            'due_date' => $request->due_date,
-            'chemical_name' => $request->chemical_name,
-            'payment_cash' => $request->payment_cash,
-            'payment_credit' => $request->payment_credit,
-            'payment_cheque' => $request->payment_cheque,
-            'due_amount' => $request->due_amount,
-            'purchase_amount' => $request->purchase_amount,
-            'purchasing_type' => $request->purchasing_type,
-            'cash_recieved' => $request->cash_recieved,
-            'total_quantity' => $total_quantity
-    	]);*/
+        
         if(isset($_POST['purchase_unit']) == 'kg' && isset($_POST['purchased_kg'])){
             if($_POST['purchased_gram'] == '500'){
                   $kg = floatval($_POST['purchased_kg']+0.5);
@@ -356,4 +283,34 @@ class InventoryController extends Controller
         $total_quantity = Inventory::select('total_quantity')->where('chemical_name',$_POST['chemical_id'])->where('item_name',$_POST['barrel_type'])->sum('total_quantity');
         return json_encode($arrayName = array('barrel_quantity' =>$barrel_quantity ,'total_quantity' =>$total_quantity));
     }
+
+    public function get_suggestion(Request $request){
+        $inventory = Inventory::where('item_code', $request->term)->orWhere('item_name', 'like', '%' . $request->term . '%')->get();
+        $result = array();
+        foreach ($inventory as $key => $value) {
+            $result[]=['id' => $value->id,'value'=>$value->item_code];
+        }
+        return  response()->json($result);
+    }
+
+    public function get_suggestion_name(Request $request){
+        $inventory = Inventory::where('item_code', $request->term)->orWhere('item_name', 'like', '%' . $request->term . '%')->get();
+        $result = array();
+        foreach ($inventory as $key => $value) {
+            $result[]=['id' => $value->id,'value'=>$value->item_name];
+        }
+        return  response()->json($result);
+    }
+
+    public function get_ajax_chemical_name(){
+        $inventory = Inventory::where('item_code', $_POST['item_code'])->value('item_name');
+        return json_encode($inventory);
+    }
+
+    public function get_ajax_chemical_code(){
+        $inventory = Inventory::where('item_name', $_POST['item_name'])->value('item_code');
+        return json_encode($inventory);
+    }
+
+   
 }
