@@ -62,7 +62,9 @@ class CharterController extends Controller
     /*Insert Item*/
     public function insert_item(Request $request){
     	$check_previous = Item_charter::where('parent_id',$request->parent_id)->where('sub_id',$request->sub_id)->where('item_code',$request->item_code)->value('item_code');
+        
     	if($check_previous == ''){
+
     		Item_charter::create([
     		'parent_id' => $request->parent_id,
     		'sub_id' => $request->sub_id,
@@ -75,34 +77,13 @@ class CharterController extends Controller
     		'measurment_unit' => $request->measurment_unit,
     		'status' => $request->status,
     	]);
-        /*Inventory::create([
-            'item_name' => $request->item_name,
-            'dop' => '-',
-            'chemical_amount' => '-',
-            'quantity' => '',
-            'total_amount' => $request->total_amount,   
-            'supplier' => $request->supplier,
-            'limit_amount' => $request->limit_amount,
-            'added_by' => $request->added_by,
-            'cheque_number' => $request->cheque_number,
-            'cheque_image' => $request->cheque_image,
-            'cheque_amount' => $request->cheque_amount,
-            'limit_cheque_date' => $request->limit_cheque_date,
-            'payment_status' => $request->payment_status,
-            'due_date' => $request->due_date,
-            'chemical_name' => $request->chemical_name,
-            'payment_cash' => $request->payment_cash,
-            'payment_credit' => $request->payment_credit,
-            'payment_cheque' => $request->payment_cheque,
-            'due_amount' => $request->due_amount,
-            'purchasing_type' => $request->purchasing_type,
-            'cash_recieved' => $request->cash_recieved,
-            'total_quantity' => $total_quantity,
-            'purchase_amount' => $request->purchase_amount,
-            'purchase_unit'  =>$request->purchase_unit,
-            'purchased_gram' => $request->purchased_gram,
-            'unit_purchased' => $kg
-        ]);*/
+        Inventory::create([
+                'item_code'=>$request->item_code,
+                'dop' => date('d-m-Y'),
+                'item_name' =>$request->item_name,
+                'purchasing_type' => $request->measurment_unit
+            ]);
+        
     	echo json_encode(true);
     	}else{
     	Item_charter::where('parent_id',$request->parent_id)->where('sub_id',$request->sub_id)->where('item_code',$request->item_code)->update([

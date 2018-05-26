@@ -62,7 +62,7 @@ hr{
                             <h4 class="m-t-0 header-title" style="margin-top: 10px !important; text-align: right;"><b>Purchase Order No</b></h4>
                         </div>
                         <div class="col-md-2">
-                            <input type="text" class="form-control pull-right" name="invoice_number" value="{{$invoice_number}}" readonly="">
+                            <input type="text" class="form-control pull-right" name="invoice_number" value="{{$invoice_number}}" readonly="" readonly="">
                         </div>
                         <div class="col-md-2">
                             <h4 class="m-t-0 header-title" style="margin-top: 10px !important;text-align: right;"><b>D.O.P</b></h4>
@@ -107,31 +107,31 @@ hr{
                                     <div class="form-group col-md-4">
                                         <!-- <label class="col-md-4 control-label">Scode</label> -->
                                         <div class="col-md-12">
-                                            <input type="text" class="form-control" name="scode" id="scode" placeholder="scode"  required="">
+                                            <input type="text" class="form-control" name="scode" id="scode" placeholder="scode"  required="" readonly="">
                                         </div>                                
                                     </div>
                                     <div class="form-group col-md-4">
                                         <!-- <label class="col-md-3 control-label">Name</label> -->
                                         <div class="col-md-12">
-                                            <input type="text" class="form-control" name="name" id="name" placeholder="Full Name"  required="">
+                                            <input type="text" class="form-control" name="name" id="name" placeholder="Full Name"  required="" readonly="">
                                         </div>                                
                                     </div>
                                     <div class="form-group col-md-5" style="width: 40%">
                                         <!-- <label class="col-md-7 control-label">Company Name</label> -->
                                         <div class="col-md-12">
-                                            <input type="text" class="form-control" name="company_name" id="company_name" placeholder="Company Name"  required="">
+                                            <input type="text" class="form-control" name="company_name" id="company_name" placeholder="Company Name"  required="" readonly="">
                                         </div>                                
                                     </div>
                                     <div class="form-group col-md-12">
                                         <!-- <label class="col-md-4 control-label">Phone No</label> -->
                                         <div class="col-md-12">
-                                            <input type="text" class="form-control" name="phone_no" id="phone_no" placeholder="Phone No"  required="">
+                                            <input type="text" class="form-control" name="phone_no" id="phone_no" placeholder="Phone No"  required="" readonly="">
                                         </div>                                
                                     </div>
                                     <div class="form-group col-md-12">
                                         <!-- <label class="col-md-2 control-label">Address</label> -->
                                         <div class="col-md-12">
-                                            <input type="text" class="form-control" name="address" id="address" placeholder="Address"  required="">
+                                            <input type="text" class="form-control" name="address" id="address" placeholder="Address"  required="" readonly="">
                                         </div>                                
                                     </div>
                                 
@@ -145,13 +145,13 @@ hr{
                                         <div class="form-group col-md-6">
                                             <!-- <label class="col-md-7 control-label">Credit Balance Limit</label> -->
                                             <div class="col-md-12">
-                                                <input type="number" class="form-control" name="credit_balance_limit" id="credit_balance_limit" placeholder="Credit balance limit"  required="">
+                                                <input type="number" class="form-control" name="credit_balance_limit" id="credit_balance_limit" placeholder="Credit balance limit"  required="" readonly="">
                                             </div>                                
                                         </div>
                                         <div class="form-group col-md-6">
                                             <!-- <label class="col-md-5 control-label">Credit Balance</label> -->
                                             <div class="col-md-12">
-                                                <input type="number" class="form-control" name="credit_balance" id="credit_balance" placeholder="Credit Balance"  required="">
+                                                <input type="number" class="form-control" name="credit_balance" id="credit_balance" placeholder="Credit Balance"  required="" readonly="">
                                             </div>                                
                                         </div>
                                     </div>
@@ -160,13 +160,13 @@ hr{
                                          <div class="form-group col-md-6">
                                             <!-- <label class="col-md-6 control-label">PD Cheque Limit</label> -->
                                             <div class="col-md-12">
-                                                <input type="number" class="form-control amount" name="pd_cheque_limit" id="pd_cheque_limit" placeholder="Post-dated Cheque Limit"  required="">
+                                                <input type="number" class="form-control amount" name="pd_cheque_limit" id="pd_cheque_limit" placeholder="Post-dated Cheque Limit"  required="" readonly="">
                                             </div>                                
                                         </div>
                                         <div class="form-group col-md-6">
                                             <!-- <label class="col-md-7 control-label">PD Cheque Balance</label> -->
                                             <div class="col-md-12">
-                                                <input type="number" class="form-control amount" name="pd_cheque_balance" id="pd_cheque_balance" placeholder="Post-dated Cheque Balance"  required="">
+                                                <input type="number" class="form-control amount" name="pd_cheque_balance" id="pd_cheque_balance" placeholder="Post-dated Cheque Balance"  required="" readonly="">
                                             </div>                                
                                         </div>
                                      </div>
@@ -178,7 +178,7 @@ hr{
                                     <div class="row">    
                                     <div class="col-md-12">
                                          <div class="table-plus">
-                                             <button type="button" id="submit_parent" class="btn btn-success fa fa-plus" ></button>
+                                             <button type="button" id="add_more" class="btn btn-success fa fa-plus" ></button>
                                          </div>
                                     </div>                                                                               
                                         <div class="p-20">
@@ -197,7 +197,7 @@ hr{
                                                         <th>Value incl. Tax</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody id="add_here">
                                                     <tr>
                                                         <th scope="row">1</th>
                                                         <td><input type="text" id="code_1" class="form-control code" name="item_code[]"></td>
@@ -218,7 +218,7 @@ hr{
                                                         <td><input type="number" id="quantity_1" class="form-control quantity" name="quantity[]"></td>
                                                         <td><input type="text"   id="unit_1" class="form-control unit" name="unit[]"></td>
                                                         <td><input type="number" id="rate_1" class="form-control rate calculate" name="rate[]"></td>
-                                                        <td><input type="text"  class="form-control calculate exc_tax" name="exc_tax[]"></td>
+                                                        <td><input type="text"   id="exc_tax_1" class="form-control calculate exc_tax" name="exc_tax[]"></td>
                                                         <td><input type="text"  class="form-control calculate inc_code" name="inc_code[]"></td>
                                                     </tr>
                                                     <tr>
@@ -239,7 +239,7 @@ hr{
                                                         <td><input type="number"  id="quantity_2" class="form-control quantity" name="quantity[]"></td>
                                                         <td><input type="text"    id="unit_2"     class="form-control unit" name="unit[]"></td>
                                                         <td><input type="number"    id="rate_2"     class="form-control calculate" name="rate[]"></td>
-                                                        <td><input type="text"  class="form-control calculate exc_tax" name="exc_tax[]"></td>
+                                                        <td><input type="text"   id="exc_tax_2" class="form-control calculate exc_tax" name="exc_tax[]"></td>
                                                         <td><input type="text"  class="form-control calculate inc_code" name="inc_code[]"></td>
                                                     </tr>
                                                     <tr>
@@ -262,25 +262,25 @@ hr{
                                                         <td><input type="number" id="quantity_3" class="form-control quantity" name="quantity[]"></td>
                                                         <td><input type="text"   id="unit_3"  class="form-control unit" name="unit[]"></td>
                                                         <td><input type="number"   id="rate_3"  class="form-control rate calculate" name="rate[]"></td>
-                                                        <td><input type="text"   class="form-control calculate exc_tax" name="exc_tax[]"></td>
+                                                        <td><input type="text"   id="exc_tax_3" class="form-control calculate exc_tax" name="exc_tax[]"></td>
                                                         <td><input type="text"   class="form-control calculate inc_code" name="inc_code[]"></td>
                                                     </tr>
                                                     <thead style="background-color: #ccc;">
                                                     <tr>
                                                         <th  colspan="7"></th>
                                                         
-                                                        <th>Total</th>
-                                                        <th>Value Excl. Tax</th>
-                                                        <th>Value incl. Tax</th>
+                                                        <th id="total_rs">Total</th>
+                                                        <th id="total_rs_ex">Value Excl. Tax</th>
+                                                        <th id="tax_rs">Value incl. Tax</th>
                                                         </tr>
                                                     </thead>
                                                 </tbody>
                                             </table>
                                         </div>         
-                                        <h3 class="pull-right" id="total_rs" style="margin-right: 60px">Amount : </h1>
-                                        <h3 class="pull-right" id="tax_rs" style="margin-right: 200px">Tax Rs : </h1>                               
+                                        {{-- <h3 class="pull-right" id="total_rs" style="margin-right: 60px">Amount : </h1> --}}
+                                        {{-- <h3 class="pull-right" id="tax_rs" style="margin-right: 200px">Tax Rs : </h1>  --}}                              
                                     </div>
-                                </div>
+                                </div>  
                             </div>
                             <div class="col-md-offset-6 col-md-6">
                                 <div class="card-box clearfix">
@@ -442,6 +442,7 @@ hr{
     var sum =  0;
     var tax =  0; 
     var total_max = 0 ;
+    var carriage = 0;
     $(document).on('keyup','.unit',function (){
         id = $(this).attr('id');
         
@@ -450,6 +451,7 @@ hr{
         unit = parseInt($('#unit_'+id).val());
         rate = quantity * unit;
         $('#rate_'+id).val(rate);  
+        $('#exc_tax_'+id).val(rate);  
         sum = 0; 
          $('[name="rate[]"]').each(function(){
             amount = $(this).val();
@@ -459,12 +461,14 @@ hr{
         });
         $('#total_rs').html('');
         $('#total_rs').html('Total Rs:  '+sum);
+        $('#total_rs_ex').html('');
+        $('#total_rs_ex').html('Total Rs:  '+sum);
         $('#net_total').val(sum);
         total = sum;
     });
 
     /******/
-    $(document).on('keyup','[name="exc_tax[]"]',function (){
+   /* $(document).on('keyup','[name="exc_tax[]"]',function (){
         tax = 0;
         $('[name="exc_tax[]"]').each(function(){
             amount = $(this).val();
@@ -483,7 +487,7 @@ hr{
         $('#tax_rs').html('');
         $('#tax_rs').html(`Tax Rs:  `+tax);
         $('#net_total').val(parseInt(tax)+parseInt(sum));
-    });
+    });*/
     /******/
     /******/
     $(document).on('keyup','[name="inc_code[]"]',function (){
@@ -496,23 +500,62 @@ hr{
         });
         $('#tax_rs').html('');
         $('#tax_rs').html(`Tax Rs:  `+tax);
-        $('[name="exc_tax[]"]').each(function(){
+       /* $('[name="exc_tax[]"]').each(function(){
             amount = $(this).val();
             if(amount != ''){
                 tax =  parseInt(amount) + parseInt(tax);    
             }
-        });
+        });*/
         $('#tax_rs').html('');
         $('#tax_rs').html(`Tax Rs:  `+tax);
         $('#net_total').val(parseInt(tax)+parseInt(sum));
     }); 
+    /***/
+    $(document).on('focusout','#carriage',function (){
+       net_total = $('#net_total').val();
+       
+       total_money = parseInt(net_total) + parseInt($(this).val());
+       $('#net_total').val(total_money);
+       carriage = total_money;
+    });
+    /***/
+    row = 4;
+    $(document).on('click','#add_more',function (){
+        html = `<tr>
+                   <th scope="row">`+row+`</th>
+                    <td><input type="text" id="code_`+row+`" class="form-control code" name="item_code[]"></td>
+                    <td><input type="text" id="name_`+row+`" class="form-control name" name="description[]"></td>
+                    <td>
+                        <select name="measurment[]" class="form-control">
+                            <option>Select measurment</option>
+                            <option value="kg">Kg</option>
+                            <option value="liter">Liter</option>
+                            <option value="quantity">Quantity</option>
+                        </select>
+                    </td>
+                     <td><select name="storage_type[]" class="form-control add_item_type">
+                        @foreach($item_type as $key => $val)
+                            <option value="{{$val->item_name}}">{{$val->item_name}}</option>
+                        @endforeach
+                    </select></td>
+                    <td><input type="number" id="quantity_`+row+`" class="form-control quantity" name="quantity[]"></td>
+                    <td><input type="text"   id="unit_`+row+`"  class="form-control unit" name="unit[]"></td>
+                    <td><input type="number"   id="rate_`+row+`"  class="form-control rate calculate" name="rate[]"></td>
+                    <td><input type="text"   id="exc_tax_`+row+`" class="form-control calculate exc_tax" name="exc_tax[]"></td>
+                    <td><input type="text"   class="form-control calculate inc_code" name="inc_code[]"></td>
+                </tr>`;
+                $('#add_here').append(html);
+                row++;
+
+    });
     /******/
     $(document).on('focusout',function (){
         total_rupees = parseInt(sum)+parseInt(tax)
         carriage = $('#carriage').val();
         sum_of_product = parseInt(total_rupees) + parseInt(carriage)
-        total = sum_of_product;
-        $('#net_total').val(parseInt(tax)+parseInt(sum));
+        total = parseInt(tax)+parseInt(sum);
+        total = total + parseInt(carriage);
+        $('#net_total').val();
     });
     /******/
    

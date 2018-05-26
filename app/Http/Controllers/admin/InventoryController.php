@@ -59,6 +59,7 @@ class InventoryController extends Controller
                 'payment_cash' => $request->payment_cash,
                 'payment_credit' => $request->payment_credit,
                 'payment_cheque' => $request->payment_cheque,
+                'amount_credit' => $request->amount_credit,
                 'cash_recieved' => $request->cash_recieved,
                 'cheque_number' => $request->cheque_number,
                 'cheque_image' => $request->cheque_image,

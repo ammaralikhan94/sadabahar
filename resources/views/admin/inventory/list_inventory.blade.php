@@ -35,8 +35,8 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Chemical Name</th>
-                    <th>Storage type</th>
+                    <th>Product Name</th>
+                    <th>Item Code</th>
                     <th>Quantity</th>
                     <th>Total Amount</th>
                     <th>Payment Mode</th>
@@ -49,15 +49,15 @@
                 <tr>
                     <td>{{$val->key + 1}}</td>
                     <td>{{$val->item_name}}</td>
-                    <td>{{$val->storage_type}}</td>
+                    <td>{{$val->item_code}}</td>
                     <td>{{$val->quantity}}</td>
-                    <td>{{$val->net_total}}</td>
-                    <td>{{(isset($val->payment_cash) &&  $val->payment_cash == 'on')?'Cash':''}}{{(isset($val->payment_cheque) && $val->payment_cheque == 'on')?'Cheque':''}}{{(isset($val->payment_credit) &&  $val->payment_credit == 'on')?'Cash':''}}</td>
-                    <td>{{$val->payment_status}}</td>
-                    <td><a class="btn btn-primary" href="{{route('edit_inventory' , ['id' => $val->id])}}">Edit</a> <a class="btn btn-danger" href="{{route('delete_inventory' , ['id' => $val->id])}}">Delete</a></td>
+                    <td>{{$val->unit_purchased}}</td>
+                    <td>{{(isset($val->payment_cash) &&  $val->payment_cash == 'on')?'Cash,':''}}{{(isset($val->payment_cheque) && $val->payment_cheque == 'on')?'Cheque,':''}}{{(isset($val->payment_credit) &&  $val->payment_credit == 'on')?'Cash':''}}</td>
+                    <td>{{-- {{$val->payment_status}} --}}Active</td>
+                    <td>{{-- <a class="btn btn-primary" href="{{route('edit_inventory' , ['id' => $val->id])}}">Edit</a> --}} <a class="btn btn-danger" href="{{route('delete_inventory' , ['id' => $val->id])}}">Delete</a></td>
                 </tr>
                 @endforeach
-                @foreach($item_charter as $key => $value)
+               {{--  @foreach($item_charter as $key => $value)
                     <tr>
                         <td>{{$value->key + 1}}</td>
                         <td>{{$value->item_name}}</td>
@@ -66,9 +66,9 @@
                         <td>{{$value->purchase_price}}</td>
                         <td>-</td>
                         <td>{{($value->payment_status == 0)?'Inactive':'Active'}}</td>
-                        <td><a class="btn btn-primary" href="{{route('edit_inventory' , ['id' => $value->id])}}">Edit</a> <a class="btn btn-danger" href="{{route('delete_inventory' , ['id' => $val->id])}}">Delete</a></td>
+                        <td><a class="btn btn-primary" href="{{route('edit_inventory' , ['id' => $value->id])}}">Edit</a> <a class="btn btn-danger" href="{{route('delete_inventory' , ['id' => $value->id])}}">Delete</a></td>
                     </tr>
-                @endforeach
+                @endforeach --}}
                 </tbody>
             </table>
         </div>

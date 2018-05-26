@@ -44,7 +44,7 @@ input[type=number]::-webkit-outer-spin-button {
                       <div class="pull-right m-t-30">
                           <p><strong>Date: </strong> {{date('d-m-Y')}}</p><br>
                           <p><strong>Supplier: </strong> {{App\Supplier::where('id',$purchase_item[0]['supplier'])->value('name')}} </p><br>
-                          <p><strong>Payment Type: </strong> {{(isset($purchase_item[0]['payment_cash']) &&  $purchase_item[0]['payment_cash'] == 'on')?'Cash':''}}{{(isset($purchase_item[0]['payment_cheque']) && $purchase_item[0]['payment_cheque'] == 'on')?'Cheque':''}}{{(isset($purchase_item[0]['payment_credit']) &&  $purchase_item[0]['payment_credit'] == 'on')?'Cash':''}}</p><br>
+                          <p><strong>Payment Type: </strong> {{(isset($purchase_item[0]['payment_cash']) &&  $purchase_item[0]['payment_cash'] == 'on')?'Cash,':''}}{{(isset($purchase_item[0]['payment_cheque']) && $purchase_item[0]['payment_cheque'] == 'on')?'Cheque,':''}}{{(isset($purchase_item[0]['payment_credit']) &&  $purchase_item[0]['payment_credit'] == 'on')?'credit,':''}}</p><br>
                       </div>
                   </div>
               </div>
@@ -93,14 +93,14 @@ input[type=number]::-webkit-outer-spin-button {
                       <p class="text-right"><b>Cash Recieved:</b> {{$purchase_item[0]['cash_recieved']}} </p><br>
                       @php }@endphp 
                       @php 
-                      if(isset($purchase_item[0]['payment_cheque']) && !empty($purchase_item[0]['payment_cheque'])){
+                      if(isset($purchase_item[0]['cheque_amount']) && !empty($purchase_item[0]['cheque_amount'])){
                     @endphp
                       <p class="text-right"><b>Cheque Payment:</b> {{$purchase_item[0]['cheque_amount']}} </p><br>
                       @php }@endphp 
                       @php 
-                      if(isset($purchase_item[0]['credit_limit']) && !empty($purchase_item[0]['credit_limit'])){
+                      if(isset($purchase_item[0]['amount_credit']) && !empty($purchase_item[0]['amount_credit'])){
                     @endphp
-                      <p class="text-right"><b>Credit Cash Recieved:</b> {{$purchase_item[0]['credit_limit']}} </p><br>
+                      <p class="text-right"><b>Credit Cash:</b> {{$purchase_item[0]['amount_credit']}} </p><br>
                       @php }@endphp 
                       @php 
                       if($purchase_item[0]['carriage'] == ''){
@@ -108,7 +108,7 @@ input[type=number]::-webkit-outer-spin-button {
                       <p class="text-right"><b>Carriage:</b> {{$purchase_item[0]['carriage']}} </p><br>
                       <p class="text-right"><b>Sub-total:</b> {{$purchase_item[0]['net_total']}} </p>
                       @php }else{@endphp
-                      <p class="text-right"><b>Sub-total:</b> {{$purchase_item[0]['net_total'] + $purchase_item[0]['carriage']}} </p>
+                      <p class="text-right"><b>Sub-total:</b> {{$purchase_item[0]['net_total']}} </p>
                       @php }@endphp 
                       <hr>
                       

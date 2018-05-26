@@ -343,8 +343,9 @@
                             setTimeout(function(){$('#item').css("border-color", "grey"); }, 1000);
                             }    
                         }
-                        location.reload();
+                        
                 });
+                /*location.reload();*/
             });
 
         $(document).on('change','#sub_select',function(){
