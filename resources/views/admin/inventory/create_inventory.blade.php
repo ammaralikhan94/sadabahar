@@ -178,7 +178,7 @@ hr{
                                     <div class="row">    
                                     <div class="col-md-12">
                                          <div class="table-plus">
-                                             <button type="button" id="submit_parent" class="btn btn-success fa fa-plus" > </button>
+                                             <button type="button" id="submit_parent" class="btn btn-success fa fa-plus" ></button>
                                          </div>
                                     </div>                                                                               
                                         <div class="p-20">
@@ -265,6 +265,15 @@ hr{
                                                         <td><input type="text"   class="form-control calculate exc_tax" name="exc_tax[]"></td>
                                                         <td><input type="text"   class="form-control calculate inc_code" name="inc_code[]"></td>
                                                     </tr>
+                                                    <thead style="background-color: #ccc;">
+                                                    <tr>
+                                                        <th  colspan="7"></th>
+                                                        
+                                                        <th>Total</th>
+                                                        <th>Value Excl. Tax</th>
+                                                        <th>Value incl. Tax</th>
+                                                        </tr>
+                                                    </thead>
                                                 </tbody>
                                             </table>
                                         </div>         
