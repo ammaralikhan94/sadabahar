@@ -347,7 +347,7 @@ hr{
                                         </div>                                  
                                     </div>
                                     {{-- *************************POST DATE CHEQUE ************************ --}}
-                                    <div class="form-group col-md-12 show_post_cheques"  style="display: none;">
+                                   {{--  <div class="form-group col-md-12 show_post_cheques"  style="display: none;">
                                         <label class="col-md-5 control-label">Cheque Number</label>
                                         <div class="col-md-3">
                                             <input type="number" class="form-control" name="cheque_number"  placeholder="Cheque Number"  required="">
@@ -355,8 +355,8 @@ hr{
                                         <div class="col-md-3">
                                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mycheque">Add more cheque</button>
                                         </div>  
-                                    </div>
-                                    <div class="form-group col-md-12 show_post_cheques"  style="display: none;">
+                                    </div> --}}
+                                    {{-- <div class="form-group col-md-12 show_post_cheques"  style="display: none;">
                                         <label class="col-md-5 control-label">Cheque Image</label>
                                         <div class="col-md-7">
                                             <input type="file" class="form-control" name="cheque_image"  placeholder="Cheque Image"  required="">
@@ -373,7 +373,7 @@ hr{
                                         <div class="col-md-7">
                                             <input type="date" class="form-control amount" name="limit_cheque_date" id="limit_cheque_date"  placeholder="Limit cheque date"  required="">
                                         </div>                                
-                                    </div>
+                                    </div> --}}
                                     {{-- *************************POST DATE CHEQUE ************************ --}}
                                     <input type="Submit" value="Submit" class="btn btn-success pull-right">
                                 </div>
@@ -460,36 +460,42 @@ hr{
           <h4 class="modal-title">Add Cheques</h4>
         </div>
         <div class="modal-body">
-          <div class="col-md-12">
-            <div class="card-box clearfix">                                                        
+          <div class="col-md-12" >
+            <div class="card-box clearfix" id="add_cheque_here">                                                        
                 <div class="form-group col-md-3">
                     <label class="col-md-12 control-label">Bank Name</label>
                     <div class="col-md-12">
-                        <input type="text" class="form-control" name="scode" id="scode" placeholder="Bank Name"  required="">
+                        <input type="text" class="form-control" name="bank_name[]"  placeholder="Bank Name"  required="">
                     </div>                                
                 </div>
                 <div class="form-group col-md-3">
-                    <label class="col-md-12 control-label">Cheque Name</label>
+                    <label class="col-md-12 control-label">Cheque Number</label>
                     <div class="col-md-12">
-                        <input type="text" class="form-control" name="name" id="name" placeholder="Cheque Name"  required="">
+                        <input type="text" class="form-control" name="cheque_number[]"  placeholder="Cheque Number"  required="">
                     </div>                                
                 </div>
                 <div class="form-group col-md-2">
-                    <label class="col-md-12 control-label">Cheque Date</label>
+                    <label class="col-md-12 control-label">Cheque Amount</label>
                     <div class="col-md-12">
-                        <input type="text" class="form-control" name="name" id="name" placeholder="Cheque Date"  required="">
+                        <input type="text" class="form-control" name="cheque_amount[]"  placeholder="Cheque Amount"  required="">
                     </div>                                
                 </div>
                 <div class="form-group col-md-3">
                     <label class="col-md-12 control-label">Cheque Image</label>
                     <div class="col-md-12">
-                        <input type="text" class="form-control" name="name" id="name" placeholder="Cheque Image"  required="">
+                        <input type="file" class="form-control" name="cheque_image[]"  placeholder="Cheque Image"  required="">
+                    </div>                                
+                </div>
+                <div class="form-group col-md-3">
+                    <label class="col-md-12 control-label">Cheque Date Limit</label>
+                    <div class="col-md-12">
+                        <input type="file" class="form-control" name="limit_cheque_date[]"  placeholder="Cheque Date Limit"  required="">
                     </div>                                
                 </div>
                 <div class="form-group col-md-1">
                     <label class="col-md-12 control-label"></label>
                     <div class="col-md-12">
-                        <button type="button" id="add_more" class="btn btn-success fa fa-plus modal-plus" ></button>
+                        <button type="button"  class="btn btn-success fa fa-plus modal-plus add_more_cheques" ></button>
                     </div>                                
                 </div>
             </div>
@@ -509,6 +515,39 @@ hr{
 @section('customScript')
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
+    $(document).on('click','.add_more_cheques',function (){
+        html = `<div class="form-group col-md-3">
+                    <label class="col-md-12 control-label">Bank Name</label>
+                    <div class="col-md-12">
+                        <input type="text" class="form-control" name="bank_name[]"  placeholder="Bank Name"  required="">
+                    </div>                                
+                </div>
+                <div class="form-group col-md-3">
+                    <label class="col-md-12 control-label">Cheque Name</label>
+                    <div class="col-md-12">
+                        <input type="text" class="form-control" name="cheque_name[]"  placeholder="Cheque Name"  required="">
+                    </div>                                
+                </div>
+                <div class="form-group col-md-2">
+                    <label class="col-md-12 control-label">Cheque Date</label>
+                    <div class="col-md-12">
+                        <input type="text" class="form-control" name="cheque_date[]"  placeholder="Cheque Date"  required="">
+                    </div>                                
+                </div>
+                <div class="form-group col-md-3">
+                    <label class="col-md-12 control-label">Cheque Image</label>
+                    <div class="col-md-12">
+                        <input type="file" class="form-control" name="cheque_image[]"  placeholder="Cheque Image"  required="">
+                    </div>                                
+                </div>
+                <div class="form-group col-md-1">
+                    <label class="col-md-12 control-label"></label>
+                    <div class="col-md-12">
+                        <button type="button"  class="btn btn-success fa fa-plus modal-plus add_more_cheques" ></button>
+                    </div>                                
+                </div>`;
+    });
+
     var sum =  0;
     var tax =  0; 
     var total_max = 0 ;
@@ -764,6 +803,7 @@ hr{
 
             if($('#pdc').is(":checked")){
                 supplier = $('[name="supplier"]').val();
+
                 if(supplier == ''){
                     alert('please select supplier first');
                     return false;
@@ -814,6 +854,7 @@ hr{
                     alert('please select supplier first');
                     return false;
                 }
+                $('#mycheque').modal('show'); 
                 $('.show_post_cheques').show('slow');
                 $('[name="cheque_number"]').prop('required',true);
                 $('[name="cheque_image"]').prop('required',true);
