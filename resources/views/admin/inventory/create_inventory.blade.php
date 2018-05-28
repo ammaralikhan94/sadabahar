@@ -29,6 +29,12 @@ hr{
     padding: 10px;
     text-align: right;
 }
+
+#mycheque .modal-dialog {
+    width: 1000px;
+    margin: 30px auto;
+}
+
 </style>
 @endsection
 @section('content')
@@ -450,7 +456,34 @@ hr{
           <h4 class="modal-title">Add Cheques</h4>
         </div>
         <div class="modal-body">
-          <p>Some text in the modal.</p>
+          <div class="col-md-12">
+            <div class="card-box clearfix">                                                        
+                <div class="form-group col-md-3">
+                    <label class="col-md-12 control-label">Bank Name</label>
+                    <div class="col-md-12">
+                        <input type="text" class="form-control" name="scode" id="scode" placeholder="Bank Name"  required="">
+                    </div>                                
+                </div>
+                <div class="form-group col-md-3">
+                    <label class="col-md-12 control-label">Cheque Name</label>
+                    <div class="col-md-12">
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Cheque Name"  required="">
+                    </div>                                
+                </div>
+                <div class="form-group col-md-3">
+                    <label class="col-md-12 control-label">Cheque Date</label>
+                    <div class="col-md-12">
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Cheque Date"  required="">
+                    </div>                                
+                </div>
+                <div class="form-group col-md-3">
+                    <label class="col-md-12 control-label">Cheque Image</label>
+                    <div class="col-md-12">
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Cheque Image"  required="">
+                    </div>                                
+                </div>
+            </div>
+        </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="cheque">Close</button>
