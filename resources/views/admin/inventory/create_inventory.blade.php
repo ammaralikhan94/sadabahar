@@ -134,7 +134,6 @@ hr{
                                             <input type="text" class="form-control" name="address" id="address" placeholder="Address"  required="" readonly="">
                                         </div>                                
                                     </div>
-                                
                                 </div>
                             </div>
 
@@ -340,9 +339,12 @@ hr{
                                     {{-- *************************POST DATE CHEQUE ************************ --}}
                                     <div class="form-group col-md-12 show_post_cheques"  style="display: none;">
                                         <label class="col-md-5 control-label">Cheque Number</label>
-                                        <div class="col-md-7">
+                                        <div class="col-md-3">
                                             <input type="number" class="form-control" name="cheque_number"  placeholder="Cheque Number"  required="">
                                         </div>                                
+                                        <div class="col-md-3">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mycheque">Add more cheque</button>
+                                        </div>  
                                     </div>
                                     <div class="form-group col-md-12 show_post_cheques"  style="display: none;">
                                         <label class="col-md-5 control-label">Cheque Image</label>
@@ -425,7 +427,7 @@ hr{
                     </div>
                 </div>
             </div>
-</div>
+        </div>
       </div>
       <!-- Modal footer -->
       <div class="modal-footer">
@@ -436,6 +438,31 @@ hr{
   </div>
 </div>
     {{-- Modal for new item --}}
+
+    {{-- Modal for add cheques --}}
+    <div class="modal fade" id="mycheque" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="cheque">&times;</button>
+          <h4 class="modal-title">Add Cheques</h4>
+        </div>
+        <div class="modal-body">
+          <p>Some text in the modal.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="cheque">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  {{--  --}}
+
+
+    {{-- Modal for add more cheques --}}
 @section('customScript')
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
