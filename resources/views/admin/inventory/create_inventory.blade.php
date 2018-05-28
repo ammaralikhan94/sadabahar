@@ -35,6 +35,10 @@ hr{
     margin: 30px auto;
 }
 
+.modal-plus{
+    margin-top: 25px;
+}
+
 </style>
 @endsection
 @section('content')
@@ -470,7 +474,7 @@ hr{
                         <input type="text" class="form-control" name="name" id="name" placeholder="Cheque Name"  required="">
                     </div>                                
                 </div>
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-2">
                     <label class="col-md-12 control-label">Cheque Date</label>
                     <div class="col-md-12">
                         <input type="text" class="form-control" name="name" id="name" placeholder="Cheque Date"  required="">
@@ -480,6 +484,12 @@ hr{
                     <label class="col-md-12 control-label">Cheque Image</label>
                     <div class="col-md-12">
                         <input type="text" class="form-control" name="name" id="name" placeholder="Cheque Image"  required="">
+                    </div>                                
+                </div>
+                <div class="form-group col-md-1">
+                    <label class="col-md-12 control-label"></label>
+                    <div class="col-md-12">
+                        <button type="button" id="add_more" class="btn btn-success fa fa-plus modal-plus" ></button>
                     </div>                                
                 </div>
             </div>
