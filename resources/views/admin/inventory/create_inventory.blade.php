@@ -31,7 +31,7 @@ hr{
 }
 
 #mycheque .modal-dialog {
-    width: 1000px;
+    width: 1400px;
     margin: 30px auto;
 }
 
@@ -55,7 +55,7 @@ hr{
                 <strong>{{ $message }}</strong>
         </div>
     @endif
-    <form class="form-horizontal" action="{{route('insert_inventory')}}" method="post">
+    <form class="form-horizontal" action="{{route('insert_inventory')}}" method="post" enctype="multipart/form-data">
 <div class="row">
         <div class="col-sm-12">
             <div class="card-box">
@@ -93,13 +93,9 @@ hr{
                 <div class="col-md-12">
                     <hr>
                 </div>
-
                 <div class="row">
                     <div class="col-md-12">
-                        
-                        
                             {{csrf_field()}}
-
                             <div class="form-group col-md-12">
                                 <label class="col-md-1 control-label">Supplier</label>
                                 <div class="col-md-2">
@@ -209,70 +205,26 @@ hr{
                                                 <tbody id="add_here">
                                                     <tr>
                                                         <th scope="row">1</th>
-                                                        <td><input type="text" id="code_1" class="form-control code" name="item_code[]"></td>
-                                                        <td><input type="text" id="name_1" class="form-control name" name="description[]"></td>
+                                                        <td><input type="text" id="code_1" class="form-control code" name="item_code[]" required=""></td>
+                                                        <td><input type="text" id="name_1" class="form-control name" name="description[]" required=""></td>
                                                         <td>
-                                                            <select name="measurment[]" class="form-control">
+                                                            <select name="measurment[]" class="form-control" required="">
                                                                 <option>Select Mesurement</option>
                                                                 <option value="kg">Kg</option>
                                                                 <option value="liter">Liter</option>
                                                                 <option value="quantity">Quantity</option>
                                                             </select>
                                                         </td>
-                                                        <td><select name="storage_type[]" class="form-control add_item_type">
+                                                        <td><select name="storage_type[]" class="form-control add_item_type" required=""> 
                                                             @foreach($item_type as $key => $val)
                                                                 <option value="{{$val->item_name}}">{{$val->item_name}}</option>
                                                             @endforeach
                                                         </select></td>
-                                                        <td><input type="number" id="quantity_1" class="form-control quantity" name="quantity[]"></td>
-                                                        <td><input type="text"   id="unit_1" class="form-control unit" name="unit[]"></td>
-                                                        <td><input type="number" id="rate_1" class="form-control rate calculate" name="rate[]"></td>
-                                                        <td><input type="text"   id="exc_tax_1" class="form-control calculate exc_tax" name="exc_tax[]"></td>
-                                                        <td><input type="text"  class="form-control calculate inc_code" name="inc_code[]"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">2</th>
-                                                        <td><input type="text" id="code_2" class="form-control code" name="item_code[]"></td>
-                                                        <td><input type="text" id="name_2" class="form-control name" name="description[]"></td>
-                                                        <td><select name="measurment[]" class="form-control">
-                                                            <option>Select Mesurement</option>
-                                                            <option value="kg">Kg</option>
-                                                            <option value="liter">Liter</option>
-                                                            <option value="quantity">Quantity</option>
-                                                        </select></td>
-                                                         <td><select name="storage_type[]" class="form-control add_item_type">
-                                                           @foreach($item_type as $key => $val)
-                                                                <option value="{{$val->item_name}}">{{$val->item_name}}</option>
-                                                            @endforeach
-                                                        </select></td>
-                                                        <td><input type="number"  id="quantity_2" class="form-control quantity" name="quantity[]"></td>
-                                                        <td><input type="text"    id="unit_2"     class="form-control unit" name="unit[]"></td>
-                                                        <td><input type="number"    id="rate_2"     class="form-control calculate" name="rate[]"></td>
-                                                        <td><input type="text"   id="exc_tax_2" class="form-control calculate exc_tax" name="exc_tax[]"></td>
-                                                        <td><input type="text"  class="form-control calculate inc_code" name="inc_code[]"></td>
-                                                    </tr>
-                                                    <tr>
-                                                       <th scope="row">3</th>
-                                                        <td><input type="text" id="code_3" class="form-control code" name="item_code[]"></td>
-                                                        <td><input type="text" id="name_3" class="form-control name" name="description[]"></td>
-                                                        <td>
-                                                            <select name="measurment[]" class="form-control">
-                                                                <option>Select measurment</option>
-                                                                <option value="kg">Kg</option>
-                                                                <option value="liter">Liter</option>
-                                                                <option value="quantity">Quantity</option>
-                                                            </select>
-                                                        </td>
-                                                         <td><select name="storage_type[]" class="form-control add_item_type">
-                                                            @foreach($item_type as $key => $val)
-                                                                <option value="{{$val->item_name}}">{{$val->item_name}}</option>
-                                                            @endforeach
-                                                        </select></td>
-                                                        <td><input type="number" id="quantity_3" class="form-control quantity" name="quantity[]"></td>
-                                                        <td><input type="text"   id="unit_3"  class="form-control unit" name="unit[]"></td>
-                                                        <td><input type="number"   id="rate_3"  class="form-control rate calculate" name="rate[]"></td>
-                                                        <td><input type="text"   id="exc_tax_3" class="form-control calculate exc_tax" name="exc_tax[]"></td>
-                                                        <td><input type="text"   class="form-control calculate inc_code" name="inc_code[]"></td>
+                                                        <td><input type="number" id="quantity_1" class="form-control quantity" name="quantity[]" required=""></td>
+                                                        <td><input type="text"   id="unit_1" class="form-control unit" name="unit[]" required=""></td>
+                                                        <td><input type="number" id="rate_1" class="form-control rate calculate" name="rate[]" required=""></td>
+                                                        <td><input type="text"   id="exc_tax_1" class="form-control calculate exc_tax" name="exc_tax[]" required=""></td>
+                                                        <td><input type="text"  class="form-control calculate inc_code" name="inc_code[]" required=""></td>
                                                     </tr>
                                                     <thead style="background-color: #ccc;">
                                                     <tr>
@@ -285,9 +237,7 @@ hr{
                                                     </thead>
                                                 </tbody>
                                             </table>
-                                        </div>         
-                                        {{-- <h3 class="pull-right" id="total_rs" style="margin-right: 60px">Amount : </h1> --}}
-                                        {{-- <h3 class="pull-right" id="tax_rs" style="margin-right: 200px">Tax Rs : </h1>  --}}                              
+                                        </div>                
                                     </div>
                                 </div>  
                             </div>
@@ -343,48 +293,86 @@ hr{
                                     <div class="form-group col-md-12" id="cash_recieved" style="display: none;">
                                         <label class="col-md-5 control-label">Cash Recieved</label>
                                         <div class="col-md-7">
-                                            <input type="number" class="form-control amount" name="cash_recieved" id="cash_recieved" placeholder="Cash Recieved"  required="">
+                                            <input type="number" class="form-control amount" name="cash_recieved" id="cash_recieved" placeholder="Cash Recieved"  >
                                         </div>                                  
                                     </div>
-                                    {{-- *************************POST DATE CHEQUE ************************ --}}
-                                   {{--  <div class="form-group col-md-12 show_post_cheques"  style="display: none;">
-                                        <label class="col-md-5 control-label">Cheque Number</label>
-                                        <div class="col-md-3">
-                                            <input type="number" class="form-control" name="cheque_number"  placeholder="Cheque Number"  required="">
-                                        </div>                                
-                                        <div class="col-md-3">
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mycheque">Add more cheque</button>
-                                        </div>  
-                                    </div> --}}
-                                    {{-- <div class="form-group col-md-12 show_post_cheques"  style="display: none;">
-                                        <label class="col-md-5 control-label">Cheque Image</label>
-                                        <div class="col-md-7">
-                                            <input type="file" class="form-control" name="cheque_image"  placeholder="Cheque Image"  required="">
-                                        </div>                                
-                                    </div>
-                                    <div class="form-group col-md-12 show_post_cheques"  style="display: none;">
-                                        <label class="col-md-5 control-label">Cheque Amount</label>
-                                        <div class="col-md-7">
-                                            <input type="number" class="form-control" name="cheque_amount" id="cheque_amount" placeholder="Cheque Amount"  required="">
-                                        </div>                                
-                                    </div>
-                                    <div class="form-group col-md-12 show_post_cheques"  style="display: none;">
-                                        <label class="col-md-5 control-label">cheque Date Limit</label>
-                                        <div class="col-md-7">
-                                            <input type="date" class="form-control amount" name="limit_cheque_date" id="limit_cheque_date"  placeholder="Limit cheque date"  required="">
-                                        </div>                                
-                                    </div> --}}
                                     {{-- *************************POST DATE CHEQUE ************************ --}}
                                     <input type="Submit" value="Submit" class="btn btn-success pull-right">
                                 </div>
                             </div>
 
-                        </form>
+                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    
+
+    {{-- Modal for add cheques --}}
+    <div class="modal fade" id="mycheque" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add Cheques</h4>
+        </div>
+        <div class="modal-body">
+          <div class="col-md-12" >
+            <div class="card-box clearfix" id="add_cheque_here">                                                        
+                <div class="form-group col-md-3">
+                    <label class="col-md-12 control-label">Bank Name</label>
+                    <div class="col-md-12">
+                        <select class="form-control" name="bank_name[]">
+                            @foreach($bank as $key => $val)
+                                <option value="{{$val->bank_name}}">{{$val->bank_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>                                
+                </div>
+                <div class="form-group col-md-2">
+                    <label class="col-md-12 control-label">Cheque Number</label>
+                    <div class="col-md-12">
+                        <input type="text" class="form-control" name="cheque_number[]"  placeholder="Cheque Number"  >
+                    </div>                                
+                </div>
+                <div class="form-group col-md-2">
+                    <label class="col-md-12 control-label">Cheque Amount</label>
+                    <div class="col-md-12">
+                        <input type="text" class="form-control" name="cheque_amount[]"  placeholder="Cheque Amount"  >
+                    </div>                                
+                </div>
+                <div class="form-group col-md-2">
+                    <label class="col-md-12 control-label">Cheque Image</label>
+                    <div class="col-md-12">
+                        <input type="file" class="form-control" name="cheque_image[]"  placeholder="Cheque Image"  >
+                    </div>                                
+                </div>
+                <div class="form-group col-md-2">
+                    <label class="col-md-12 control-label">Cheque Date Limit</label>
+                    <div class="col-md-12">
+                        <input type="date" class="form-control" name="limit_cheque_date[]"  placeholder="Cheque Date Limit"  >
+                    </div>                                
+                </div>
+                <div class="form-group col-md-1">
+                    <label class="col-md-12 control-label"></label>
+                    <div class="col-md-12">
+                        <button type="button"  class="btn btn-success fa fa-plus modal-plus add_more_cheques" ></button>
+                    </div>                                
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{--  --}}
+</form>
+    {{-- Modal for add more cheques --}}
     {{-- Modal for new item --}}
         <div class="modal" id="myModal">
           <div class="modal-dialog">
@@ -448,27 +436,21 @@ hr{
   </div>
 </div>
     {{-- Modal for new item --}}
-
-    {{-- Modal for add cheques --}}
-    <div class="modal fade" id="mycheque" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="cheque">&times;</button>
-          <h4 class="modal-title">Add Cheques</h4>
-        </div>
-        <div class="modal-body">
-          <div class="col-md-12" >
-            <div class="card-box clearfix" id="add_cheque_here">                                                        
-                <div class="form-group col-md-3">
+@section('customScript')
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $(document).on('click','.add_more_cheques',function (){
+        html = `<div class="form-group col-md-3">
                     <label class="col-md-12 control-label">Bank Name</label>
                     <div class="col-md-12">
-                        <input type="text" class="form-control" name="bank_name[]"  placeholder="Bank Name"  required="">
+                         <select class="form-control" name="bank_name[]">
+                            @foreach($bank as $key => $val)
+                                <option value="{{$val->bank_name}}">{{$val->bank_name}}</option>
+                            @endforeach
+                        </select>
                     </div>                                
                 </div>
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-2">
                     <label class="col-md-12 control-label">Cheque Number</label>
                     <div class="col-md-12">
                         <input type="text" class="form-control" name="cheque_number[]"  placeholder="Cheque Number"  required="">
@@ -480,64 +462,16 @@ hr{
                         <input type="text" class="form-control" name="cheque_amount[]"  placeholder="Cheque Amount"  required="">
                     </div>                                
                 </div>
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-2">
                     <label class="col-md-12 control-label">Cheque Image</label>
                     <div class="col-md-12">
                         <input type="file" class="form-control" name="cheque_image[]"  placeholder="Cheque Image"  required="">
-                    </div>                                
-                </div>
-                <div class="form-group col-md-3">
-                    <label class="col-md-12 control-label">Cheque Date Limit</label>
-                    <div class="col-md-12">
-                        <input type="file" class="form-control" name="limit_cheque_date[]"  placeholder="Cheque Date Limit"  required="">
-                    </div>                                
-                </div>
-                <div class="form-group col-md-1">
-                    <label class="col-md-12 control-label"></label>
-                    <div class="col-md-12">
-                        <button type="button"  class="btn btn-success fa fa-plus modal-plus add_more_cheques" ></button>
-                    </div>                                
-                </div>
-            </div>
-        </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="cheque">Close</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-  {{--  --}}
-
-
-    {{-- Modal for add more cheques --}}
-@section('customScript')
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script>
-    $(document).on('click','.add_more_cheques',function (){
-        html = `<div class="form-group col-md-3">
-                    <label class="col-md-12 control-label">Bank Name</label>
-                    <div class="col-md-12">
-                        <input type="text" class="form-control" name="bank_name[]"  placeholder="Bank Name"  required="">
-                    </div>                                
-                </div>
-                <div class="form-group col-md-3">
-                    <label class="col-md-12 control-label">Cheque Name</label>
-                    <div class="col-md-12">
-                        <input type="text" class="form-control" name="cheque_name[]"  placeholder="Cheque Name"  required="">
                     </div>                                
                 </div>
                 <div class="form-group col-md-2">
-                    <label class="col-md-12 control-label">Cheque Date</label>
+                    <label class="col-md-12 control-label">Cheque Date Limit</label>
                     <div class="col-md-12">
-                        <input type="text" class="form-control" name="cheque_date[]"  placeholder="Cheque Date"  required="">
-                    </div>                                
-                </div>
-                <div class="form-group col-md-3">
-                    <label class="col-md-12 control-label">Cheque Image</label>
-                    <div class="col-md-12">
-                        <input type="file" class="form-control" name="cheque_image[]"  placeholder="Cheque Image"  required="">
+                        <input type="date" class="form-control" name="limit_cheque_date[]"  placeholder="Cheque Date Limit"  required="">
                     </div>                                
                 </div>
                 <div class="form-group col-md-1">
@@ -546,8 +480,8 @@ hr{
                         <button type="button"  class="btn btn-success fa fa-plus modal-plus add_more_cheques" ></button>
                     </div>                                
                 </div>`;
-    });
-
+            $('#add_cheque_here').append(html);
+    }); 
     var sum =  0;
     var tax =  0; 
     var total_max = 0 ;
@@ -854,13 +788,15 @@ hr{
                     alert('please select supplier first');
                     return false;
                 }
-                $('#mycheque').modal('show'); 
+                $('[name="amount_credit"]').prop('required',false);
+                $('[name="credit_date_limit"]').prop('required',false);
+                $('[name="cash_recieved"]').prop('required',false); 
                 $('.show_post_cheques').show('slow');
                 $('[name="cheque_number"]').prop('required',true);
                 $('[name="cheque_image"]').prop('required',true);
                 $('[name="limit_cheque_date"]').prop('required',true);
                 $('[name="cheque_number"]').prop('required',true);
-                
+                 $('#mycheque').modal('show');  
                  $.ajax({
                    type:'POST',
                    url:'{{route('get-cheque-limit')}}',

@@ -14,6 +14,7 @@ use App\Barrel;
 use App\Notification;
 use App\Item_charter;
 use App\Invoice_number;
+use App\Bank;
 use Auth;
 use DB;
 
@@ -21,12 +22,13 @@ class InventoryController extends Controller
 {
     public function create_inventory()
     {	
-    	$item_type = Item_purchase_type::get();
-    	$supplier  = Supplier::get();
+        $item_type = Item_purchase_type::get();
+        $supplier  = Supplier::get();
         $chemical  = Chemical::get();
         $invoice_number = Invoice_number::count();
+        $bank = Bank::get();
         $invoice_number = $invoice_number +1;
-        return view('admin.inventory.create_inventory' , compact('item_type','supplier','chemical','invoice_number'));
+        return view('admin.inventory.create_inventory' , compact('item_type','supplier','chemical','invoice_number','bank'));
     }
 
 
@@ -39,7 +41,25 @@ class InventoryController extends Controller
     
     /*Insert Inventory*/
     public function insert_inventory(Request $request){
+        /*dd($_FILES['cheque_image']);*/
         $count = count($_POST['item_code']);
+        if($request->hasfile('cheque_image'))
+         {
+            foreach($request->file('cheque_image') as $image)
+            {
+                $name=$image->getClientOriginalName();
+                $image->move(public_path().'/cheque/', $name);  
+                $data[] = $name;
+            }
+         }else{
+                $data[] = '';
+            }
+         $image = implode(',', $data);
+         $bank_name = implode(',', $request->bank_name);
+         $cheque_number = implode(',', $_POST['cheque_number']);
+         $cheque_amount = implode(',', $_POST['cheque_amount']);
+         $limit_cheque_date = implode(',', $_POST['limit_cheque_date']);
+         
         for($i = 0 ; $i<$count; $i++){
             if($_POST['item_code'][$i] != '' ){
                 $item_code = $_POST['item_code'][$i];
@@ -50,8 +70,7 @@ class InventoryController extends Controller
                 $unit = $_POST['unit'][$i];
                 $rate = $_POST['rate'][$i];
                 $exc_tax = $_POST['exc_tax'][$i];
-                $inc_code = $_POST['inc_code'][$i];
-               
+                $inc_code = $_POST['inc_code'][$i]; 
                 $inventory_id = Inventory::create([
                 'supplier'=> $request->supplier,
                 'carriage'=> $request->carriage,
@@ -61,10 +80,10 @@ class InventoryController extends Controller
                 'payment_cheque' => $request->payment_cheque,
                 'amount_credit' => $request->amount_credit,
                 'cash_recieved' => $request->cash_recieved,
-                'cheque_number' => $request->cheque_number,
-                'cheque_image' => $request->cheque_image,
-                'cheque_amount' => $request->cheque_amount,
-                'limit_cheque_date' => $request->limit_cheque_date,
+                'cheque_number' => $cheque_number,
+                'cheque_image' => $image,
+                'cheque_amount' => $cheque_amount,
+                'limit_cheque_date' => $limit_cheque_date,
                 'item_code'=>$item_code,
                 'dop' => '25-5-2018',
                 'item_name' => $description,
@@ -75,6 +94,7 @@ class InventoryController extends Controller
                 'purchase_unit' => $unit,
                 'unit_purchased' => $rate,
                 'exc_tax' => $exc_tax,
+                'bank_name' => $bank_name,
                 'inc_code' => $inc_code
             ])->id;
                 Invoice_number::insert([
@@ -313,5 +333,21 @@ class InventoryController extends Controller
         return json_encode($inventory);
     }
 
-   
+    // *************************BANK CREATE*********************************************
+    public function create_bank(){
+        return view('admin.bank.create_bank');
+    }
+
+     public function insert_bank(Request $request){
+        Bank::insert([
+            'bank_name' => $request->bank_name
+        ]); 
+        return redirect()->back()->with('success' , 'bank added successfully !');
+    }
+
+    public function list_bank(){
+        $bank = Bank::get();
+        return view('admin.bank.list_bank',compact('bank'));
+    }
+
 }

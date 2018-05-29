@@ -103,7 +103,7 @@ input[type=number]::-webkit-outer-spin-button {
                       <p class="text-right"><b>Credit Cash:</b> {{$purchase_item[0]['amount_credit']}} </p><br>
                       @php }@endphp 
                       @php 
-                      if($purchase_item[0]['carriage'] == ''){
+                      if($purchase_item[0]['carriage'] != ''){
                       @endphp
                       <p class="text-right"><b>Carriage:</b> {{$purchase_item[0]['carriage']}} </p><br>
                       <p class="text-right"><b>Sub-total:</b> {{$purchase_item[0]['net_total']}} </p>

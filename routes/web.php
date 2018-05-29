@@ -33,14 +33,14 @@ Route::group(['middleware' => 'auth'], function () {
 	/*********************************User Routes Ends****************************************/
 
 	/*********************************Supplier Routes Starts****************************************/
-	Route::get('/create_supplier/', ['as' => 'create_supplier',  'uses' => 'admin\supplierController@create_supplier']);/*create users*/
-	Route::post('/insert_supplier/', ['as' => 'insert_supplier',  'uses' => 'admin\supplierController@insert_supplier']);/*insert users*/
-	Route::get('/edit_supplier/{id}', ['as' => 'edit_supplier',  'uses' => 'admin\supplierController@edit_supplier']);/*edit users*/
-	Route::get('/list_supplier/', ['as' => 'list_supplier',  'uses' => 'admin\supplierController@list_supplier']);/*list users*/
-	Route::post('/update_supplier/', ['as' => 'update_supplier',  'uses' => 'admin\supplierController@update_supplier']);/*update users*/
-	Route::get('/supplier_payment/{id}', ['as' => 'supplier_payment',  'uses' => 'admin\supplierController@supplier_payment']);/*update users*/
-	Route::get('/add_payment/{id}', ['as' => 'add_payment',  'uses' => 'admin\supplierController@add_payment']);/*add payment*/
-	Route::post('/insert_supplier_amount/', ['as' => 'insert_supplier_amount',  'uses' => 'admin\supplierController@insert_supplier_amount']);/*add payment*/
+	Route::get('/create_supplier/', ['as' => 'create_supplier',  'uses' => 'admin\SupplierController@create_supplier']);/*create users*/
+	Route::post('/insert_supplier/', ['as' => 'insert_supplier',  'uses' => 'admin\SupplierController@insert_supplier']);/*insert users*/
+	Route::get('/edit_supplier/{id}', ['as' => 'edit_supplier',  'uses' => 'admin\SupplierController@edit_supplier']);/*edit users*/
+	Route::get('/list_supplier/', ['as' => 'list_supplier',  'uses' => 'admin\SupplierController@list_supplier']);/*list users*/
+	Route::post('/update_supplier/', ['as' => 'update_supplier',  'uses' => 'admin\SupplierController@update_supplier']);/*update users*/
+	Route::get('/supplier_payment/{id}', ['as' => 'supplier_payment',  'uses' => 'admin\SupplierController@supplier_payment']);/*update users*/
+	Route::get('/add_payment/{id}', ['as' => 'add_payment',  'uses' => 'admin\SupplierController@add_payment']);/*add payment*/
+	Route::post('/insert_supplier_amount/', ['as' => 'insert_supplier_amount',  'uses' => 'admin\SupplierController@insert_supplier_amount']);/*add payment*/
 	/*********************************Supplier Routes Ends****************************************/
 
 	/*********************************Customer Routes Starts****************************************/
@@ -120,6 +120,12 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/insert_brand/', ['as' => 'insert_brand',  'uses' => 'admin\CharterController@insert_brand']);/*insert brand*/
 	Route::get('/list_brand/', ['as' => 'list_brand',  'uses' => 'admin\CharterController@list_brand']);/*insert brand*/
 	/*********************************Brand End*************************************/
+
+	/*********************************Bank Start*************************************/
+	Route::get('/create_bank/', ['as' => 'create_bank',  'uses' => 'admin\InventoryController@create_bank']);/*create bank*/
+	Route::post('/insert_bank/', ['as' => 'insert_bank',  'uses' => 'admin\InventoryController@insert_bank']);/*insert bank*/
+	Route::get('/list_bank/', ['as' => 'list_bank',  'uses' => 'admin\InventoryController@list_bank']);/*insert bank*/
+	/*********************************Bank End*************************************/
 
 	/**********************Get Suggestion**************/
 	Route::get('/get_suggestion/', ['as' => 'get_suggestion',  'uses' => 'admin\InventoryController@get_suggestion']);

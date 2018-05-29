@@ -103,14 +103,15 @@
                 </ul>       
             </li> 
             <li class="has-submenu">
-             <a href="#"><i class="fa  fa-bitbucket"></i>Inventory Charter</a>
+             <a href="#"><i class="fa  fa-bitbucket"></i>General</a>
                 <ul class="submenu megamenu">
                     <li>
                         <ul>
                             <li><a href="{{route('create_charter')}}"><i class="fa  fa-bitbucket"></i>Inventory Charter</a></li>
                             <li><a href="{{route('create_brand')}}"><i class="fa  fa-bitbucket"></i>Add Brand</a></li>
                             <li><a href="{{route('list_brand')}}"><i class="fa  fa-bitbucket"></i>List Brand</a></li>
-                            {{-- <li><a href="{{route('list_inventory')}}"><i class="fa  fa-list  "></i>  List Inventory</a></li> --}}
+                            <li><a href="{{route('create_bank')}}"><i class="fa  fa-bitbucket"></i>Create Bank</a></li>
+                            <li><a href="{{route('list_bank')}}"><i class="fa  fa-bitbucket"></i>List Bank</a></li>
                         </ul>
                     </li>
                 </ul>       
