@@ -57,25 +57,32 @@ input[type=number]::-webkit-outer-spin-button {
                                   <th>Item code</th>
                                   <th>Item Name</th>
                                   <th>Storage Type</th>
-                                  <th>Item Measure</th>
+                                  <th>Total Storeage Quantity</th>
                                   <th>Per Unit Price</th>
+                                  <th>Cost/</th>
                                   <th>Purchase Quantity</th>
-                                  <th>Purchase Cost</th>
+                                  <th>Rate</th>
                                   <th>Excluding Tax</th>
                                   <th>Including Tax</th>
                               </tr></thead>
-                              <tbody>
+                              <tbody> 
                                 @foreach($purchase_item as $key => $val)
                                     <tr>
                                         <td>{{$val->item_code}}</td>
                                         <td>{{$val->item_name}}</td>
                                         <td>{{$val->storage_type}}</td>
+                                        <td>{{$val->storeage_quantity}}</td>
                                         <td>{{$val->purchasing_type}}</td>
+                                        <td>{{$val->cost}}</td>
+                                        @if($val->kg == '')
                                         <td>{{$val->purchase_unit}}</td>
-                                        <td>{{$val->quantity}}</td>
+                                        @else
+                                        <td>{{($val->kg != '')?$val->kg.' kg  ':''}}{{($val->gram != '')?$val->gram.' gram':''}}</td>
+                                        @endif
                                         <td>{{$val->unit_purchased}}</td>
                                         <td>{{$val->exc_tax}}</td>
                                         <td>{{$val->inc_code}}</td>
+                                        
                                     </tr>
                                 @endforeach
                                  {{--  @php $cash_recieved = $val->cash_recieved; @endphp --}}

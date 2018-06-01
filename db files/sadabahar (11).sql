@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 26, 2018 at 11:19 AM
+-- Generation Time: Jun 01, 2018 at 09:44 PM
 -- Server version: 10.1.10-MariaDB
 -- PHP Version: 7.0.3
 
@@ -19,6 +19,38 @@ SET time_zone = "+00:00";
 --
 -- Database: `sadabahar`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bank`
+--
+
+CREATE TABLE `bank` (
+  `id` int(11) NOT NULL,
+  `bank_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `bank`
+--
+
+INSERT INTO `bank` (`id`, `bank_name`) VALUES
+(1, 'Habib Bank'),
+(2, 'Al habib bank'),
+(3, 'Meezan bank'),
+(4, 'faysal Bank'),
+(5, 'Silk Bank'),
+(6, 'Allied Bank'),
+(7, 'Standard chartered Bank'),
+(8, 'JS Bank'),
+(9, 'Askari Bank'),
+(10, 'Alfalah Bank'),
+(11, 'Habib Metro Bank'),
+(12, 'MCB Bank'),
+(13, 'UBL Bank'),
+(14, 'Islamic Bank'),
+(15, 'Dubai Islamic Bank');
 
 -- --------------------------------------------------------
 
@@ -46,13 +78,6 @@ CREATE TABLE `barrel` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `barrel`
---
-
-INSERT INTO `barrel` (`id`, `barrel_type`, `barrel_strength`, `barrel_measure`, `chemical_name`, `empty_barrel`, `fully_occupied_barrel`, `total_barrel`, `item_purchase_type`, `current_volume`, `current_unit`, `total_volume`, `remaining_volume`, `purchase_unit`, `unit_purchased`, `added_by`, `created_at`, `updated_at`) VALUES
-(4, 'Drum', '25', 'kg', 4, 0, 1, 5, 'new', 2.5, 'kg', 125, 119.5, 'kg', '2.5', 1, '2018-05-15 15:50:58', '2018-05-15 15:50:58');
 
 -- --------------------------------------------------------
 
@@ -88,14 +113,6 @@ CREATE TABLE `category` (
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `category`
---
-
-INSERT INTO `category` (`id`, `main_category`, `created_at`, `updated_at`) VALUES
-(1, 'Main vcaa', '2018-05-12 14:21:13', '2018-05-12 14:21:13'),
-(2, 'tetd', '2018-05-12 14:37:18', '2018-05-12 14:37:18');
-
 -- --------------------------------------------------------
 
 --
@@ -114,8 +131,7 @@ CREATE TABLE `category_charter` (
 --
 
 INSERT INTO `category_charter` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'Bond', '2018-05-23 11:24:38', '2018-05-23 11:24:38'),
-(2, 'Bags', '2018-05-23 12:39:48', '2018-05-23 12:39:48');
+(1, 'Bond', '2018-06-01 19:03:37', '2018-06-01 19:03:37');
 
 -- --------------------------------------------------------
 
@@ -145,6 +161,7 @@ INSERT INTO `chemical` (`id`, `chemical_name`) VALUES
 CREATE TABLE `customer` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
+  `company_name` varchar(255) DEFAULT NULL,
   `phone_number` varchar(255) NOT NULL,
   `address` varchar(255) NOT NULL,
   `cheque_status` varchar(255) DEFAULT NULL,
@@ -157,8 +174,8 @@ CREATE TABLE `customer` (
 -- Dumping data for table `customer`
 --
 
-INSERT INTO `customer` (`id`, `name`, `phone_number`, `address`, `cheque_status`, `payment_mode`, `created_at`, `updated_at`) VALUES
-(2, 'jack sparrow', '02225252', 'Malir Cant', NULL, 'credit_limit', '2018-05-08 07:59:29', '2018-05-08 07:59:29');
+INSERT INTO `customer` (`id`, `name`, `company_name`, `phone_number`, `address`, `cheque_status`, `payment_mode`, `created_at`, `updated_at`) VALUES
+(5, 'ammar khan', 'Texbroad', '121211', 'saDSA', NULL, 'credit_limit', '2018-05-31 10:27:42', '2018-05-31 10:10:11');
 
 -- --------------------------------------------------------
 
@@ -170,6 +187,7 @@ CREATE TABLE `customer_amount_limit` (
   `id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `customer_amount_limit` int(11) DEFAULT NULL,
+  `credit_date_limit` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -178,9 +196,8 @@ CREATE TABLE `customer_amount_limit` (
 -- Dumping data for table `customer_amount_limit`
 --
 
-INSERT INTO `customer_amount_limit` (`id`, `customer_id`, `customer_amount_limit`, `created_at`, `updated_at`) VALUES
-(1, 1, 10000, '2018-05-04 11:26:52', '2018-05-04 11:26:52'),
-(2, 2, 25000, '2018-05-08 07:59:29', '2018-05-08 07:59:29');
+INSERT INTO `customer_amount_limit` (`id`, `customer_id`, `customer_amount_limit`, `credit_date_limit`, `created_at`, `updated_at`) VALUES
+(4, 5, 25000, '25', '2018-05-31 10:24:55', '2018-05-31 10:10:11');
 
 -- --------------------------------------------------------
 
@@ -202,8 +219,7 @@ CREATE TABLE `customer_cheque_limit` (
 --
 
 INSERT INTO `customer_cheque_limit` (`id`, `customer_id`, `cheque_date_limit`, `cheque_date_amount`, `created_at`, `updated_at`) VALUES
-(1, 1, '10', '20000', '2018-05-04 11:26:52', '2018-05-04 11:26:52'),
-(2, 2, '20', '25000', '2018-05-08 07:59:29', '2018-05-08 07:59:29');
+(4, 5, '25', '25000', '2018-05-31 10:10:11', '2018-05-31 10:10:11');
 
 -- --------------------------------------------------------
 
@@ -243,17 +259,21 @@ CREATE TABLE `customer_payment_status` (
 
 CREATE TABLE `inventory` (
   `id` int(11) NOT NULL,
-  `invoice_number` varchar(255) NOT NULL,
-  `item_code` varchar(255) NOT NULL,
-  `item_name` varchar(255) NOT NULL,
+  `invoice_number` varchar(255) DEFAULT NULL,
+  `item_code` varchar(255) DEFAULT NULL,
+  `item_name` varchar(255) DEFAULT NULL,
   `storage_type` varchar(255) DEFAULT NULL,
-  `dop` varchar(255) NOT NULL,
-  `quantity` int(11) NOT NULL,
+  `dop` varchar(255) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `cost` int(11) DEFAULT NULL,
+  `kg` varchar(255) DEFAULT NULL,
+  `gram` varchar(255) DEFAULT NULL,
   `cash_recieved` int(11) DEFAULT NULL,
-  `supplier` int(11) NOT NULL,
+  `supplier` int(11) DEFAULT NULL,
+  `customer` varchar(255) DEFAULT NULL,
   `limit_amount` int(11) DEFAULT NULL,
   `cheque_number` varchar(255) DEFAULT NULL,
-  `cheque_amount` int(11) DEFAULT NULL,
+  `cheque_amount` varchar(255) DEFAULT NULL,
   `cheque_image` varchar(255) DEFAULT NULL,
   `limit_cheque_date` varchar(255) DEFAULT NULL,
   `payment_cash` varchar(255) DEFAULT NULL,
@@ -262,27 +282,28 @@ CREATE TABLE `inventory` (
   `purchase_amount` int(11) DEFAULT NULL,
   `due_date` varchar(255) DEFAULT NULL,
   `due_amount` int(11) DEFAULT NULL,
-  `purchasing_type` varchar(255) NOT NULL,
+  `purchasing_type` varchar(255) DEFAULT NULL,
   `purchase_unit` varchar(255) DEFAULT NULL,
-  `unit_purchased` varchar(255) NOT NULL,
+  `unit_purchased` varchar(255) DEFAULT NULL,
   `purchased_gram` varchar(255) DEFAULT NULL,
   `carriage` varchar(255) DEFAULT NULL,
   `net_total` int(11) DEFAULT NULL,
   `amount_credit` int(11) DEFAULT NULL,
   `credit_date_limit` int(11) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `bank_name` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT '0000-00-00 00:00:00',
   `exc_tax` varchar(255) DEFAULT NULL,
-  `inc_code` varchar(255) DEFAULT NULL
+  `inc_code` varchar(255) DEFAULT NULL,
+  `storeage_quantity` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `inventory`
 --
 
-INSERT INTO `inventory` (`id`, `invoice_number`, `item_code`, `item_name`, `storage_type`, `dop`, `quantity`, `cash_recieved`, `supplier`, `limit_amount`, `cheque_number`, `cheque_amount`, `cheque_image`, `limit_cheque_date`, `payment_cash`, `payment_credit`, `payment_cheque`, `purchase_amount`, `due_date`, `due_amount`, `purchasing_type`, `purchase_unit`, `unit_purchased`, `purchased_gram`, `carriage`, `net_total`, `amount_credit`, `credit_date_limit`, `created_at`, `updated_at`, `exc_tax`, `inc_code`) VALUES
-(2, '1', 'b1', 'samad bond', 'drum', '25-5-2018', 25, 10100, 41, NULL, NULL, NULL, NULL, NULL, 'on', NULL, NULL, NULL, NULL, NULL, 'kg', '200', '5000', NULL, '25', 10100, NULL, NULL, '2018-05-26 08:09:15', '2018-05-26 08:09:15', NULL, NULL),
-(3, '1', 'b2', 'samad bond old', 'drum', '25-5-2018', 20, 10100, 41, NULL, NULL, NULL, NULL, NULL, 'on', NULL, NULL, NULL, NULL, NULL, 'liter', '200', '4000', NULL, '25', 10100, NULL, NULL, '2018-05-26 08:09:15', '2018-05-26 08:09:15', NULL, NULL);
+INSERT INTO `inventory` (`id`, `invoice_number`, `item_code`, `item_name`, `storage_type`, `dop`, `quantity`, `cost`, `kg`, `gram`, `cash_recieved`, `supplier`, `customer`, `limit_amount`, `cheque_number`, `cheque_amount`, `cheque_image`, `limit_cheque_date`, `payment_cash`, `payment_credit`, `payment_cheque`, `purchase_amount`, `due_date`, `due_amount`, `purchasing_type`, `purchase_unit`, `unit_purchased`, `purchased_gram`, `carriage`, `net_total`, `amount_credit`, `credit_date_limit`, `bank_name`, `created_at`, `updated_at`, `exc_tax`, `inc_code`, `storeage_quantity`) VALUES
+(1, NULL, 'b1', 'samad bond', NULL, '02-06-2018', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Kg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-06-01 19:06:02', '2018-06-01 19:06:02', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -301,8 +322,33 @@ CREATE TABLE `invoice_number` (
 --
 
 INSERT INTO `invoice_number` (`id`, `inventory_id`, `invoice_number`) VALUES
-(2, 2, 1),
-(3, 3, 1);
+(1, 1, 1),
+(2, 1, 2),
+(3, 2, 3),
+(4, 3, 3),
+(5, 1, 5),
+(6, 1, 6),
+(7, 2, 6),
+(8, 3, 6),
+(9, 4, 6),
+(10, 5, 6),
+(11, 6, 6),
+(12, 7, 6),
+(13, 8, 6),
+(14, 9, 6),
+(15, 10, 6),
+(16, 11, 6),
+(17, 12, 6),
+(18, 13, 6),
+(19, 14, 6),
+(20, 15, 6),
+(21, 16, 6),
+(22, 17, 6),
+(23, 1, 23),
+(24, 2, 23),
+(25, 3, 23),
+(26, 4, 23),
+(27, 5, 23);
 
 -- --------------------------------------------------------
 
@@ -326,6 +372,13 @@ CREATE TABLE `items` (
   `sub_id` int(11) NOT NULL,
   `supplier` varchar(255) NOT NULL DEFAULT 'sadabahar'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `items`
+--
+
+INSERT INTO `items` (`id`, `item_code`, `item_name`, `item_description`, `brand_name`, `purchase_price`, `selling_price`, `measurment_unit`, `status`, `created_at`, `updated_at`, `parent_id`, `sub_id`, `supplier`) VALUES
+(1, 'b1', 'samad bond', 'test bond', 'wiki', '200', '500', 'Kg', '0', '2018-06-01 19:06:02', '2018-06-01 19:06:02', 1, 1, 'sadabahar');
 
 -- --------------------------------------------------------
 
@@ -454,8 +507,7 @@ CREATE TABLE `sub_category_charter` (
 --
 
 INSERT INTO `sub_category_charter` (`id`, `parent_id`, `name`, `created_at`, `updated_at`) VALUES
-(5, 1, 'samad bond', '2018-05-23 12:18:30', '2018-05-23 12:18:30'),
-(6, 2, 'ladies Bags', '2018-05-23 12:40:11', '2018-05-23 12:40:11');
+(1, 1, 'new bonds', '2018-06-01 19:03:46', '2018-06-01 19:03:46');
 
 -- --------------------------------------------------------
 
@@ -480,9 +532,7 @@ CREATE TABLE `supplier` (
 --
 
 INSERT INTO `supplier` (`id`, `name`, `company_name`, `phone_number`, `address`, `cheque_status`, `payment_mode`, `created_at`, `updated_at`) VALUES
-(41, 'Pepsi', 'Pepsi', '02125252856', 'nazimabad # 2', NULL, 'credit_limit', '2018-05-24 10:26:51', '2018-05-24 10:26:51'),
-(43, 'asa', 'Farhan chemical', '12', 'asas', NULL, 'credit_limit', '2018-05-24 10:23:41', '2018-05-23 12:35:17'),
-(44, 'Jack Sparrow', 'Black Pearl', '923330304771', 'nazimabad # 2', NULL, 'credit_limit', '2018-05-24 10:23:48', '2018-05-23 12:38:31');
+(1, 'John martin', 'Pepsi', '42154542', 'saDSA', NULL, 'credit_limit', '2018-05-31 10:11:15', '2018-05-31 10:11:15');
 
 -- --------------------------------------------------------
 
@@ -504,9 +554,7 @@ CREATE TABLE `supplier_amount_limit` (
 --
 
 INSERT INTO `supplier_amount_limit` (`id`, `supplier_id`, `supplier_amount_limit`, `credit_date_limit`, `created_at`, `updated_at`) VALUES
-(15, 41, 25000, 23, '2018-05-24 10:26:51', '2018-05-24 10:26:51'),
-(17, 43, 12, 12, '2018-05-23 12:35:17', '2018-05-23 12:35:17'),
-(18, 44, 25000, 5, '2018-05-23 12:38:31', '2018-05-23 12:38:31');
+(20, 1, 26000, 26, '2018-05-31 10:11:15', '2018-05-31 10:11:15');
 
 -- --------------------------------------------------------
 
@@ -528,9 +576,7 @@ CREATE TABLE `supplier_cheques` (
 --
 
 INSERT INTO `supplier_cheques` (`id`, `supplier_id`, `cheque_date_limit`, `cheque_amount_limit`, `created_at`, `updated_at`) VALUES
-(24, 41, '25', 25000, '2018-05-24 10:26:51', '2018-05-24 10:26:51'),
-(26, 43, '12', 1212, '2018-05-23 12:35:17', '2018-05-23 12:35:17'),
-(27, 44, '10', 50000, '2018-05-23 12:38:31', '2018-05-23 12:38:31');
+(1, 1, '26', 26000, '2018-05-31 10:11:15', '2018-05-31 10:11:15');
 
 -- --------------------------------------------------------
 
@@ -602,6 +648,12 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `role_id`, `phone_number
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `bank`
+--
+ALTER TABLE `bank`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `barrel`
@@ -758,6 +810,11 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `bank`
+--
+ALTER TABLE `bank`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+--
 -- AUTO_INCREMENT for table `barrel`
 --
 ALTER TABLE `barrel`
@@ -771,12 +828,12 @@ ALTER TABLE `brand`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `category_charter`
 --
 ALTER TABLE `category_charter`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `chemical`
 --
@@ -786,17 +843,17 @@ ALTER TABLE `chemical`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `customer_amount_limit`
 --
 ALTER TABLE `customer_amount_limit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `customer_cheque_limit`
 --
 ALTER TABLE `customer_cheque_limit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `customer_orders`
 --
@@ -811,22 +868,22 @@ ALTER TABLE `customer_payment_status`
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `invoice_number`
 --
 ALTER TABLE `invoice_number`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 --
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `item_purchase_type`
 --
 ALTER TABLE `item_purchase_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `migrations`
 --
@@ -851,22 +908,22 @@ ALTER TABLE `sales`
 -- AUTO_INCREMENT for table `sub_category_charter`
 --
 ALTER TABLE `sub_category_charter`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `supplier`
 --
 ALTER TABLE `supplier`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `supplier_amount_limit`
 --
 ALTER TABLE `supplier_amount_limit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `supplier_cheques`
 --
 ALTER TABLE `supplier_cheques`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `supplier_payment`
 --

@@ -97,12 +97,34 @@ hr{
                     <div class="col-md-12">
                             {{csrf_field()}}
                             <div class="form-group col-md-12">
+                                
+                                <div class="col-md-2">
+                                    <label>Supplier</label>
+                                    <input type="radio"  name="vendor" checked="" id="supplier">
+                                    <label>Customer</label>
+                                    <input type="radio"  name="vendor"  id="customer">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group col-md-12" id="type_supplier">
                                 <label class="col-md-1 control-label">Supplier</label>
                                 <div class="col-md-2">
                                     <select class="form-control" required="" name="supplier">
                                         <option value="">Select Supplier</option>   
                                         @foreach($supplier as $key => $sup)
                                             <option value="{{$sup->id}}">{{$sup->name}}</option>   
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12" id="type_customer" style="display: none;">
+                                <label class="col-md-1 control-label">Customer</label>
+                                <div class="col-md-2">
+                                    <select class="form-control" name="customer">
+                                        <option value="">Select Customer</option>   
+                                        @foreach($customer as $key => $cus)
+                                            <option value="{{$cus->id}}">{{$cus->name}}</option>   
                                         @endforeach
                                     </select>
                                 </div>
@@ -195,7 +217,9 @@ hr{
                                                         <th width="20%">Descrption</th>
                                                         <th>Measurment</th>
                                                         <th width="10%">Storage Type</th>
+                                                        <th width="10%">Storage Quantity</th>
                                                         <th>Quantity</th>
+                                                        <th>Cost/</th>
                                                         <th>unit</th>
                                                         <th>Rate</th>
                                                         <th>Value Excl. Tax</th>
@@ -215,20 +239,30 @@ hr{
                                                                 <option value="quantity">Quantity</option>
                                                             </select>
                                                         </td>
-                                                        <td><select name="storage_type[]" class="form-control add_item_type" required=""> 
+                                                        <td><select name="storage_type[]" id="storage_type_1" class="form-control add_item_type" required=""> 
+                                                            <option value="">Select Storage type</option>
                                                             @foreach($item_type as $key => $val)
                                                                 <option value="{{$val->item_name}}">{{$val->item_name}}</option>
                                                             @endforeach
                                                         </select></td>
+                                                        <td><input type="number" id="storeage_quantity_1" class="form-control storeage_quantity" name="storeage_quantity[]" required=""></td>
                                                         <td><input type="number" id="quantity_1" class="form-control quantity" name="quantity[]" required=""></td>
-                                                        <td><input type="text"   id="unit_1" class="form-control unit" name="unit[]" required=""></td>
+                                                        <td><input type="number" id="cost_1" class="form-control cost" name="cost[]" required=""></td>
+                                                        <td><input type="text"   id="unit_1" class="form-control unit" name="unit[]" >
+                                                            <select class="form-control kg" id="kg_1" name="kg[]" style="display: none">
+                                                                <option value="">Kg</option>
+                                                                @for($i=1;$i<100;$i++)
+                                                                <option>{{$i}}</option>
+                                                                @endfor
+                                                            </select>
+                                                            <input type="text" id="gram_1" class="form-control gram" name="gram[]" style="display: none;" /></td>
                                                         <td><input type="number" id="rate_1" class="form-control rate calculate" name="rate[]" required=""></td>
                                                         <td><input type="text"   id="exc_tax_1" class="form-control calculate exc_tax" name="exc_tax[]" required=""></td>
-                                                        <td><input type="text"  class="form-control calculate inc_code" name="inc_code[]" required=""></td>
+                                                        <td><input type="text"  class="form-control calculate inc_code" name="inc_code[]"></td>
                                                     </tr>
                                                     <thead style="background-color: #ccc;">
                                                     <tr>
-                                                        <th  colspan="7"></th>
+                                                        <th  colspan="9"></th>
                                                         
                                                         <th id="total_rs">Total</th>
                                                         <th id="total_rs_ex">Value Excl. Tax</th>
@@ -241,12 +275,15 @@ hr{
                                     </div>
                                 </div>  
                             </div>
+                            <div>
+                                <strong id="append_unit" ></strong>
+                            </div>
                             <div class="col-md-offset-6 col-md-6">
                                 <div class="card-box clearfix">
                                     <div class="form-group col-md-12">
                                         <label class="col-md-5 control-label">Carriage and Freight</label>
                                         <div class="col-md-7">
-                                            <input type="number" class="form-control amount" name="carriage" id="carriage" placeholder="Carriage"  required="">
+                                            <input type="number" class="form-control amount" name="carriage" id="carriage" placeholder="Carriage" >
                                         </div>                                
                                     </div>
                                     <div class="form-group col-md-12">
@@ -288,7 +325,7 @@ hr{
                                         <label class="col-md-5 control-label">Credit Date Limit</label>
                                         <div class="col-md-7">
                                             <input type="date" class="form-control amount" name="credit_date_limit" id="credit_date_limit" placeholder="Credit Date Limit"  required="">
-                                        </div>                                
+                                        </div>
                                     </div>
                                     <div class="form-group col-md-12" id="cash_recieved" style="display: none;">
                                         <label class="col-md-5 control-label">Cash Recieved</label>
@@ -439,6 +476,40 @@ hr{
 @section('customScript')
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
+    $(document).on('click','[name="vendor"]',function (){
+        type = $(this).attr('id');
+        if(type == 'customer'){
+             $('#scode').val('');
+            $('#name').val('');
+            $('#company_name').val('');
+            $('#phone_no').val('');
+            $('#address').val('');
+            $('#credit_balance_limit').val('');
+            $('#credit_balance').val('');
+            $('#pd_cheque_limit').val('');
+            $('#pd_cheque_balance').val('');
+            $('[name="limit_amount"]').val('');
+            $('#type_supplier').hide('slow');
+            $('[name="supplier"]').prop('required',false);
+             $('#type_customer').show('slow');
+            $('[name="customer"]').prop('required',true);
+        }if(type == 'supplier'){
+             $('#scode').val('');
+            $('#name').val('');
+            $('#company_name').val('');
+            $('#phone_no').val('');
+            $('#address').val('');
+            $('#credit_balance_limit').val('');
+            $('#credit_balance').val('');
+            $('#pd_cheque_limit').val('');
+            $('#pd_cheque_balance').val('');
+            $('[name="limit_amount"]').val('');
+            $('#type_customer').hide('slow');
+            $('[name="customer"]').prop('required',false);
+             $('#type_supplier').show('slow');
+            $('[name="supplier"]').prop('required',true);
+        }
+    });
     $(document).on('click','.add_more_cheques',function (){
         html = `<div class="form-group col-md-3">
                     <label class="col-md-12 control-label">Bank Name</label>
@@ -488,11 +559,12 @@ hr{
     var carriage = 0;
     $(document).on('keyup','.unit',function (){
         id = $(this).attr('id');
-        
         id = id.substring(5);
-        quantity = parseInt($('#quantity_'+id).val());
+        measure_type = $('#check_type_quantity option:selected').val();
+        /*alert(measure_type);*/
         unit = parseInt($('#unit_'+id).val());
-        rate = quantity * unit;
+        cost = parseInt($('#cost_'+id).val());
+        rate = unit * cost;
         $('#rate_'+id).val(rate);  
         $('#exc_tax_'+id).val(rate);  
         sum = 0; 
@@ -508,8 +580,77 @@ hr{
         $('#total_rs_ex').html('Total Rs:  '+sum);
         $('#net_total').val(sum);
         total = sum;
+    }); 
+
+    $(document).on('change','.kg',function (){
+        id = $(this).attr('id');
+        id = id.substring(3);
+        /*alert(measure_type);*/
+        unit = parseInt($('#kg_'+id+' option:selected').val());
+        cost = parseInt($('#cost_'+id).val());
+        rate = unit * cost;
+        $('#rate_'+id).val(rate);  
+        $('#exc_tax_'+id).val(rate);  
+        sum = 0; 
+         $('[name="rate[]"]').each(function(){
+            amount = $(this).val();
+            if(amount != ''){
+                sum =  parseInt(amount) + sum;    
+            }
+        });
+        $('#total_rs').html('');
+        $('#total_rs').html('Total Rs:  '+sum);
+        $('#total_rs_ex').html('');
+        $('#total_rs_ex').html('Total Rs:  '+sum);
+        $('#net_total').val(sum);
+        total = sum;
+    }); 
+
+    $(document).on('focusout','.gram',function(){
+        id = $(this).attr('id');
+        id = id.substring(5);
+        value = $(this).val();
+        gram = parseFloat(value)/1000;
+        new_rate = parseFloat($('#cost_'+id).val()) * gram;
+        rate = $('#rate_'+id).val();
+        new_rate = parseInt(new_rate) + parseInt(rate);
+        $('#rate_'+id).val(new_rate);
+        $('#exc_tax_'+id).val(new_rate);
     });
 
+    $(document).on('change','.add_item_type',function (){
+        id = $(this).attr('id');
+        item_type = $(this).val();
+        
+        id = id.substring(13);
+
+        $.ajax({
+               type:'POST',
+               url:'{{route('get-barrel-type')}}',
+               data:{
+                    "_token": "{{ csrf_token() }}",
+                    'item_type' : item_type
+               },
+               success:function(data){
+                data = JSON.parse(data);
+                console.log(id);
+                   $('#storeage_quantity_'+id).val(data.item_type);
+                   $('#quantity_'+id).attr('max',data.item_type);
+                   $('#append_unit').html('');
+                   if(data.item_purchase_type == 'kg'){
+                    $('#unit_'+id).hide();
+                    $('#kg_'+id).show('slow');
+                    $('#gram_'+id).show('slow');
+                   }else{
+                    $('#unit_'+id).show();
+                    $('#kg_'+id).hide('slow');
+                    $('#gram_'+id).hide('slow');
+                   }
+                   $('#append_unit').append(`<input type="hidden" value="`+data.item_type+`" id="check_type_quantity" />Each `+data.item_name+` contain `+data.item_type+` `+data.item_purchase_type+``);
+
+               }
+            });
+    });
     /******/
    /* $(document).on('keyup','[name="exc_tax[]"]',function (){
         tax = 0;
@@ -576,20 +717,28 @@ hr{
                             <option value="quantity">Quantity</option>
                         </select>
                     </td>
-                     <td><select name="storage_type[]" class="form-control add_item_type">
+                     <td><select name="storage_type[]"  id="storage_type_`+row+`" class="form-control add_item_type">
                         @foreach($item_type as $key => $val)
                             <option value="{{$val->item_name}}">{{$val->item_name}}</option>
                         @endforeach
                     </select></td>
+                    <td><input type="number" id="storeage_quantity_`+row+`" class="form-control storeage_quantity" name="storeage_quantity[]" required=""></td>
                     <td><input type="number" id="quantity_`+row+`" class="form-control quantity" name="quantity[]"></td>
-                    <td><input type="text"   id="unit_`+row+`"  class="form-control unit" name="unit[]"></td>
+                    <td><input type="number" id="cost_`+row+`" class="form-control cost" name="cost[]" required=""></td>
+                    <td><input type="text"   id="unit_`+row+`"  class="form-control unit" name="unit[]">
+                     <select class="form-control kg" id="kg_`+row+`" name="kg[]" style="display: none">
+                        <option value="">Kg</option>
+                        @for($i=1;$i<100;$i++)
+                        <option>{{$i}}</option>
+                        @endfor
+                    </select>
+                    <input type="text" id="gram_`+row+`" class="form-control gram" name="gram[]" style="display: none;" /></td>
                     <td><input type="number"   id="rate_`+row+`"  class="form-control rate calculate" name="rate[]"></td>
                     <td><input type="text"   id="exc_tax_`+row+`" class="form-control calculate exc_tax" name="exc_tax[]"></td>
                     <td><input type="text"   class="form-control calculate inc_code" name="inc_code[]"></td>
                 </tr>`;
                 $('#add_here').append(html);
                 row++;
-
     });
     /******/
     $(document).on('focusout',function (){
@@ -660,6 +809,17 @@ hr{
         }
     });
 
+    $(document).on('keyup','.quantity',function (){
+        value = $(this).attr('id');
+        id    = value.substring(9);
+        multiply_by = $('#check_type_quantity').val();
+        multiply_to = $(this).val();
+        result = '';
+        result = parseInt(multiply_by) * parseInt(multiply_to);
+        $('#unit_'+id).attr('max',result);
+        $('#storeage_quantity_'+id).val(result);
+
+    });
 
   </script>
     <script type="text/javascript">
@@ -836,6 +996,7 @@ hr{
         /*Get selected supplier credit limit*/
          $(document).on('change','[name="supplier"]',function (){
             supplier = $(this).val();
+           
             $.ajax({
                type:'POST',
                url:'{{route('get-credit-limit')}}',
@@ -866,7 +1027,48 @@ hr{
                   $('#credit_date_limit').attr('max',date_limit);
                }
             });
+
         });
+
+
+         /*Get selected customer credit limit*/
+         $(document).on('change','[name="customer"]',function (){
+            customer = $(this).val();
+           
+            $.ajax({
+               type:'POST',
+               url:'{{route('get-credit-limit-customer')}}',
+               data:{
+                    "_token": "{{ csrf_token() }}",
+                    'customer' : customer
+               },
+               success:function(data){
+                 data = JSON.parse(data);
+                 console.log(data);
+                 $('#scode').val(data['customer'].id);
+                 $('#name').val(data['customer'].name);
+                 $('#company_name').val(data['customer'].company_name);
+                 $('#phone_no').val(data['customer'].phone_number);
+                 $('#address').val(data['customer'].address);
+                 $('#credit_balance_limit').val(data['customer_amount'].customer_amount_limit);
+                 $('#credit_balance').val(data.remaining_credit);
+                 $('#pd_cheque_limit').val(data['customer_amount'].customer_amount_limit);
+                 $('#pd_cheque_balance').val(data.remaining_cheque);
+                 $('[name="limit_amount"]').attr('max' , data.customer_amount_limit);
+                 var someDate = new Date();
+                 var numberOfDaysToAdd = parseInt(data['customer_amount'].credit_date_limit);
+                 datee = someDate.setDate(someDate.getDate() + numberOfDaysToAdd); 
+                 var dd =( '0' + ( someDate.getDate()+1) ).slice( -2 );
+                 var mm = ( '0' + (someDate.getMonth()+1) ).slice( -2 );
+                 var y = someDate.getFullYear();
+                 date_limit = someFormattedDate = y + '-'+ mm + '-'+ dd;
+                  $('#credit_date_limit').attr('max',date_limit);
+               }
+            });
+
+        });
+         
+
          /*Payment Status*/ 
          $(document).on('change','#payment_status',function (){
             payment_status = $(this).val();

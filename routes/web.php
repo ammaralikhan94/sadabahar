@@ -51,6 +51,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/update_customer/', ['as' => 'update_customer',  'uses' => 'admin\CustomerController@update_customer']);/*update users*/
 	Route::post('/get-credit-limit-customer/', ['as' => 'get-credit-limit-customer',  'uses' => 'admin\SaleController@get_credit_limit_customer']);/*get credit limit AJAX*/
 	Route::post('/get-cheque-limit-customer/', ['as' => 'get-cheque-limit-customer',  'uses' => 'admin\SaleController@get_cheque_limit_customer']);/*get cheque limit AJAX*/
+	Route::post('/get-credit-limit-customer/', ['as' => 'get-credit-limit-customer',  'uses' => 'admin\InventoryController@get_credit_limit_customer']);
 	/*********************************Customer Routes Ends****************************************/
 
 	/*********************************Inventory Stars****************************************/

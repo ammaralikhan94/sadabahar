@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Item_purchase_type;
 use App\Supplier;
+use App\sale;
 use App\Supplier_amount_limit;
 use App\Supplier_cheques;
 use App\Inventory;
@@ -13,6 +14,10 @@ use App\Chemical;
 use App\Barrel;
 use App\Notification;
 use App\Item_charter;
+use App\Customer;
+use App\Customer_cheque_bounce;
+use App\Customer_amount_limit;
+use App\Customer_payment;
 use App\Invoice_number;
 use App\Bank;
 use Auth;
@@ -24,11 +29,12 @@ class InventoryController extends Controller
     {	
         $item_type = Item_purchase_type::get();
         $supplier  = Supplier::get();
+        $customer  = Customer::get();
         $chemical  = Chemical::get();
         $invoice_number = Invoice_number::count();
         $bank = Bank::get();
         $invoice_number = $invoice_number +1;
-        return view('admin.inventory.create_inventory' , compact('item_type','supplier','chemical','invoice_number','bank'));
+        return view('admin.inventory.create_inventory' , compact('item_type','supplier','chemical','customer','invoice_number','bank'));
     }
 
 
@@ -42,6 +48,7 @@ class InventoryController extends Controller
     /*Insert Inventory*/
     public function insert_inventory(Request $request){
         /*dd($_FILES['cheque_image']);*/
+        /*dd($_POST);*/
         $count = count($_POST['item_code']);
         if($request->hasfile('cheque_image'))
          {
@@ -51,21 +58,24 @@ class InventoryController extends Controller
                 $image->move(public_path().'/cheque/', $name);  
                 $data[] = $name;
             }
-         }else{
+        }else{
                 $data[] = '';
-            }
+        }
          $image = implode(',', $data);
          $bank_name = implode(',', $request->bank_name);
          $cheque_number = implode(',', $_POST['cheque_number']);
          $cheque_amount = implode(',', $_POST['cheque_amount']);
-         $limit_cheque_date = implode(',', $_POST['limit_cheque_date']);
-         
+         $limit_cheque_date = implode(',', $_POST['limit_cheque_date']); 
         for($i = 0 ; $i<$count; $i++){
             if($_POST['item_code'][$i] != '' ){
                 $item_code = $_POST['item_code'][$i];
                 $description = $_POST['description'][$i];
                 $measurment = $_POST['measurment'][$i];
+                $storeage_quantity = $_POST['storeage_quantity'][$i];
                 $storage_type = $_POST['storage_type'][$i];
+                $kg = $_POST['kg'][$i];
+                $gram = $_POST['gram'][$i];
+                $cost = $_POST['cost'][$i];
                 $quantity = $_POST['quantity'][$i];
                 $unit = $_POST['unit'][$i];
                 $rate = $_POST['rate'][$i];
@@ -73,6 +83,7 @@ class InventoryController extends Controller
                 $inc_code = $_POST['inc_code'][$i]; 
                 $inventory_id = Inventory::create([
                 'supplier'=> $request->supplier,
+                'customer'=> $request->customer,
                 'carriage'=> $request->carriage,
                 'net_total' => $request->net_total,
                 'payment_cash' => $request->payment_cash,
@@ -83,6 +94,7 @@ class InventoryController extends Controller
                 'cheque_number' => $cheque_number,
                 'cheque_image' => $image,
                 'cheque_amount' => $cheque_amount,
+                'storeage_quantity' => $storeage_quantity,
                 'limit_cheque_date' => $limit_cheque_date,
                 'item_code'=>$item_code,
                 'dop' => '25-5-2018',
@@ -91,6 +103,9 @@ class InventoryController extends Controller
                 'storage_type' => $storage_type,
                 'invoice_number' => $request->invoice_number,
                 'quantity' => $quantity,
+                'cost' => $cost,
+                'gram' => $gram,
+                'kg' => $kg,
                 'purchase_unit' => $unit,
                 'unit_purchased' => $rate,
                 'exc_tax' => $exc_tax,
@@ -100,6 +115,10 @@ class InventoryController extends Controller
                 Invoice_number::insert([
                     'inventory_id' =>  $inventory_id,
                     'invoice_number' => $request->invoice_number
+                ]);
+                
+                Barrel::create([
+
                 ]);
             }
         }
@@ -117,13 +136,13 @@ class InventoryController extends Controller
 
     /*For barrel*/
     public function get_barrel_type(){
-        $item_type = Item_purchase_type::where('id' , $_POST['item_type'])->first();
+        $item_type = Item_purchase_type::where('item_name' , $_POST['item_type'])->first();
         return json_encode($item_type);
     }
 
 	/*Ajax call for getting supplier limit*/
-	public function get_credit_limit(){
-		$supplier_amount  = Supplier_amount_limit::where('supplier_id' , $_POST['supplier'])->first();
+    public function get_credit_limit(){
+        $supplier_amount  = Supplier_amount_limit::where('supplier_id' , $_POST['supplier'])->first();
         $credit_cash      = Inventory::where('supplier' , $_POST['supplier'])->get();
         $supplier_cheques = Supplier_cheques::where('supplier_id' , $_POST['supplier'])->first();
         $supplier = Supplier::find($_POST['supplier']);
@@ -134,7 +153,23 @@ class InventoryController extends Controller
             $remaining_credit = $supplier_amount->supplier_amount_limit - $value->cash_recieved;
             $remaining_cheque = $value->cheque_amount - $cheque_limit;
         }
-		return json_encode(array('supplier_amount' => $supplier_amount, 'remaining_credit' => $remaining_credit , 'remaining_cheque' => $remaining_cheque , 'cheque_limit' => $cheque_limit, 'supplier' => $supplier));
+        return json_encode(array('supplier_amount' => $supplier_amount, 'remaining_credit' => $remaining_credit , 'remaining_cheque' => $remaining_cheque , 'cheque_limit' => $cheque_limit, 'supplier' => $supplier));
+    }
+
+    /*Ajax call for getting customer limit*/
+	public function get_credit_limit_customer(){
+		$customer_amount  = Customer_amount_limit::where('customer_id' , $_POST['customer'])->first();
+        $credit_cash      = Sale::where('customer' , $_POST['customer'])->get();
+        $customer_cheques = Customer_cheque_bounce::where('customer_id' , $_POST['customer'])->first();
+        $customer = Customer::find($_POST['customer']);
+        $cheque_limit  = $customer_cheques->cheque_limit_amount;
+        $remaining_credit = 0;
+        $remaining_cheque = 0;
+        foreach ($credit_cash as $key => $value) {
+            $remaining_credit = $customer_amount->customer_amount_limit - $value->cash_recieved;
+            $remaining_cheque = $value->cheque_amount - $cheque_limit;
+        }
+		return json_encode(array('customer_amount' => $customer_amount, 'remaining_credit' => $remaining_credit , 'remaining_cheque' => $remaining_cheque , 'cheque_limit' => $cheque_limit, 'customer' => $customer));
 	}
 
 	/*Ajax for getting cheque limit of supplier*/
@@ -248,7 +283,7 @@ class InventoryController extends Controller
     /*add barrel page*/
 	public function create_barrel(){
         $item_type = Inventory::get();
-        $inventory_chemical = Inventory::distinct()->get(['chemical_name']);
+        $inventory_chemical = Inventory::distinct()->get(['item_name']);
 		return view('admin.barrel.create_barrel',compact('item_type','inventory_chemical'));
 	}
 

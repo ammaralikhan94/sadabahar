@@ -51,10 +51,10 @@
                             <div class="form-group col-md-6">
                                 <label class="col-md-2 control-label">Chemical</label>
                                 <div class="col-md-10">
-                                    <select class="form-control" name="chemical_name">
+                                    <select class="form-control" name="item_name">
                                         <option value="">Select Chemical</option>
                                         @foreach($inventory_chemical as $key => $chem)
-                                            <option value="{{$chem->get_chemical['id']}}">{{$chem->get_chemical['chemical_name']}}</option>
+                                            <option value="{{-- {{$chem->get_chemical['id']}} --}}">{{-- {{$chem->get_chemical['chemical_name']}} --}}</option>
                                         @endforeach
                                     </select>
                                 </div>
