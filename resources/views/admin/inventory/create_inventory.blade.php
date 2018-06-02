@@ -646,7 +646,7 @@ hr{
                     $('#kg_'+id).hide('slow');
                     $('#gram_'+id).hide('slow');
                    }
-                   $('#append_unit').append(`<input type="hidden" value="`+data.item_type+`" id="check_type_quantity" />Each `+data.item_name+` contain `+data.item_type+` `+data.item_purchase_type+``);
+                   $('#append_unit').append(`<input type="hidden" value="`+data.item_type+`" name="storage_strength[]" id="check_type_quantity" />Each `+data.item_name+` contain `+data.item_type+` `+data.item_purchase_type+``);
 
                }
             });

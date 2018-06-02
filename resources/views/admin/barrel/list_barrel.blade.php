@@ -54,7 +54,7 @@
                     <td>{{$val->barrel_type}}</td>
                     <td>{{$val->barrel_strength}}</td>
                     <td>{{$val->barrel_measure}}</td>
-                    <td>{{$val->get_barrel_chemical['chemical_name']}}</td>
+                    <td>{{$val->chemical_name}}</td>
                     <td>{{$val->empty_barrel}}</td>
                     <td>{{$val->total_barrel}}</td>
                     <td>{{$val->current_volume}}</td>

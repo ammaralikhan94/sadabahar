@@ -5,13 +5,13 @@
         <ul class="navigation-menu">
             <li class="has-submenu">
                 <a href="{{URl('/')}}"><i class="md md-dashboard"></i>Dashboard</a></li>
-            <li class="has-submenu">
+            {{-- <li class="has-submenu">
                 <a href="#"><i class="fa fa-user-plus"></i></i>Users</a>
                 <ul class="submenu">
                     <li><a href="{{route('createSubadmin')}}"><i class="fa fa-user-plus"></i> Create Sub Admin</a></li>
                     <li><a href="{{route('list_subadmin')}}"><i class="fa  fa-list "></i></i></i> List Sub Admin</a></li>
                 </ul>
-            </li>
+            </li> --}}
            <li class="has-submenu">
                 <a href="#"><i class="fa  fa-truck "></i>Supplier</a>
                 <ul class="submenu megamenu">
