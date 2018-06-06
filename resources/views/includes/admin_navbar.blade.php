@@ -39,13 +39,14 @@
                 <ul class="submenu megamenu">
                     <li>
                         <ul>
-                            <li><a href="{{route('create_inventory')}}"><i class="fa fa-opencart"></i> Add Purchase</a></li>
-                            <li><a href="{{route('list_inventory')}}"><i class="fa  fa-list  "></i>  List Purchase</a></li>
+                            <li><a href="{{route('create_inventory')}}"><i class="fa fa-opencart"></i>Add Purchase</a></li>
+                            <li><a href="{{route('return_purchase')}}"><i class="fa  fa-list  "></i>Purchase Return</a></li>
+                            <li><a href="{{route('purchase_exchange')}}"><i class="fa  fa-list  "></i>Purchase Exchange</a></li>
                         </ul>
                     </li>
                 </ul>       
             </li> 
-            <li class="has-submenu">
+           {{--  <li class="has-submenu">
              <a href="#"><i class="fa fa-shopping-basket"></i>Product Sale</a>
                 <ul class="submenu megamenu">
                     <li>
@@ -55,30 +56,23 @@
                         </ul>
                     </li>
                 </ul>       
-            </li> 
+            </li>  --}}
             <li class="has-submenu">
-             <a href="#"><i class="fa fa-wrench"></i>Add Item Purchase Type</a>
+             <a href="#"><i class="fa fa-wrench"></i>Storage Type</a>
                 <ul class="submenu megamenu">
                     <li>
                         <ul>
-                            <li><a href="{{route('create_items')}}"><i class="fa fa-wrench"></i> Add Purchase Type</a></li>
-                            <li><a href="{{route('list_items')}}"><i class="fa  fa-list  "></i>  List Purchase Types</a></li>
+                            <li><a href="{{route('create_items')}}"><i class="fa fa-wrench"></i> Add Storage Type</a></li>
+                            <li><a href="{{route('list_items')}}"><i class="fa  fa-list  "></i>  List Storage Type</a></li>
                         </ul>
                     </li>
                 </ul>       
             </li>  
             <li class="has-submenu">
-                <a href="#"><i class="fa  fa-bitbucket"></i>Barrel</a>
-                <ul class="submenu megamenu">
-                    <li>
-                        <ul>
-                            <li><a href="{{route('create_barrel')}}"><i class="fa  fa-bitbucket"></i> Add Barrel</a></li>
-                            <li><a href="{{route('list_barrel')}}"><i class="fa  fa-bitbucket"></i> List Barrel</a></li>
-                        </ul>
-                    </li>
-                </ul>       
+                <a href="{{route('list_barrel')}}"><i class="fa  fa-bitbucket"></i>Inventory</a></li>
+                      
             </li>  
-            <li class="has-submenu">
+            {{-- <li class="has-submenu">
              <a href="#"><i class="fa  fa-money"></i>Expense</a>
                 <ul class="submenu megamenu">
                     <li>
@@ -86,18 +80,18 @@
                             <li><a href="{{route('create_expense')}}"><i class="fa  fa-money"></i> Regular Expense</a></li>
                             <li><a href="{{route('create_expense')}}"><i class="fa  fa-money"></i> Fixed Expense</a></li>
                             <li><a href="{{route('create_expense')}}"><i class="fa  fa-money"></i> salary Expense </a></li>
-                            {{-- <li><a href="{{route('list_inventory')}}"><i class="fa  fa-list  "></i>  List Inventory</a></li> --}}
+                            
                         </ul>
                     </li>
                 </ul>       
-            </li> 
-            <li class="has-submenu">
-             <a href="#"><i class="fa   fa-eyedropper"></i>Products</a>
+            </li>  --}}
+           <li class="has-submenu">
+             <a href="#"><i class="fa   fa-eyedropper"></i>Items</a>
                 <ul class="submenu megamenu">
                     <li>
                         <ul>
-                            <li><a href="{{route('create_chemical')}}"><i class="fa   fa-eyedropper"></i> Add Chemical</a></li>
-                            <li><a href="{{route('list_chemical')}}"><i class="fa  fa-list  "></i>  List Chemical</a></li>
+                            <li><a href="{{route('create_charter')}}"><i class="fa  fa-bitbucket"></i>Chart of items</a></li>
+                           <li><a href="{{route('list_inventory')}}"><i class="fa  fa-list  "></i>List Of Items</a></li>
                         </ul>
                     </li>
                 </ul>       
@@ -107,7 +101,6 @@
                 <ul class="submenu megamenu">
                     <li>
                         <ul>
-                            <li><a href="{{route('create_charter')}}"><i class="fa  fa-bitbucket"></i>Inventory Charter</a></li>
                             <li><a href="{{route('create_brand')}}"><i class="fa  fa-bitbucket"></i>Add Brand</a></li>
                             <li><a href="{{route('list_brand')}}"><i class="fa  fa-bitbucket"></i>List Brand</a></li>
                             <li><a href="{{route('create_bank')}}"><i class="fa  fa-bitbucket"></i>Create Bank</a></li>

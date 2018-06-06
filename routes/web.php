@@ -136,6 +136,23 @@ Route::group(['middleware' => 'auth'], function () {
 	/**********************Get Suggestion END**************/
 
 
+	/**********************PURCHASE RETURN*****************/
+	Route::get('/return_purchase/', ['as' => 'return_purchase',  'uses' => 'admin\InventoryController@return_purchase']);
+	Route::get('/view_invoice_purchase/{id}', ['as' => 'view_invoice_purchase',  'uses' => 'admin\InventoryController@view_invoice_purchase']);
+	Route::post('/save_return/', ['as' => 'save_return',  'uses' => 'admin\InventoryController@save_return']);
+
+	/**********************PURCHASE RETURN END*****************/
+	Route::post('/check_item/', ['as' => 'check_item',  'uses' => 'admin\InventoryController@check_item']);
+	/**********************PURCHASE EXCHANGE*****************/
+	Route::get('/purchase_exchange/', ['as' => 'purchase_exchange',  'uses' => 'admin\InventoryController@purchase_exchange']);
+	Route::post('/insert_exchange/', ['as' => 'insert_exchange',  'uses' => 'admin\InventoryController@insert_exchange']);
+	/*Route::get('/view_invoice_purchase/{id}', ['as' => 'view_invoice_purchase',  'uses' => 'admin\InventoryController@view_invoice_purchase']);
+	Route::post('/save_return/', ['as' => 'save_return',  'uses' => 'admin\InventoryController@save_return']);*/
+
+	/**********************PURCHASE EXCHANGE END*****************/
+
+
+
 	Route::post('/insert-item-type/', ['as' => 'insert-item-type',  'uses' => 'admin\ItemController@insert_item_type_ajax']);
 	Route::get('/test', function () {
 		return view('admin.test');

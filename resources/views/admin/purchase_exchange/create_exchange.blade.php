@@ -1,6 +1,6 @@
 @extends('layouts.admin_layout')
 @section('title')
-    Add - Purchase
+   Purchase Exchcange
 @endsection
 @section('customCss')
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -55,17 +55,17 @@ hr{
                 <strong>{{ $message }}</strong>
         </div>
     @endif
-    <form class="form-horizontal" action="{{route('insert_inventory')}}" method="post" enctype="multipart/form-data">
-<div class="row">
+    <form class="form-horizontal" action="{{route('insert_exchange')}}" method="post" enctype="multipart/form-data">
+    <div class="row">
         <div class="col-sm-12">
             <div class="card-box">
                 <!-- <a class="btn btn-success pull-right" href="{{route('create_inventory')}}" target="_blank">Add More Purchase</a> -->
                 <div class="new-purchase">
                     <div class="col-md-3">
-                        <h4 class="m-t-0 header-title" style="margin-top: 10px !important;"><b>Create Purchase</b></h4>
+                        <h4 class="m-t-0 header-title" style="margin-top: 10px !important;"><b>Purchase Exchange</b></h4>
                     </div>
                     <div class="col-md-4">
-                        <a href="{{route('create_charter')}}" target="_blank" class="btn btn-danger pull-right" {{-- data-toggle="modal" data-target="#myModal" --}}>Add  Item Type</a>
+                        <button type="button" class="btn btn-danger pull-right" data-toggle="modal" data-target="#myModal">Add  Item Type</button>
                     </div>
                     <div class="col-md-5 pull-right">
                         <div class="col-md-5">
@@ -214,7 +214,7 @@ hr{
                                                     <tr>
                                                         <th>S.No</th>
                                                         <th>Item Code</th>
-                                                        <th width="20%">Descrption</th>
+                                                        <th width="15%">Descrption</th>
                                                         <th>Measurment</th>
                                                         <th width="10%">Storage Type</th>
                                                         <th width="10%">Storage Quantity</th>
@@ -224,6 +224,7 @@ hr{
                                                         <th>Rate</th>
                                                         <th>Value Excl. Tax</th>
                                                         <th>Value incl. Tax</th>
+                                                        <th>Purchase/Exchange</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="add_here">
@@ -257,11 +258,13 @@ hr{
                                                             <input type="text" id="gram_1" class="form-control gram" name="gram[]" {{-- style="display: none;"  --}}/></td>
                                                         <td><input type="number" id="rate_1" class="form-control rate calculate" name="rate[]" required=""></td>
                                                         <td><input type="text"   id="exc_tax_1" class="form-control calculate exc_tax" name="exc_tax[]" required=""></td>
-                                                        <td><input type="text"  class="form-control calculate inc_code" name="inc_code[]"></td>
+                                                        <td><input type="text"  id="inc_code_1" class="form-control calculate inc_code" name="inc_code[]"></td>
+                                                        <td> IN<input type="radio"  name="exchange[]" value="in" id="in_1"  class="in" >
+                                                             OUT<input type="radio"  name="exchange[]   " value="out"  id="out_1" class="out" ></td>
                                                     </tr>
                                                     <thead style="background-color: #ccc;">
                                                     <tr>
-                                                        <th  colspan="9"></th>
+                                                        <th  colspan="10"></th>
                                                         
                                                         <th id="total_rs">Total</th>
                                                         <th id="total_rs_ex">Value Excl. Tax</th>
@@ -280,12 +283,32 @@ hr{
                            
                             <div class="col-md-offset-6 col-md-6">
                                 <div class="card-box clearfix">
-                                    <div class="form-group col-md-12">
+                                    <div class="form-group col-md-12" style="display: none;">
                                         <label class="col-md-5 control-label">Carriage and Freight</label>
                                         <div class="col-md-7">
-                                            <input type="number" class="form-control amount" name="carriage" id="carriage" placeholder="Carriage" >
+                                            <input type="number" class="form-control amount" name="carriage" id="carriage" placeholder="Out Amount" >
                                         </div>                                
                                     </div>
+                                    <div class="form-group col-md-12">
+                                        <label class="col-md-5 control-label">In Amount</label>
+                                        <div class="col-md-7">
+                                            <input type="number" class="form-control" name="in_amount" id="in" placeholder="In Amount" >
+                                        </div>                                
+                                    </div>
+                                    <div class="form-group col-md-12" >
+                                        <label class="col-md-5 control-label">Out Amount</label>
+                                        <div class="col-md-7">
+                                            <input type="number" class="form-control" name="out_amount" id="out" placeholder="Carriage" >
+                                        </div>                                
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <label class="col-md-5 control-label" id="balance_amount_html">Amount Balance</label>
+                                        <div class="col-md-7">
+                                            <input type="number" class="form-control" name="balance_amount" id="balance_amount" placeholder="Balance Amount"  required="">
+                                        </div>                                
+                                    </div> 
+
                                     <div class="form-group col-md-12">
                                         <label class="col-md-5 control-label">Net Total</label>
                                         <div class="col-md-7">
@@ -475,6 +498,45 @@ hr{
     {{-- Modal for new item --}}
 @section('customScript')
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script type="text/javascript">
+    var in_amount  =0;
+    var out_amount =0;
+    var balance_amount = 0;
+    $(document).on('click','.in',function (){
+        id = $(this).attr('id');
+        id = id.substring(3);
+        rate = parseFloat($('#rate_'+id).val());
+        in_amount = parseFloat($('#rate_'+id).val()) + in_amount;
+        $('#in').val(in_amount);
+        balance_amount =$('#in').val() - $('#out').val();
+        if(balance_amount > 0 ){
+          $('#balance_amount_html').html('Amount Balance');    
+          $('#balance_amount').val(Math.abs(balance_amount));    
+        }else{
+            $('#balance_amount_html').html('Amount Due');    
+            $('#balance_amount').val(Math.abs(balance_amount));    
+        }
+
+    });
+
+    $(document).on('click','.out',function (){
+        id = $(this).attr('id');
+        id = id.substring(4);
+        rate = parseFloat($('#rate_'+id).val());
+        out_amount = parseFloat($('#rate_'+id).val()) + out_amount;
+        $('#out').val(out_amount);
+        balance_amount = parseFloat($('#in').val()) - parseFloat($('#out').val());
+        $('#balance_amount').val(balance_amount);
+        if(balance_amount > 0 ){
+          $('#balance_amount_html').html('Amount Balance');    
+          $('#balance_amount').val(Math.abs(balance_amount));    
+        }else{
+            $('#balance_amount_html').html('Amount Due');    
+            $('#balance_amount').val(Math.abs(balance_amount));    
+        }
+    });
+</script>
 <script>
     $(document).on('click','[name="vendor"]',function (){
         type = $(this).attr('id');
@@ -618,7 +680,6 @@ hr{
         $('#total_rs_ex').html('Total Rs:  '+new_rate);
         $('#rate_'+id).val(new_rate);
         $('#exc_tax_'+id).val(new_rate);
-        $('#net_total').val(new_rate);
     });
 
     $(document).on('change','.add_item_type',function (){
@@ -708,12 +769,13 @@ hr{
     });
     /***/
     row = 4;
+    new_ex=1;
     $(document).on('click','#add_more',function (){
 
         html = `<tr>
                 <th scope="row">1</th>
-                <td><input type="text" id="code_`+row+`" class="form-control code " name="item_code[]" required=""></td>
-                <td><input type="text" id="name_`+row+`" class="form-control name " name="description[]" required=""></td>
+                <td><input type="text" id="code_`+row+`" class="form-control code" name="item_code[]" required=""></td>
+                <td><input type="text" id="name_`+row+`" class="form-control name" name="description[]" required=""></td>
                 <td>
                     <select name="measurment[]" class="form-control" required="">
                         <option>Select Mesurement</option>
@@ -741,9 +803,12 @@ hr{
                 <td><input type="number" id="rate_`+row+`" class="form-control rate calculate" name="rate[]" required=""></td>
                 <td><input type="text"   id="exc_tax_`+row+`" class="form-control calculate exc_tax" name="exc_tax[]" required=""></td>
                 <td><input type="text"   id="inc_code_`+row+`" class="form-control calculate inc_code" name="inc_code[]"></td>
+                <td> IN<input type="radio"  name="exchange[`+new_ex+`]" value="in" id="in_`+row+`"  class="in" name="in[]">
+                                                             OUT<input type="radio"  name="exchange[`+new_ex+`]" id="out_`+row+`" value="out" class="out" name="out[]"></td>
             </tr>`;
                 $('#add_here').append(html);
                 row++;
+                new_ex++;
     });
     /******/
     $(document).on('focusout',function (){
@@ -1183,6 +1248,26 @@ hr{
                 $('.add_item_type').append(html);
                 item_purchase_type =  $('#item_purchase_type :selected').val('');
                  $('#close_modal').trigger('click');
+               }
+            });
+        });
+        $(document).on('focusout','.name',function(){
+            id = $(this).attr('id');
+            description = $('#'+id).val();
+            $.ajax({
+               type:'POST',
+               url:'{{route('check_item')}}',
+               data:{
+                    "_token": "{{ csrf_token() }}",
+                    'description' : description,
+               },
+               success:function(data){
+                /*data = JSON.parse(data);*/
+                console.log(data);
+                if(data == 'false'){
+                    $('#'+id).val('');
+                    alert('Item does not exist in stock');
+                }
                }
             });
         });

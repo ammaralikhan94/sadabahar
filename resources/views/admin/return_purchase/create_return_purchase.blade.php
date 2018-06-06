@@ -55,7 +55,7 @@ hr{
                 <strong>{{ $message }}</strong>
         </div>
     @endif
-    <form class="form-horizontal" action="{{route('insert_inventory')}}" method="post" enctype="multipart/form-data">
+    <form class="form-horizontal" action="{{route('save_return')}}" method="post" enctype="multipart/form-data">
 <div class="row">
         <div class="col-sm-12">
             <div class="card-box">
@@ -65,7 +65,7 @@ hr{
                         <h4 class="m-t-0 header-title" style="margin-top: 10px !important;"><b>Create Purchase</b></h4>
                     </div>
                     <div class="col-md-4">
-                        <a href="{{route('create_charter')}}" target="_blank" class="btn btn-danger pull-right" {{-- data-toggle="modal" data-target="#myModal" --}}>Add  Item Type</a>
+                        <button type="button" class="btn btn-danger pull-right" data-toggle="modal" data-target="#myModal">Add  Item Type</button>
                     </div>
                     <div class="col-md-5 pull-right">
                         <div class="col-md-5">
@@ -97,27 +97,30 @@ hr{
                     <div class="col-md-12">
                             {{csrf_field()}}
                             <div class="form-group col-md-12">
-                                
+                                {{-- @php
+                                    var_dump($inventory[0]->supplier);die;
+                                @endphp --}}
                                 <div class="col-md-2">
                                     <label>Supplier</label>
-                                    <input type="radio"  name="vendor" checked="" id="supplier">
+                                    <input type="radio"  name="vendor" checked="" id="supplier" {{($inventory[0]->supplier == '')?'':'checked'}}>
                                     <label>Customer</label>
-                                    <input type="radio"  name="vendor"  id="customer">
+                                    <input type="radio"  name="vendor"  id="customer" {{($inventory[0]->customer =='')?'':'checked'}}>
                                 </div>
                             </div>
                             
+                            @if($inventory[0]->supplier != '' )
                             <div class="form-group col-md-12" id="type_supplier">
                                 <label class="col-md-1 control-label">Supplier</label>
                                 <div class="col-md-2">
                                     <select class="form-control" required="" name="supplier">
                                         <option value="">Select Supplier</option>   
                                         @foreach($supplier as $key => $sup)
-                                            <option value="{{$sup->id}}">{{$sup->name}}</option>   
+                                            <option value="{{$sup->id}}" {{($inventory[0]->supplier == $sup->id)?'selected':'' }}>{{$sup->name}}</option>   
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
-
+                            @else
                             <div class="form-group col-md-12" id="type_customer" style="display: none;">
                                 <label class="col-md-1 control-label">Customer</label>
                                 <div class="col-md-2">
@@ -129,7 +132,7 @@ hr{
                                     </select>
                                 </div>
                             </div>
-
+                            @endif
                             <div class="col-md-6">
                                 <div class="card-box clearfix">                                                        
                                     <div class="form-group col-md-4">
@@ -204,68 +207,137 @@ hr{
                                 <div class="card-box" style="padding: 0px 20px 0px 20px;">
                                     <div class="row">    
                                     <div class="col-md-12">
-                                         <div class="table-plus">
+                                         {{-- <div class="table-plus">
                                              <button type="button" id="add_more" class="btn btn-success fa fa-plus" ></button>
-                                         </div>
+                                         </div> --}}
                                     </div>                                                                               
+                                    @php $return_item = App\Save_return::where('invoice_number',$invoice_number)->get(); $return = 0; $check_item = count($return_item);@endphp
                                         <div class="p-20">
                                             <table class="table m-0">                                                    
                                                 <thead style="background-color: #ccc;">
                                                     <tr>
                                                         <th>S.No</th>
                                                         <th>Item Code</th>
-                                                        <th width="20%">Descrption</th>
+                                                        <th width="15%">Descrption</th>
                                                         <th>Measurment</th>
                                                         <th width="10%">Storage Type</th>
-                                                        <th width="10%">Storage Quantity</th>
-                                                        <th>Quantity</th>
-                                                        <th>Cost Per unit</th>
-                                                        <th>unit</th>
+                                                        <th width="7%">Storage Quantity</th>
+                                                        <th width="7%">Quantity</th>
+                                                        <th>Cost/</th>
+                                                        <th  width="7%">unit</th>
                                                         <th>Rate</th>
                                                         <th>Value Excl. Tax</th>
                                                         <th>Value incl. Tax</th>
+                                                        <th >Return</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="add_here">
-                                                    <tr>
+                                                    @php $count = 1; @endphp
+                                                    @foreach($inventory as $key =>$val)
+                                                    <tr id="return_row_{{$count}}">
                                                         <th scope="row">1</th>
-                                                        <td><input type="text" id="code_1" class="form-control code" name="item_code[]" required=""></td>
-                                                        <td><input type="text" id="name_1" class="form-control name" name="description[]" required=""></td>
+                                                        <td><input type="hidden" id="inventory_id_{{$count}}" value="{{$val->id}}" /><input type="text" id="code_{{$count}}" class="form-control code"  value="{{$val->item_code}}" required=""></td>
+                                                        <td><input type="text" id="name_{{$count}}" class="form-control name"  value="{{$val->item_name}}" required=""></td>
                                                         <td>
-                                                            <select name="measurment[]" class="form-control" required="">
+                                                            <select  id="measurment_{{$count}}" class="form-control" required="">
                                                                 <option>Select Mesurement</option>
-                                                                <option value="kg">Kg</option>
-                                                                <option value="kg">Liter</option>
+                                                                <option value="Kg" {{($val->purchasing_type == 'kg')?'selected':''}}>Kg</option>
+                                                                <option value="liter" {{($val->purchasing_type == 'liter')?'selected':''}}>Liter</option>
+                                                                <option value="quantity" {{($val->purchasing_type == 'quantity')?'selected':''}}>Quantity</option>
                                                             </select>
                                                         </td>
-                                                        <td><select name="storage_type[]" id="storage_type_1" class="form-control add_item_type" required=""> 
+                                                        <td><select  id="storage_type_{{$count}}" class="form-control add_item_type" required=""> 
                                                             <option value="">Select Storage type</option>
-                                                            @foreach($item_type as $key => $val)
-                                                                <option value="{{$val->item_name}}">{{$val->item_name}}</option>
+                                                            @foreach($item_type as $key => $value)
+                                                                <option value="{{$value->item_name}}" {{($val->storage_type == $value->item_name)?'selected':''}}>{{$value->item_name}}</option>
                                                             @endforeach
                                                         </select></td>
-                                                        <td><input type="number" id="storeage_quantity_1" class="form-control storeage_quantity" name="storeage_quantity[]" required=""></td>
-                                                        <td><input type="number" id="quantity_1" class="form-control quantity" name="quantity[]" required=""></td>
-                                                        <td><input type="number" id="cost_1" class="form-control cost" name="cost[]" required=""></td>
-                                                        <td> <input type="hidden"   id="unit_1" class="form-control unit" name="unit[]" >
-                                                            <select class="form-control kg" id="kg_1" name="kg[]"{{--  style="display: none" --}}>
-                                                                <option value="">unit</option>
+                                                        <td><input type="number" id="storeage_quantity_{{$count}}" class="form-control storeage_quantity"  required="" value="{{App\item_purchase_type::where('item_name',$val->storage_type)->value('item_type') * $val->quantity}}"></td>
+                                                        <td><input type="number" id="quantity_{{$count}}" class="form-control quantity"  required="" value="{{$val->quantity}}"></td>
+                                                        <td><input type="number" id="cost_{{$count}}" class="form-control cost"  required="" value="{{$val->cost}}"></td>
+                                                        <td>
+                                                            <input type="text" id="unit_{{$count}}" class="form-control unit"  value="{{$val->purchase_unit}}" @php if(empty($val->purchase_unit)){ @endphp
+                                                                        style="display: none;" 
+
+                                                                    @php }@endphp>
+                                                            <select class="form-control kg" id="kg_{{$count}}"  {{($val->kg != '')?'':'style="display: none"'}}>
+                                                                <option value="">Kg</option>
                                                                 @for($i=1;$i<100;$i++)
-                                                                <option>{{$i}}</option>
+                                                                        <option value="{{$i}}"  {{($val->kg == $i)?'selected':''}}>{{$i}}</option>
+                                                                    @if($i == $val->kg)
+                                                                    @php break;@endphp 
+                                                                    @endif
                                                                 @endfor
                                                             </select>
-                                                            <input type="text" id="gram_1" class="form-control gram" name="gram[]" {{-- style="display: none;"  --}}/></td>
-                                                        <td><input type="number" id="rate_1" class="form-control rate calculate" name="rate[]" required=""></td>
-                                                        <td><input type="text"   id="exc_tax_1" class="form-control calculate exc_tax" name="exc_tax[]" required=""></td>
-                                                        <td><input type="text"  class="form-control calculate inc_code" name="inc_code[]"></td>
+                                                            <input type="text" id="gram_{{$count}}" class="form-control gram"  {{($val->gram != '')?'':'style="display: none"'}}  value="{{$val->gram}}" /></td>
+                                                        <td><input type="number" id="rate_{{$count}}" class="form-control rate calculate"  value="{{$val->unit_purchased}}" required=""></td>
+                                                        <td><input type="text"  id="exc_tax_{{$count}}" class="form-control calculate exc_tax"  required="" value="{{$val->unit_purchased}}"></td>
+                                                        <td><input type="text"  class="form-control calculate inc_code" id="inc_code_{{$count}}"  value="{{$val->inc_code}}"></td>
+                                                        <td>@php if($check_item == 0){@endphp <button type="button" class="btn btn-danger return" id="return_{{$count}}">Return</button> @php }else{@endphp <strong><p style="color: red">Item Is Returned</p></strong> @php }@endphp  </td>
                                                     </tr>
+                                                    @php $count++; @endphp
+                                                    @endforeach
+                                                    {{-- ************************************************ RETURN ********************************** --}}
+
+                                                    @foreach($return_item as $key => $item)
+
+                                                    @php $inventory = App\Inventory::where('id',$item->inventory_id)->first(); $return =1;@endphp 
+                                                    <tr id="return_row_{{$return}}" style="background-color: orange">
+                                                        <th scope="row">1</th>
+                                                        <td><input type="hidden" id="inventory_id_{{$return}}" value="{{$item->id}}" /><input type="text" id="code_{{$return}}" class="form-control code"  value="{{$inventory->item_code}}" required=""></td>
+                                                        <td><input type="text" id="name_{{$return}}" class="form-control name"  value="{{$inventory->item_name}}" required=""></td>
+                                                        <td>
+                                                            <select  id="measurment_{{$return}}" class="form-control" required="">
+                                                                <option>Select Mesurement</option>
+                                                                <option value="Kg" {{($inventory->purchasing_type == 'kg')?'selected':''}}>Kg</option>
+                                                                <option value="liter" {{($inventory->purchasing_type == 'liter')?'selected':''}}>Liter</option>
+                                                                <option value="quantity" {{($inventory->purchasing_type == 'quantity')?'selected':''}}>Quantity</option>
+                                                            </select>
+                                                        </td>
+                                                        <td><select  id="storage_type_{{$return}}" class="form-control add_item_type" required=""> 
+                                                            <option value="">Select Storage type</option>
+                                                            @foreach($item_type as $key => $value)
+                                                                <option value="{{$value->item_name}}" {{($inventory->storage_type == $value->item_name)?'selected':''}}>{{$value->item_name}}</option>
+                                                            @endforeach
+                                                        </select></td>
+                                                        <td><input type="number" id="storeage_quantity_{{$return}}" class="form-control storeage_quantity"  required="" value="{{App\item_purchase_type::where('item_name',$inventory->storage_type)->value('item_type') * $inventory->quantity}}"></td>
+                                                        <td><input type="number" id="quantity_{{$return}}" class="form-control quantity"  required="" value="{{$inventory->quantity}}"></td>
+                                                        <td><input type="number" id="cost_{{$return}}" class="form-control cost"  required="" value="{{$item->cost}}"></td>
+                                                        <td>
+                                                            <input type="text" id="unit_{{$return}}" class="form-control unit"  value="{{$item->purchase_unit}}" @php if(empty($item->purchase_unit)){ @endphp
+                                                                        style="display: none;" 
+
+                                                                    @php }@endphp>
+                                                            <select class="form-control kg" id="kg_{{$return}}"  {{($item->kg != '')?'':'style="display: none"'}}>
+                                                                <option value="">Kg</option>
+                                                                @for($i=1;$i<100;$i++)
+                                                                        <option value="{{$i}}"  {{($item->kg == $i)?'selected':''}}>{{$i}}</option>
+                                                                    @if($i == $item->kg)
+                                                                    @php break;@endphp 
+                                                                    @endif
+                                                                @endfor
+                                                            </select>
+                                                            <input type="text" id="gram_{{$return}}" class="form-control gram"  {{($item->gram != '')?'':'style="display: none"'}}  value="{{$item->gram}}" /></td>
+                                                        <td><input type="number" id="rate_{{$return}}" class="form-control rate calculate"  value="{{$item->rate}}" required=""></td>
+                                                        <td><input type="text"  id="exc_tax_{{$return}}" class="form-control calculate exc_tax"  required="" value="{{$item->exc_tax}}"></td>
+                                                        <td><input type="text"  class="form-control calculate inc_code" id="inc_code_{{$return}}"  value="{{$item->inc_code}}"></td>
+                                                        <td><button type="button" class="btn btn-danger return" id="return_{{$return}}">Return</button></td>
+                                                    </tr>   
+                                                     @php $return++; @endphp
+                                                    @endforeach
+
+
+
+
+
+                                                    {{-- ************************************************ RETURN ********************************** --}}
                                                     <thead style="background-color: #ccc;">
                                                     <tr>
-                                                        <th  colspan="9"></th>
+                                                        <th  colspan="10"></th>
                                                         
-                                                        <th id="total_rs">Total</th>
-                                                        <th id="total_rs_ex">Value Excl. Tax</th>
-                                                        <th id="tax_rs">Value incl. Tax</th>
+                                                        <th id="total_rs">{{-- Total {{$val->net_total}} --}}</th>
+                                                        <th id="total_rs_ex">{{-- Value Excl. Tax {{$val->net_total}} --}}</th>
+                                                        <th id="tax_rs">{{-- Value incl. Tax {{$val->net_total}} --}}</th>
                                                         </tr>
                                                     </thead>
                                                 </tbody>
@@ -283,54 +355,55 @@ hr{
                                     <div class="form-group col-md-12">
                                         <label class="col-md-5 control-label">Carriage and Freight</label>
                                         <div class="col-md-7">
-                                            <input type="number" class="form-control amount" name="carriage" id="carriage" placeholder="Carriage" >
+                                            <input type="number" class="form-control amount" name="carriage" id="carriage" value="{{$val->carriage}}" placeholder="Carriage" >
                                         </div>                                
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <label class="col-md-5 control-label">Net Total</label>
+                                        <label class="col-md-5 control-label">Balance</label>
                                         <div class="col-md-7">
-                                            <input type="number" class="form-control amount" name="net_total" id="net_total" placeholder="Net total"  required="">
+                                            <input type="number" class="form-control amount" name="net_total" id="net_total" value="{{$val->net_total}}" placeholder="Balance"  required="">
                                         </div>                                
                                     </div>
+
                                     <div class="form-group col-md-12">
                                         <label class="col-md-5 control-label">Payment Method</label>
                                         <div class="col-md-7">
                                             <div class="checkbox radio-inline">
-                                                <input  type="checkbox" name="payment_credit">
+                                                <input  type="checkbox" name="payment_credit" {{($val->payment_credit == "on")?'checked':''}}>
                                                 <label for="checkbox0">
                                                     Credit
                                                 </label>
                                             </div>
                                             <div class="checkbox radio-inline">
-                                                <input  type="checkbox" name="payment_cash">
+                                                <input  type="checkbox" name="payment_cash" {{($val->payment_cash == "on")?'checked':''}}>
                                                 <label for="checkbox0">
                                                     Cash
                                                 </label>
                                             </div>
                                             <div class="checkbox radio-inline">
-                                                <input  type="checkbox" name="payment_cheque" id="pdc">
+                                                <input  type="checkbox" name="payment_cheque" id="pdc" {{($val->payment_cheque == "on")?'checked':''}}>
                                                 <label for="checkbox0">
                                                     Post Dated Cheque
                                                 </label>
                                             </div>
                                         </div>                                
                                     </div>
-                                     <div class="form-group col-md-12 credit_amount_field" style="display: none;">
+                                     <div class="form-group col-md-12 credit_amount_field"  <?php if($val->payment_credit != 'on'){?> style="display: none" <?php }?>>
                                         <label class="col-md-5 control-label">Amount Credit</label>
                                         <div class="col-md-7">
-                                            <input type="number" class="form-control amount" name="amount_credit" id="amount_credit" placeholder="Credit Amount"  required="">
+                                            <input type="number" class="form-control amount" name="amount_credit" id="amount_credit" placeholder="Credit Amount"   value="{{$val->amount_credit}}">
                                         </div>                                
                                     </div>
-                                    <div class="form-group col-md-12 credit_amount_field"  style="display: none;">
+                                    <div class="form-group col-md-12 credit_amount_field"  <?php if($val->payment_credit != 'on'){?> style="display: none" <?php }?>>
                                         <label class="col-md-5 control-label">Credit Date Limit</label>
                                         <div class="col-md-7">
-                                            <input type="date" class="form-control amount" name="credit_date_limit" id="credit_date_limit" placeholder="Credit Date Limit"  required="">
+                                            <input type="date" class="form-control amount" name="credit_date_limit" id="credit_date_limit" placeholder="Credit Date Limit"   value="{{$val->credit_date_limit}}">
                                         </div>
                                     </div>
-                                    <div class="form-group col-md-12" id="cash_recieved" style="display: none;">
+                                    <div class="form-group col-md-12" id="cash_recieved"  <?php if($val->payment_cash != 'on'){?> style="display: none" <?php }?>>
                                         <label class="col-md-5 control-label">Cash Recieved</label>
                                         <div class="col-md-7">
-                                            <input type="number" class="form-control amount" name="cash_recieved" id="cash_recieved" placeholder="Cash Recieved"  >
+                                            <input type="number" class="form-control amount" value="{{$val->cash_recieved}}" name="cash_recieved" id="cash_recieved" placeholder="Cash Recieved"  >
                                         </div>                                  
                                     </div>
                                     {{-- *************************POST DATE CHEQUE ************************ --}}
@@ -355,49 +428,59 @@ hr{
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Add Cheques</h4>
         </div>
+        @php 
+            $cheque_amount = explode(',',$inventory[0]['cheque_amount']);
+            $bank_name = explode(',',$inventory[0]['bank_name']);
+            $cheque_number = explode(',',$inventory[0]['cheque_number']);
+            $cheque_image = explode(',',$inventory[0]['cheque_image']);
+            $limit_cheque_date = explode(',',$inventory[0]['limit_cheque_date']);
+            $new_count = count($cheque_number);
+        @endphp 
         <div class="modal-body">
           <div class="col-md-12" >
-            <div class="card-box clearfix" id="add_cheque_here">                                                        
-                <div class="form-group col-md-3">
-                    <label class="col-md-12 control-label">Bank Name</label>
-                    <div class="col-md-12">
-                        <select class="form-control" name="bank_name[]">
-                            @foreach($bank as $key => $val)
-                                <option value="{{$val->bank_name}}">{{$val->bank_name}}</option>
-                            @endforeach
-                        </select>
-                    </div>                                
-                </div>
-                <div class="form-group col-md-2">
-                    <label class="col-md-12 control-label">Cheque Number</label>
-                    <div class="col-md-12">
-                        <input type="text" class="form-control" name="cheque_number[]"  placeholder="Cheque Number"  >
-                    </div>                                
-                </div>
-                <div class="form-group col-md-2">
-                    <label class="col-md-12 control-label">Cheque Amount</label>
-                    <div class="col-md-12">
-                        <input type="text" class="form-control" name="cheque_amount[]"  placeholder="Cheque Amount"  >
-                    </div>                                
-                </div>
-                <div class="form-group col-md-2">
-                    <label class="col-md-12 control-label">Cheque Image</label>
-                    <div class="col-md-12">
-                        <input type="file" class="form-control" name="cheque_image[]"  placeholder="Cheque Image"  >
-                    </div>                                
-                </div>
-                <div class="form-group col-md-2">
-                    <label class="col-md-12 control-label">Cheque Date Limit</label>
-                    <div class="col-md-12">
-                        <input type="date" class="form-control" name="limit_cheque_date[]"  placeholder="Cheque Date Limit"  >
-                    </div>                                
-                </div>
-                <div class="form-group col-md-1">
-                    <label class="col-md-12 control-label"></label>
-                    <div class="col-md-12">
-                        <button type="button"  class="btn btn-success fa fa-plus modal-plus add_more_cheques" ></button>
-                    </div>                                
-                </div>
+            <div class="card-box clearfix" id="add_cheque_here">
+                @for($i=0;$i<$new_count;$i++)                                                        
+                    <div class="form-group col-md-3">
+                        <label class="col-md-12 control-label">Bank Name</label>
+                        <div class="col-md-12">
+                            <select class="form-control" name="bank_name[]">
+                                @foreach($bank as $key => $val)
+                                    <option value="{{$val->bank_name}}" {{($bank_name[$i] == $val->bank_name)?'selected':''}}>{{$val->bank_name}}</option>
+                                @endforeach
+                            </select>
+                        </div>                                
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label class="col-md-12 control-label">Cheque Number</label>
+                        <div class="col-md-12">
+                            <input type="text" class="form-control" name="cheque_number[]"  placeholder="Cheque Number" value="{{$cheque_number[$i]}}">
+                        </div>                                
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label class="col-md-12 control-label">Cheque Amount</label>
+                        <div class="col-md-12">
+                            <input type="text" class="form-control" name="cheque_amount[]"  placeholder="Cheque Amount" value="{{$cheque_amount[$i]}}">
+                        </div>                                
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label class="col-md-12 control-label">Cheque Image</label>
+                        <div class="col-md-12">
+                            <input type="file" class="form-control" name="cheque_image[]"  placeholder="Cheque Image"  value="{{$cheque_image[$i]}}">
+                        </div>                                
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label class="col-md-12 control-label">Cheque Date Limit</label>
+                        <div class="col-md-12">
+                            <input type="date" class="form-control" name="limit_cheque_date[]"  placeholder="Cheque Date Limit" value="{{$limit_cheque_date[$i]}}"  >
+                        </div>                                
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label class="col-md-12 control-label"></label>
+                        <div class="col-md-12">
+                            <button type="button"  class="btn btn-success fa fa-plus modal-plus add_more_cheques" ></button>
+                        </div>                                
+                    </div>
+                @endfor
             </div>
         </div>
         </div>
@@ -407,6 +490,7 @@ hr{
       </div>
     </div>
   </div>
+  <input type="hidden" class="form-control pull-right" name="invoice_number" value="{{$invoice_number}}" readonly="" readonly="">
   {{--  --}}
 </form>
     {{-- Modal for add more cheques --}}
@@ -510,6 +594,84 @@ hr{
             $('[name="supplier"]').prop('required',true);
         }
     });
+    $(document).on('click','.return' , function (){
+        id = $(this).attr('id');
+        id = id.substring(7);
+        inventory_id = $("#inventory_id_"+id).val();
+        
+        $("#add_here").append(`<tr id="return_row_{{$count}}" style="background-color:orange">
+                                                        <th scope="row">1</th>
+                                                        <td><input type="hidden" value="`+inventory_id+`" name="inventory_id[]"/><input type="text" id="code_{{$count}}" class="form-control code" name="item_code[]" value="{{$val->item_code}}" required=""></td>
+                                                        <td><input type="text" id="name_{{$count}}" class="form-control name" name="description[]" value="{{$val->item_name}}" required=""></td>
+                                                        <td>
+                                                            <select name="measurment[]" id="measurment_{{$count}}" class="form-control" required="">
+                                                                <option>Select Mesurement</option>
+                                                                <option value="Kg" {{($val->purchasing_type == 'kg')?'selected':''}}>Kg</option>
+                                                                <option value="liter" {{($val->purchasing_type == 'liter')?'selected':''}}>Liter</option>
+                                                                <option value="quantity" {{($val->purchasing_type == 'quantity')?'selected':''}}>Quantity</option>
+                                                            </select>
+                                                        </td>
+                                                        <td><select name="storage_type[]" id="storage_type_{{$count}}" class="form-control add_item_type" required=""> 
+                                                            <option value="">Select Storage type</option>
+                                                            @foreach($item_type as $key => $value)
+                                                                <option value="{{$value->item_name}}" {{($val->storage_type == $value->item_name)?'selected':''}}>{{$value->item_name}}</option>
+                                                            @endforeach
+                                                        </select></td>
+                                                        <td><input type="number" id="storeage_quantity_{{$count}}" class="form-control storeage_quantity" name="storeage_quantity[]" required="" value="{{App\item_purchase_type::where('item_name',$val->storage_type)->value('item_type') * $val->quantity}}"></td>
+                                                        <td><input type="number" id="quantity_{{$count}}" class="form-control quantity" name="quantity[]" required="" value="{{$val->quantity}}"></td>
+                                                        <td><input type="number" id="cost_{{$count}}" class="form-control cost" name="cost[]" required="" value="{{$val->cost}}"></td>
+                                                        <td>
+                                                            <input type="text" id="unit_{{$count}}" class="form-control unit" name="unit[]" value="{{$val->purchase_unit}}" @php if(empty($val->purchase_unit)){ @endphp
+                                                                        style="display: none;" 
+
+                                                                    @php }@endphp>
+                                                            <select class="form-control kg" id="kg_{{$count}}" name="kg[]" {{($val->kg != '')?'':'style="display: none"'}}>
+                                                                <option value="">Kg</option>
+                                                                @for($i=1;$i<100;$i++)
+                                                                        <option value="{{$i}}"  {{($val->kg == $i)?'selected':''}}>{{$i}}</option>
+                                                                    @if($i == $val->kg)
+                                                                    @php break;@endphp 
+                                                                    @endif
+                                                                @endfor
+                                                            </select>
+                                                            <input type="text" id="gram_{{$count}}" class="form-control gram" name="gram[]" {{($val->gram != '')?'':'style="display: none"'}}  value="{{$val->gram}}" /></td>
+                                                        <td><input type="number" id="rate_{{$count}}" class="form-control rate calculate" name="rate[]" value="{{$val->unit_purchased}}" required=""></td>
+                                                        <td><input type="text"  id="exc_tax_{{$count}}" class="form-control calculate exc_tax" name="exc_tax[]" required="" value="{{$val->unit_purchased}}"></td>
+                                                        <td><input type="text"  class="form-control calculate inc_code" id="inc_code_{{$count}}" name="inc_code[]" value="{{$val->inc_code}}"></td>
+                                                        <td><button type="button" class="btn btn-danger return" id="return_{{$count}}">Return</button></td>
+                                                    </tr>`);
+        /*$("#return_row_"+id).clone(false).prop('id', 'change_css'+id ).appendTo("#add_here");*/
+        code= $("#code_"+id).val();
+        name= $("#name_"+id).val();
+        measurment= $("#measurment_"+id).val();
+        storage_type= $("#storage_type_"+id).val();
+        storeage_quantity= $("#storeage_quantity_"+id).val();
+        quantity= $("#quantity_"+id).val();
+        unit= $("#unit_"+id).val();
+        cost= $("#cost_"+id).val();
+        kg= $("#kg_"+id).val();
+        gram= $("#gram_"+id).val();
+        rate= $("#rate_"+id).val();
+        unit= $("#unit_"+id).val();
+        exc_tax = $("#exc_tax_"+id).val();
+        inc_code= $("#inc_code_"+id).val();
+        new_id = parseInt(id)+1;
+         $("#code_"+new_id).val(code);
+         $("#name_"+new_id).val(name);
+         $('#measurment_'+new_id+' option[value="'+measurment+'"]').attr("selected", "selected");
+         $('#storage_type_'+new_id+' option[value="'+storage_type+'"]').attr("selected", "selected");
+         $("#storeage_quantity_"+new_id).val(storeage_quantity);
+         $("#quantity_"+new_id).val(quantity);
+         $("#cost_"+new_id).val(cost);
+         $('#kg_'+new_id+' option[value="'+kg+'"]').attr("selected", "selected");
+         $("#gram_"+new_id).val(gram);
+         $("#rate_"+new_id).val(rate);
+         $("#unit_"+new_id).val(unit);
+         $("#exc_tax_"+new_id).val(exc_tax);
+         $("#inc_code_"+new_id).val(inc_code);
+        $('#change_css'+new_id).css("background-color", "orange");
+
+    });
     $(document).on('click','.add_more_cheques',function (){
         html = `<div class="form-group col-md-3">
                     <label class="col-md-12 control-label">Bank Name</label>
@@ -575,9 +737,9 @@ hr{
             }
         });
         $('#total_rs').html('');
-        $('#total_rs').html('Total Rs:  '+sum);
+        $('#total_rs').html('Balance:  '+sum);
         $('#total_rs_ex').html('');
-        $('#total_rs_ex').html('Total Rs:  '+sum);
+        $('#total_rs_ex').html('Balance:  '+sum);
         $('#net_total').val(sum);
         total = sum;
     }); 
@@ -588,22 +750,29 @@ hr{
         /*alert(measure_type);*/
         unit = parseInt($('#kg_'+id+' option:selected').val());
         cost = parseInt($('#cost_'+id).val());
+        value = parseInt($('#gram_'+id).val());
+        gram = parseFloat(value)/1000;
+        new_rate = parseFloat($('#cost_'+id).val()) * gram;
         rate = unit * cost;
+        rate = rate + new_rate;
         $('#rate_'+id).val(rate);  
+        
         $('#exc_tax_'+id).val(rate);  
-        sum = 0; 
+        /*sum = 0; 
          $('[name="rate[]"]').each(function(){
             amount = $(this).val();
             if(amount != ''){
-                sum =  parseInt(amount) + sum;    
+                sum =  parseInt(amount) - sum;    
             }
         });
+        console.log(sum);*/
+
         $('#total_rs').html('');
-        $('#total_rs').html('Total Rs:  '+sum);
+        $('#total_rs').html('Balance:  '+Math.abs(rate));
         $('#total_rs_ex').html('');
-        $('#total_rs_ex').html('Total Rs:  '+sum);
-        $('#net_total').val(sum);
-        total = sum;
+        $('#total_rs_ex').html('Balance:  '+Math.abs(rate));
+        $('#net_total').val(Math.abs(rate));
+        total = Math.abs(rate);
     }); 
 
     $(document).on('focusout','.gram',function(){
@@ -614,8 +783,9 @@ hr{
         new_rate = parseFloat($('#cost_'+id).val()) * gram;
         rate = $('#rate_'+id).val();
         new_rate = parseInt(new_rate) + parseInt(rate);
-        $('#total_rs').html('Total Rs:  '+new_rate);
-        $('#total_rs_ex').html('Total Rs:  '+new_rate);
+        
+        $('#total_rs').html('Balance:  '+Math.abs(new_rate));
+        $('#total_rs_ex').html('Balance:  '+Math.abs(new_rate));
         $('#rate_'+id).val(new_rate);
         $('#exc_tax_'+id).val(new_rate);
         $('#net_total').val(new_rate);
@@ -646,8 +816,8 @@ hr{
                     $('#gram_'+id).show('slow');
                    }else{
                     $('#unit_'+id).show();
-                    /*$('#kg_'+id).hide('slow');
-                    $('#gram_'+id).hide('slow');*/
+                    $('#kg_'+id).hide('slow');
+                    $('#gram_'+id).hide('slow');
                    }    
                     $('#append_unit').append(`<input type="hidden" value="`+data.item_type+`" name="storage_strength[]" id="check_type_quantity" />Each `+data.item_name+` contain `+data.item_type+` `+data.item_purchase_type+``);
 
@@ -709,39 +879,38 @@ hr{
     /***/
     row = 4;
     $(document).on('click','#add_more',function (){
-
         html = `<tr>
-                <th scope="row">1</th>
-                <td><input type="text" id="code_`+row+`" class="form-control code " name="item_code[]" required=""></td>
-                <td><input type="text" id="name_`+row+`" class="form-control name " name="description[]" required=""></td>
-                <td>
-                    <select name="measurment[]" class="form-control" required="">
-                        <option>Select Mesurement</option>
-                        <option value="kg">Kg</option>
-                        <option value="kg">Liter</option>
-                    </select>
-                </td>
-                <td><select name="storage_type[]" id="storage_type_`+row+`" class="form-control add_item_type" required=""> 
-                    <option value="">Select Storage type</option>
-                    @foreach($item_type as $key => $val)
-                        <option value="{{$val->item_name}}">{{$val->item_name}}</option>
-                    @endforeach
-                </select></td>
-                <td><input type="number" id="storeage_quantity_`+row+`" class="form-control storeage_quantity" name="storeage_quantity[]" required=""></td>
-                <td><input type="number" id="quantity_`+row+`" class="form-control quantity" name="quantity[]" required=""></td>
-                <td><input type="number" id="cost_`+row+`" class="form-control cost" name="cost[]" required=""></td>
-                <td> <input type="hidden"   id="unit_`+row+`" class="form-control unit" name="unit[]" >
-                    <select class="form-control kg" id="kg_`+row+`" name="kg[]"{{--  style="display: none" --}}>
-                        <option value="">unit</option>
+                   <th scope="row">`+row+`</th>
+                    <td><input type="text" id="code_`+row+`" class="form-control code" name="item_code[]"></td>
+                    <td><input type="text" id="name_`+row+`" class="form-control name" name="description[]"></td>
+                    <td>
+                        <select name="measurment[]" class="form-control">
+                            <option>Select measurment</option>
+                            <option value="kg">Kg</option>
+                            <option value="liter">Liter</option>
+                            <option value="quantity">Quantity</option>
+                        </select>
+                    </td>
+                     <td><select name="storage_type[]"  id="storage_type_`+row+`" class="form-control add_item_type">
+                        @foreach($item_type as $key => $val)
+                            <option value="{{$val->item_name}}">{{$val->item_name}}</option>
+                        @endforeach
+                    </select></td>
+                    <td><input type="number" id="storeage_quantity_`+row+`" class="form-control storeage_quantity" name="storeage_quantity[]" required=""></td>
+                    <td><input type="number" id="quantity_`+row+`" class="form-control quantity" name="quantity[]"></td>
+                    <td><input type="number" id="cost_`+row+`" class="form-control cost" name="cost[]" required=""></td>
+                    <td><input type="text"   id="unit_`+row+`"  class="form-control unit" name="unit[]">
+                     <select class="form-control kg" id="kg_`+row+`" name="kg[]" style="display: none">
+                        <option value="">Kg</option>
                         @for($i=1;$i<100;$i++)
                         <option>{{$i}}</option>
                         @endfor
                     </select>
-                    <input type="text" id="gram_`+row+`" class="form-control gram" name="gram[]" {{-- style="display: none;"  --}}/></td>
-                <td><input type="number" id="rate_`+row+`" class="form-control rate calculate" name="rate[]" required=""></td>
-                <td><input type="text"   id="exc_tax_`+row+`" class="form-control calculate exc_tax" name="exc_tax[]" required=""></td>
-                <td><input type="text"   id="inc_code_`+row+`" class="form-control calculate inc_code" name="inc_code[]"></td>
-            </tr>`;
+                    <input type="text" id="gram_`+row+`" class="form-control gram" name="gram[]" style="display: none;" /></td>
+                    <td><input type="number"   id="rate_`+row+`"  class="form-control rate calculate" name="rate[]"></td>
+                    <td><input type="text"   id="exc_tax_`+row+`" class="form-control calculate exc_tax" name="exc_tax[]"></td>
+                    <td><input type="text"   class="form-control calculate inc_code" name="inc_code[]"></td>
+                </tr>`;
                 $('#add_here').append(html);
                 row++;
     });
@@ -907,7 +1076,7 @@ hr{
                     alert('please select supplier first');
                     return false;
                 }
-                
+                alert();
                 $('.show_post_cheques').show('slow');
                 $('[name="cheque_number"]').prop('required',true);
                 $('[name="cheque_image"]').prop('required',true);
@@ -1035,6 +1204,41 @@ hr{
 
         });
 
+         $(document).ready(function(){
+             supplier = $("[name='supplier']").val();
+           
+            $.ajax({
+               type:'POST',
+               url:'{{route('get-credit-limit')}}',
+               data:{
+                    "_token": "{{ csrf_token() }}",
+                    'supplier' : supplier
+               },
+               success:function(data){
+                 data = JSON.parse(data);
+                 console.log(data);
+                 $('#scode').val(data['supplier'].id);
+                 $('#name').val(data['supplier'].name);
+                 $('#company_name').val(data['supplier'].company_name);
+                 $('#phone_no').val(data['supplier'].phone_number);
+                 $('#address').val(data['supplier'].address);
+                 $('#credit_balance_limit').val(data['supplier_amount'].supplier_amount_limit);
+                 $('#credit_balance').val(data.remaining_credit);
+                 $('#pd_cheque_limit').val(data['supplier_amount'].supplier_amount_limit);
+                 $('#pd_cheque_balance').val(data.remaining_cheque);
+                 $('[name="limit_amount"]').attr('max' , data.supplier_amount_limit);
+                 var someDate = new Date();
+                 var numberOfDaysToAdd = parseInt(data['supplier_amount'].credit_date_limit);
+                 datee = someDate.setDate(someDate.getDate() + numberOfDaysToAdd); 
+                 var dd =( '0' + ( someDate.getDate()+1) ).slice( -2 );
+                 var mm = ( '0' + (someDate.getMonth()+1) ).slice( -2 );
+                 var y = someDate.getFullYear();
+                 date_limit = someFormattedDate = y + '-'+ mm + '-'+ dd;
+                  $('#credit_date_limit').attr('max',date_limit);
+               }
+            });
+
+         });
 
          /*Get selected customer credit limit*/
          $(document).on('change','[name="customer"]',function (){
@@ -1072,7 +1276,41 @@ hr{
             });
 
         });
-         
+    
+        $(document).ready(function(){
+            customer = $("[name='customer']").val();
+           
+            $.ajax({
+               type:'POST',
+               url:'{{route('get-credit-limit-customer')}}',
+               data:{
+                    "_token": "{{ csrf_token() }}",
+                    'customer' : customer
+               },
+               success:function(data){
+                 data = JSON.parse(data);
+                 console.log(data);
+                 $('#scode').val(data['customer'].id);
+                 $('#name').val(data['customer'].name);
+                 $('#company_name').val(data['customer'].company_name);
+                 $('#phone_no').val(data['customer'].phone_number);
+                 $('#address').val(data['customer'].address);
+                 $('#credit_balance_limit').val(data['customer_amount'].customer_amount_limit);
+                 $('#credit_balance').val(data.remaining_credit);
+                 $('#pd_cheque_limit').val(data['customer_amount'].customer_amount_limit);
+                 $('#pd_cheque_balance').val(data.remaining_cheque);
+                 $('[name="limit_amount"]').attr('max' , data.customer_amount_limit);
+                 var someDate = new Date();
+                 var numberOfDaysToAdd = parseInt(data['customer_amount'].credit_date_limit);
+                 datee = someDate.setDate(someDate.getDate() + numberOfDaysToAdd); 
+                 var dd =( '0' + ( someDate.getDate()+1) ).slice( -2 );
+                 var mm = ( '0' + (someDate.getMonth()+1) ).slice( -2 );
+                 var y = someDate.getFullYear();
+                 date_limit = someFormattedDate = y + '-'+ mm + '-'+ dd;
+                  $('#credit_date_limit').attr('max',date_limit);
+               }
+            });
+        });       
 
          /*Payment Status*/ 
          $(document).on('change','#payment_status',function (){
@@ -1183,6 +1421,26 @@ hr{
                 $('.add_item_type').append(html);
                 item_purchase_type =  $('#item_purchase_type :selected').val('');
                  $('#close_modal').trigger('click');
+               }
+            });
+        });
+        $(document).on('focusout','.name',function(){
+            id = $(this).attr('id');
+            description = $('#'+id).val();
+            $.ajax({
+               type:'POST',
+               url:'{{route('check_item')}}',
+               data:{
+                    "_token": "{{ csrf_token() }}",
+                    'description' : description,
+               },
+               success:function(data){
+                /*data = JSON.parse(data);*/
+                console.log(data);
+                if(data == 'false'){
+                    $('#'+id).val('');
+                    alert('Item does not exist in stock');
+                }
                }
             });
         });

@@ -1,6 +1,6 @@
 @extends('layouts.admin_layout')
 @section('title')
-	List - Barrel
+    List - Inventory
 @endsection
 @section('customCss')
         <!-- DataTables -->
@@ -30,39 +30,35 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="card-box table-responsive">
-            <h4 class="m-t-0 header-title"><b>Barrel</b></h4>
+            <h4 class="m-t-0 header-title"><b>Inventory</b></h4>
             <table id="subadmin_table" class="table table-striped table-bordered">
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Storage Type</th>
-                    <th>Storage Strength</th>
-                    <th>Storage unit</th>
-                    <th>Chemical Name</th>
-                    <th>Empty Barrel</th>
-                    <th>Total Barrel</th>
-                    <th>Current volume</th>
-                    <th>Total volume</th>
-                    <th>Filled volume</th>
-                    <th>Volume Remaining</th>
+                    <th>Invoice Number</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                    @foreach($barrel as $key => $val)
+                    @foreach($invoice_number as $key => $val)
                 <tr>
-                    <td>{{$key + 1}}</td>
-                    <td>{{$val->barrel_type}}</td>
-                    <td>{{$val->barrel_strength}}</td>
-                    <td>{{$val->barrel_measure}}</td>
-                    <td>{{$val->chemical_name}}</td>
-                    <td>{{$val->empty_barrel}}</td>
-                    <td>{{$val->total_barrel}}</td>
-                    <td>{{$val->current_volume}}</td>
-                    <td>{{$val->total_volume}}</td>
-                    <td>{{$val->current_volume}}</td>
-                    <td>{{$val->remaining_volume}}</td>
+                    <td>{{$key+ 1}}</td>
+                    <td>{{$val->invoice_number}}</td>
+                    <td><a class="btn btn-primary" href="{{route('view_invoice_purchase' , ['id' => $val->invoice_number])}}">View Purchase</a> <a class="btn btn-danger" href="{{route('delete_inventory' , ['id' => $val->id])}}">Delete</a></td>
                 </tr>
                 @endforeach
+               {{--  @foreach($item_charter as $key => $value)
+                    <tr>
+                        <td>{{$value->key + 1}}</td>
+                        <td>{{$value->item_name}}</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>{{$value->purchase_price}}</td>
+                        <td>-</td>
+                        <td>{{($value->payment_status == 0)?'Inactive':'Active'}}</td>
+                        <td><a class="btn btn-primary" href="{{route('edit_inventory' , ['id' => $value->id])}}">Edit</a> <a class="btn btn-danger" href="{{route('delete_inventory' , ['id' => $value->id])}}">Delete</a></td>
+                    </tr>
+                @endforeach --}}
                 </tbody>
             </table>
         </div>

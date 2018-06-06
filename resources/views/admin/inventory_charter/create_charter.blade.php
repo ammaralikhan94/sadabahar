@@ -351,6 +351,7 @@
         $(document).on('change','#sub_select',function(){
             parent_id = $('#sub_select :selected').val();
             parent_text = $('#sub_select :selected').text();
+            item_code = (Math.random().toString(36).substr(2, 2));
             $('#parent_id').val(parent_id); 
             $.ajax({
                type:'POST',
@@ -361,6 +362,7 @@
                },
                success:function(data){
                 console.log(data);
+                $('#item_code').val(item_code);
                 $('#item').find('option').remove().end().append('<option value="">Select Item</option>');
                 $.each( JSON.parse(data), function( index, value ){
                       $('#item').append(`<option value="`+value.id+`">`+value.item_name+`</option>`);

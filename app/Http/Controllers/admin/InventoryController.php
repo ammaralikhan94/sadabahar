@@ -20,6 +20,7 @@ use App\Customer_amount_limit;
 use App\Customer_payment;
 use App\Invoice_number;
 use App\Bank;
+use App\Save_return;
 use Auth;
 use DB;
 
@@ -40,7 +41,7 @@ class InventoryController extends Controller
 
     /*list inventory*/
     public function list_inventory(){
-        $inventory = Inventory::get();
+        $inventory = Inventory::distinct()->groupBy('item_name')->get();
         $item_charter = Item_charter::get();
     	return view('admin.inventory.list_inventory' , compact('inventory','item_charter'));
     }
@@ -48,7 +49,7 @@ class InventoryController extends Controller
     /*Insert Inventory*/
     public function insert_inventory(Request $request){
         /*dd($_FILES['cheque_image']);*/
-    
+        /*dd($_POST);*/
         $count = count($_POST['item_code']);
         if($request->hasfile('cheque_image'))
          {
@@ -71,8 +72,9 @@ class InventoryController extends Controller
                 $item_code = $_POST['item_code'][$i];
                 $description = $_POST['description'][$i];
                 $measurment = $_POST['measurment'][$i];
-                $storage_strength = $_POST['storage_strength'][$i];
+                /*$storage_strength = $_POST['storage_strength'][$i];*/
                 $storeage_quantity = $_POST['storeage_quantity'][$i];
+                /*$storage_strength_type = $_POST['storage_strength_type'][$i];*/
                 $storage_type = $_POST['storage_type'][$i];
                 $kg = $_POST['kg'][$i];
                 $gram = $_POST['gram'][$i];
@@ -82,7 +84,7 @@ class InventoryController extends Controller
                 $rate = $_POST['rate'][$i];
                 $exc_tax = $_POST['exc_tax'][$i];
                 $inc_code = $_POST['inc_code'][$i]; 
-                /*$inventory_id = Inventory::create([
+               $inventory_id = Inventory::create([
                 'supplier'=> $request->supplier,
                 'customer'=> $request->customer,
                 'carriage'=> $request->carriage,
@@ -116,58 +118,57 @@ class InventoryController extends Controller
                 Invoice_number::insert([
                     'inventory_id' =>  $inventory_id,
                     'invoice_number' => $request->invoice_number
-                ]);*/
-                
-        $check_previous_barrel = Barrel::where('barrel_type', $storage_type)->where('chemical_name',$description)->first();
-        if($check_previous_barrel != '' ){
-            $total_barrel = $quantity + $check_previous_barrel->total_barrel;
-            if($gram != ''){
-                $purchased_unit= $gram / 1000;
-                $purchased_unit = $kg + $purchased_unit;
-                $current_volume = $purchased_unit + $check_previous_barrel->current_volume;
-                $remaining_volume =  $check_previous_barrel->remaining_volume - $current_volume;
-                $total_volume = $storeage_quantity+ $check_previous_barrel->total_volume;
-                var_dump($total_volume);die;
+                ]);
+            $check_previous_barrel = Barrel::where('barrel_type', $storage_type)->where('chemical_name',$description)->first();
+            if($check_previous_barrel != '' ){
+                $total_barrel = $quantity + $check_previous_barrel->total_barrel;
+                if($gram != '' || $kg != ''){
+                    $purchased_unit= $gram / 1000;
+                    $purchased_unit = $kg + $purchased_unit;
+                    $current_volume = $purchased_unit + $check_previous_barrel->current_volume;
+                    $total_volume = $storeage_quantity+ $check_previous_barrel->total_volume;
+                    $remaining_volume =  $total_volume - $current_volume;
+                }else{
+                    $remaining_volume = $storage_strength - $check_previous_barrel->current_volume ;
+                    $purchased_unit = $check_previous_barrel->purchased_unit + $check_previous_barrel->purchased_unit;
+                    $remaining_volume = $remaining_volume + $check_previous_barrel->remaining_volume;
+                    $total_volume =$storage_strength + $check_previous_barrel->total_volume;
+                }
+                Barrel::where('id',$check_previous_barrel->id)->update([
+                    'total_barrel'   => $total_barrel,
+                    'remaining_volume' => $remaining_volume,
+                    'current_volume' =>  $current_volume,
+                    'unit_purchased' =>  $purchased_unit,
+                    'total_volume' =>  $total_volume,     
+                ]);
             }else{
-                $remaining_volume = $storage_strength - $check_previous_barrel->current_volume ;
-                $purchased_unit = $check_previous_barrel->purchased_unit + $check_previous_barrel->purchased_unit;
-                $remaining_volume = $remaining_volume + $check_previous_barrel->remaining_volume;
-                $total_volume =$storage_strength + $check_previous_barrel->total_volume;
-            }
-            Barrel::where('id',$check_previous_barrel->id)->update([
-                'total_barrel'   => $total_barrel,
-                'remaining_volume' => $remaining_volume,
-                'current_volume' =>  $current_volume,
-                'unit_purchased' =>  $purchased_unit,
-                'total_volume' =>  $total_volume,     
-            ]);
-        }else{
-           if($gram  != ''){
-                $converted_gram =  $gram / 1000;
-                $purchased_unit = $kg + $converted_gram;
-                $remaining_volume =  $storeage_quantity - $purchased_unit ;
-           }else{
-                $purchased_unit = $unit ;    
-                $remaining_volume = $storeage_quantity - $request->unit_purchased;
-           }
-            Barrel::create([
-                'barrel_type' => $storage_type,
-                'barrel_strength' => $storage_strength,
-                'barrel_measure' => $measurment,
-                'chemical_name' => $description,
-                'empty_barrel'  => 0,
-                'remaining_volume' => $remaining_volume,
-                'fully_occupied_barrel' =>  $quantity,
-                'total_barrel'   => $quantity,
-                'item_purchase_type' => 'new' , 
-                'current_volume' =>  $purchased_unit,
-                'current_unit' =>$storage_type,
-                'purchase_unit'  => $purchased_unit,
-                'unit_purchased' => $purchased_unit,
-                'total_volume' => $storeage_quantity,
-                'added_by'     => Auth::user()->id     
-            ]);
-        }
+                   if($gram  != '' || $kg != ''){
+                        $converted_gram =  $gram / 1000;
+                        $purchased_unit = $kg + $converted_gram;
+                        $remaining_volume =  $storeage_quantity - $purchased_unit ;
+                   }else{
+                        $purchased_unit = $unit ;    
+                        $remaining_volume = $storeage_quantity - $request->unit_purchased;
+                   }
+                   
+                    Barrel::create([
+                        'barrel_type' => $storage_type,
+                        // 'barrel_strength' => $storage_strength,
+                        'barrel_measure' => $measurment,
+                        'chemical_name' => $description,
+                        'empty_barrel'  => 0,
+                        'remaining_volume' => $remaining_volume,
+                        'fully_occupied_barrel' =>  $quantity,
+                        'total_barrel'   => $quantity,
+                        'item_purchase_type' => 'new', 
+                        'current_volume' =>  $purchased_unit,
+                        'current_unit' =>$storage_type,
+                        'purchase_unit'  => $purchased_unit,
+                        'unit_purchased' => $purchased_unit,
+                        'total_volume' => $storeage_quantity,
+                        'added_by'     => Auth::user()->id     
+                    ]);
+                }
             }
         }
         $purchase_item = Inventory::where('invoice_number',$request->invoice_number)->get();
@@ -336,7 +337,7 @@ class InventoryController extends Controller
     /*add barrel page*/
 	public function create_barrel(){
         $item_type = Inventory::get();
-        $inventory_chemical = Inventory::distinct()->get(['item_name']);
+        $inventory_chemical = Inventory::distinct()->get(['item_name'])->get();
 		return view('admin.barrel.create_barrel',compact('item_type','inventory_chemical'));
 	}
 
@@ -438,4 +439,219 @@ class InventoryController extends Controller
         return view('admin.bank.list_bank',compact('bank'));
     }
 
+    /***************Return Purchase Work******************/
+    public function return_purchase(){
+        $invoice_number = Invoice_number::distinct()->groupBy('invoice_number')->get();
+        return view('admin.return_purchase.return_purchase',compact('invoice_number'));
+    }
+
+    /*View purchase from invoice*/
+    public function view_invoice_purchase($id){
+        $inventory = Inventory::where('invoice_number',$id)->whereNotNull('invoice_number')->get();
+        $item_type = Item_purchase_type::get();
+        $supplier  = Supplier::get();
+        $customer  = Customer::get();
+        $chemical  = Chemical::get();
+        $invoice_number = Invoice_number::count();
+        $bank = Bank::get();
+        
+        return view('admin.return_purchase.create_return_purchase' , compact('inventory','item_type','supplier','chemical','customer','invoice_number','bank'));
+    }
+
+    /*Save Return*/
+    public function save_return(){
+        
+        if(isset($_POST['item_code']) && !empty($_POST['item_code'])){
+            $count = count($_POST['item_code']);
+            for($i=0;$i<$count;$i++){
+                $inventory_id = $_POST['inventory_id'][$i];
+                $item_code = $_POST['item_code'][$i];
+                $description = $_POST['description'][$i];
+                $cost = $_POST['cost'][$i];
+                $unit = $_POST['unit'][$i];
+                $kg = $_POST['kg'][$i];
+                $gram = $_POST['gram'][$i];
+                $rate = $_POST['rate'][$i];
+                $exc_tax = $_POST['exc_tax'][$i];
+                $inc_code = $_POST['inc_code'][$i];
+                $cheque_amount = $_POST['cheque_amount'][$i];
+                Save_return::create([
+                 'inventory_id' =>$inventory_id,
+                 'cost' => $cost,
+                 'unit' => $unit,
+                 'kg' => $kg,
+                 'gram' => $gram,
+                 'rate' => $rate,
+                 'exc_tax' => $exc_tax,
+                 'inc_code' => $inc_code,
+                 'invoice_number' => $_POST['invoice_number'],
+                 'net_total' => $_POST['net_total'],
+                 'amount_credit' => $_POST['amount_credit'],
+                 'cash_recieved' => $_POST['cash_recieved'],
+                 'cheque_amount' => $cheque_amount,
+                ]);
+                $item  = Barrel::where('chemical_name',$description)->first();
+                if($kg != '' || $gram != '' ){
+                    $gram = $gram / 1000;
+                    $kg = $kg + $gram ; 
+                    $current_volume  = $item->current_volume - $kg;
+                    $remaining_volume = $item->remaining_volume +$kg;
+                    
+                }
+                Barrel::where('id',$item->id)->update([
+                    'current_volume' => $current_volume,
+                    'remaining_volume' => $remaining_volume
+                ]);
+                return redirect('list_barrel');         
+            }   
+        }else{
+            return redirect('return_purchase');
+        }
+    }
+
+    /*Purchase Exchange*/
+    public function purchase_exchange(){
+        $item_type = Item_purchase_type::get();
+        $supplier  = Supplier::get();
+        $customer  = Customer::get();
+        $chemical  = Chemical::get();
+        $invoice_number = Invoice_number::count();
+        $bank = Bank::get();
+        $invoice_number = $invoice_number +1;
+        return view('admin/purchase_exchange/create_exchange',compact('item_type','supplier','chemical','customer','invoice_number','bank'));
+    }
+
+    public function insert_exchange(Request $request){
+         $count = count($_POST['item_code']);
+        if($request->hasfile('cheque_image'))
+         {
+            foreach($request->file('cheque_image') as $image)
+            {
+                $name=$image->getClientOriginalName();
+                $image->move(public_path().'/cheque/', $name);  
+                $data[] = $name;
+            }
+        }else{
+                $data[] = '';
+        }
+         $image = implode(',', $data);
+         $bank_name = implode(',', $request->bank_name);
+         $cheque_number = implode(',', $_POST['cheque_number']);
+         $cheque_amount = implode(',', $_POST['cheque_amount']);
+         $limit_cheque_date = implode(',', $_POST['limit_cheque_date']); 
+        for($i = 0 ; $i<$count; $i++){
+            if($_POST['item_code'][$i] != '' ){
+                $item_code = $_POST['item_code'][$i];
+                $description = $_POST['description'][$i];
+                $measurment = $_POST['measurment'][$i];
+                /*$storage_strength = $_POST['storage_strength'][$i];*/
+                $storeage_quantity = $_POST['storeage_quantity'][$i];
+                /*$storage_strength_type = $_POST['storage_strength_type'][$i];*/
+                $storage_type = $_POST['storage_type'][$i];
+                $kg = $_POST['kg'][$i];
+                $gram = $_POST['gram'][$i];
+                $cost = $_POST['cost'][$i];
+                $quantity = $_POST['quantity'][$i];
+                $unit = $_POST['unit'][$i];
+                $rate = $_POST['rate'][$i];
+                $exc_tax = $_POST['exc_tax'][$i];
+                $inc_code = $_POST['inc_code'][$i]; 
+                $exchange = $_POST['exchange'][$i]; 
+                $inventory_id = Inventory::create([
+                'supplier'=> $request->supplier,
+                'customer'=> $request->customer,
+                'carriage'=> $request->carriage,
+                'net_total' => $request->net_total,
+                'payment_cash' => $request->payment_cash,
+                'payment_credit' => $request->payment_credit,
+                'payment_cheque' => $request->payment_cheque,
+                'amount_credit' => $request->amount_credit,
+                'cash_recieved' => $request->cash_recieved,
+                'cheque_number' => $cheque_number,
+                'cheque_image' => $image,
+                'cheque_amount' => $cheque_amount,
+                'storeage_quantity' => $storeage_quantity,
+                'limit_cheque_date' => $limit_cheque_date,
+                'item_code'=>$item_code,
+                'dop' => '25-5-2018',
+                'item_name' => $description,
+                'purchasing_type' => $measurment,
+                'storage_type' => $storage_type,
+                'invoice_number' => $request->invoice_number,
+                'quantity' => $quantity,
+                'cost' => $cost,
+                'gram' => $gram,
+                'kg' => $kg,
+                'purchase_unit' => $unit,
+                'unit_purchased' => $rate,
+                'exc_tax' => $exc_tax,
+                'bank_name' => $bank_name,
+                'inc_code' => $inc_code,
+                'return_inventory' => $exchange
+                ])->id;
+                Invoice_number::insert([
+                    'inventory_id' =>  $inventory_id,
+                    'invoice_number' => $request->invoice_number
+                ]);
+                $check_previous_barrel = Barrel::where('barrel_type', $storage_type)->where('chemical_name',$description)->first();
+                if($check_previous_barrel != ''){
+                    if($exchange == 'in'){
+                        $total_barrel = $quantity + $check_previous_barrel->total_barrel;
+                        if($gram != '' || $kg != ''){
+                            $purchased_unit= $gram / 1000;
+                            $purchased_unit = $kg + $purchased_unit;
+                            $current_volume = $purchased_unit + $check_previous_barrel->current_volume;
+                            $total_volume = $storeage_quantity+ $check_previous_barrel->total_volume;
+                            $remaining_volume =  $total_volume - $current_volume;
+                        }else{
+                            $remaining_volume = $storage_strength - $check_previous_barrel->current_volume ;
+                            $purchased_unit = $check_previous_barrel->purchased_unit + $check_previous_barrel->purchased_unit;
+                            $remaining_volume = $remaining_volume + $check_previous_barrel->remaining_volume;
+                            $total_volume =$storage_strength + $check_previous_barrel->total_volume;
+                        }
+                        Barrel::where('id',$check_previous_barrel->id)->update([
+                            'total_barrel'   => $total_barrel,
+                            'remaining_volume' => $remaining_volume,
+                            'current_volume' =>  $current_volume,
+                            'unit_purchased' =>  $purchased_unit,
+                            'total_volume' =>  $total_volume,     
+                        ]);
+                    }else{
+                        $total_barrel = $quantity - $check_previous_barrel->total_barrel;
+                        if($gram != '' || $kg != ''){
+                            $purchased_unit= $gram / 1000;
+                            $purchased_unit = $kg + $purchased_unit;
+                            $current_volume = $purchased_unit - $check_previous_barrel->current_volume;
+                            $total_volume = $storeage_quantity + $check_previous_barrel->total_volume;
+                            $remaining_volume =  $total_volume - $current_volume;
+                        }else{
+                            $remaining_volume = $storage_strength - $check_previous_barrel->current_volume ;
+                            $purchased_unit = $check_previous_barrel->purchased_unit - $check_previous_barrel->purchased_unit;
+                            $remaining_volume = $remaining_volume - $check_previous_barrel->remaining_volume;
+                            $total_volume =$storage_strength - $check_previous_barrel->total_volume;
+                        }
+                        Barrel::where('id',$check_previous_barrel->id)->update([
+                            'total_barrel'   => $total_barrel,
+                            'remaining_volume' => $remaining_volume,
+                            'current_volume' =>  $current_volume,
+                            'unit_purchased' =>  $purchased_unit,
+                        ]);
+                    }
+                }
+            }
+        }
+        $purchase_item = Inventory::where('invoice_number',$request->invoice_number)->get();
+        $invoice = $request->invoice_number;
+        return view('admin.invoice.purchase_exchange',compact('purchase_item','invoice'));
+    }
+
+    public function check_item(){
+        $check_item = $_POST['description'];
+        $inventory = Inventory::where('item_name',$check_item)->whereNotNull('invoice_number')->first();
+        if(!isset($inventory->item_name)){
+            echo json_encode(false);
+        }else{
+            echo json_encode(true);
+        }
+    }
 }
