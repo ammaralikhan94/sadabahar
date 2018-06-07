@@ -49,7 +49,7 @@
                     <td>{{$val->item_name}}</td>
                     <td>{{$val->item_code}}</td>
                     <td>{{-- {{$val->payment_status}} --}}Active</td>
-                    <td>{{-- <a class="btn btn-primary" href="{{route('edit_inventory' , ['id' => $val->id])}}">Edit</a> --}} <a class="btn btn-danger" href="{{route('delete_inventory' , ['id' => $val->id])}}">Delete</a></td>
+                    <td>{{-- <a class="table-icons" href="{{route('edit_inventory' , ['id' => $val->id])}}">Edit</a> --}} <a class="table-icons" href="{{route('delete_inventory' , ['id' => $val->id])}}"><i style="color: #ff0000" class="fa fa-trash"></i></a></td>
                 </tr>
                 @endforeach
                {{--  @foreach($item_charter as $key => $value)
