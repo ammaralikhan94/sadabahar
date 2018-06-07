@@ -21,6 +21,7 @@ use App\Customer_payment;
 use App\Invoice_number;
 use App\Bank;
 use App\Save_return;
+use App\Exchange_invoice;
 use Auth;
 use DB;
 
@@ -117,7 +118,8 @@ class InventoryController extends Controller
             ])->id;
                 Invoice_number::insert([
                     'inventory_id' =>  $inventory_id,
-                    'invoice_number' => $request->invoice_number
+                    'invoice_number' => $request->invoice_number,
+                    'invoice_type' => 'Purchase Invoice',
                 ]);
             $check_previous_barrel = Barrel::where('barrel_type', $storage_type)->where('chemical_name',$description)->first();
             if($check_previous_barrel != '' ){
@@ -404,7 +406,7 @@ class InventoryController extends Controller
     }
 
     public function get_suggestion_name(Request $request){
-        $inventory = Inventory::where('item_code', $request->term)->orWhere('item_name', 'like', '%' . $request->term . '%')->get();
+        $inventory = Inventory::where('item_code', $request->term)->orWhere('item_name', 'like', '%' . $request->term . '%')->groupBy('item_name')->get();
         $result = array();
         foreach ($inventory as $key => $value) {
             $result[]=['id' => $value->id,'value'=>$value->item_name];
@@ -589,9 +591,10 @@ class InventoryController extends Controller
                 'inc_code' => $inc_code,
                 'return_inventory' => $exchange
                 ])->id;
-                Invoice_number::insert([
+                Exchange_invoice::insert([
                     'inventory_id' =>  $inventory_id,
-                    'invoice_number' => $request->invoice_number
+                    'invoice_number' => $request->invoice_number,
+                    'invoice_type' => 'Purchase Exchange',
                 ]);
                 $check_previous_barrel = Barrel::where('barrel_type', $storage_type)->where('chemical_name',$description)->first();
                 if($check_previous_barrel != ''){
@@ -653,5 +656,10 @@ class InventoryController extends Controller
         }else{
             echo json_encode(true);
         }
+    }
+
+    public function get_invoice(){
+        $invoice = Invoice_number::get();
+        return view('admin.invoice.invoices',compact('invoice'));   
     }
 }

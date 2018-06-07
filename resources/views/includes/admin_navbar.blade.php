@@ -69,7 +69,13 @@
                 </ul>       
             </li>  
             <li class="has-submenu">
+                <a href="{{route('list_barrel')}}"><i class="fa  fa-bitbucket"></i>Inventory</a></li>   
+            </li>  
+             <li class="has-submenu">
                 <a href="{{route('list_barrel')}}"><i class="fa  fa-bitbucket"></i>Inventory</a></li>
+            </li>  
+             <li class="has-submenu">
+                <a href="{{route('get_invoice')}}"><i class="fa  fa-bitbucket"></i>Invoice</a></li>
                       
             </li>  
             {{-- <li class="has-submenu">

@@ -151,7 +151,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	/**********************PURCHASE EXCHANGE END*****************/
 
-
+    Route::get('/get_invoice/', ['as' => 'get_invoice',  'uses' => 'admin\InventoryController@get_invoice']);
 
 	Route::post('/insert-item-type/', ['as' => 'insert-item-type',  'uses' => 'admin\ItemController@insert_item_type_ajax']);
 	Route::get('/test', function () {
