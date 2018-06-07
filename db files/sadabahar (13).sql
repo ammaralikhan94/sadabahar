@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 01, 2018 at 09:44 PM
+-- Generation Time: Jun 07, 2018 at 11:58 AM
 -- Server version: 10.1.10-MariaDB
 -- PHP Version: 7.0.3
 
@@ -63,7 +63,7 @@ CREATE TABLE `barrel` (
   `barrel_type` varchar(225) NOT NULL,
   `barrel_strength` varchar(255) NOT NULL,
   `barrel_measure` varchar(255) NOT NULL,
-  `chemical_name` int(11) NOT NULL,
+  `chemical_name` varchar(255) NOT NULL,
   `empty_barrel` float NOT NULL,
   `fully_occupied_barrel` float NOT NULL,
   `total_barrel` float NOT NULL,
@@ -254,6 +254,18 @@ CREATE TABLE `customer_payment_status` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `exchange_invoice`
+--
+
+CREATE TABLE `exchange_invoice` (
+  `id` int(11) NOT NULL,
+  `inventory_id` int(11) DEFAULT NULL,
+  `invoice_number` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `inventory`
 --
 
@@ -295,15 +307,17 @@ CREATE TABLE `inventory` (
   `updated_at` timestamp NULL DEFAULT '0000-00-00 00:00:00',
   `exc_tax` varchar(255) DEFAULT NULL,
   `inc_code` varchar(255) DEFAULT NULL,
-  `storeage_quantity` varchar(255) DEFAULT NULL
+  `storeage_quantity` varchar(255) DEFAULT NULL,
+  `return_inventory` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `inventory`
 --
 
-INSERT INTO `inventory` (`id`, `invoice_number`, `item_code`, `item_name`, `storage_type`, `dop`, `quantity`, `cost`, `kg`, `gram`, `cash_recieved`, `supplier`, `customer`, `limit_amount`, `cheque_number`, `cheque_amount`, `cheque_image`, `limit_cheque_date`, `payment_cash`, `payment_credit`, `payment_cheque`, `purchase_amount`, `due_date`, `due_amount`, `purchasing_type`, `purchase_unit`, `unit_purchased`, `purchased_gram`, `carriage`, `net_total`, `amount_credit`, `credit_date_limit`, `bank_name`, `created_at`, `updated_at`, `exc_tax`, `inc_code`, `storeage_quantity`) VALUES
-(1, NULL, 'b1', 'samad bond', NULL, '02-06-2018', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Kg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-06-01 19:06:02', '2018-06-01 19:06:02', NULL, NULL, NULL);
+INSERT INTO `inventory` (`id`, `invoice_number`, `item_code`, `item_name`, `storage_type`, `dop`, `quantity`, `cost`, `kg`, `gram`, `cash_recieved`, `supplier`, `customer`, `limit_amount`, `cheque_number`, `cheque_amount`, `cheque_image`, `limit_cheque_date`, `payment_cash`, `payment_credit`, `payment_cheque`, `purchase_amount`, `due_date`, `due_amount`, `purchasing_type`, `purchase_unit`, `unit_purchased`, `purchased_gram`, `carriage`, `net_total`, `amount_credit`, `credit_date_limit`, `bank_name`, `created_at`, `updated_at`, `exc_tax`, `inc_code`, `storeage_quantity`, `return_inventory`) VALUES
+(1, NULL, '3n', 'sulphur', NULL, '05-06-2018', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Kg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-06-05 13:35:27', '2018-06-05 13:35:27', NULL, NULL, NULL, '0'),
+(12, NULL, 'k3', 'basket', NULL, '05-06-2018', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Kg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-06-05 15:54:30', '2018-06-05 15:54:30', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -314,41 +328,9 @@ INSERT INTO `inventory` (`id`, `invoice_number`, `item_code`, `item_name`, `stor
 CREATE TABLE `invoice_number` (
   `id` int(11) NOT NULL,
   `inventory_id` int(11) NOT NULL,
-  `invoice_number` int(11) NOT NULL
+  `invoice_number` int(11) NOT NULL,
+  `invoice_type` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `invoice_number`
---
-
-INSERT INTO `invoice_number` (`id`, `inventory_id`, `invoice_number`) VALUES
-(1, 1, 1),
-(2, 1, 2),
-(3, 2, 3),
-(4, 3, 3),
-(5, 1, 5),
-(6, 1, 6),
-(7, 2, 6),
-(8, 3, 6),
-(9, 4, 6),
-(10, 5, 6),
-(11, 6, 6),
-(12, 7, 6),
-(13, 8, 6),
-(14, 9, 6),
-(15, 10, 6),
-(16, 11, 6),
-(17, 12, 6),
-(18, 13, 6),
-(19, 14, 6),
-(20, 15, 6),
-(21, 16, 6),
-(22, 17, 6),
-(23, 1, 23),
-(24, 2, 23),
-(25, 3, 23),
-(26, 4, 23),
-(27, 5, 23);
 
 -- --------------------------------------------------------
 
@@ -378,7 +360,8 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`id`, `item_code`, `item_name`, `item_description`, `brand_name`, `purchase_price`, `selling_price`, `measurment_unit`, `status`, `created_at`, `updated_at`, `parent_id`, `sub_id`, `supplier`) VALUES
-(1, 'b1', 'samad bond', 'test bond', 'wiki', '200', '500', 'Kg', '0', '2018-06-01 19:06:02', '2018-06-01 19:06:02', 1, 1, 'sadabahar');
+(5, '3n', 'sulphur', 'test chemical', 'wiki', '200', '500', 'Kg', '0', '2018-06-05 13:35:27', '2018-06-05 13:35:27', 1, 1, 'sadabahar'),
+(7, 'k3', 'basket', 'test', 'wiki', '200', '500', 'Kg', '0', '2018-06-05 15:54:30', '2018-06-05 15:54:30', 1, 1, 'sadabahar');
 
 -- --------------------------------------------------------
 
@@ -400,8 +383,8 @@ CREATE TABLE `item_purchase_type` (
 --
 
 INSERT INTO `item_purchase_type` (`id`, `item_name`, `item_type`, `item_purchase_type`, `created_at`, `updated_at`) VALUES
-(2, 'basket', '2', 'quantity', '2018-05-25 11:20:59', '2018-05-25 11:20:59'),
-(3, 'drum', '25', 'kg', '2018-05-26 05:42:55', '2018-05-26 05:42:55');
+(3, 'drum', '25', 'kg', '2018-05-26 05:42:55', '2018-05-26 05:42:55'),
+(4, 'bottle', '5', 'liter', '2018-06-04 12:03:59', '2018-06-04 12:03:59');
 
 -- --------------------------------------------------------
 
@@ -486,6 +469,48 @@ CREATE TABLE `sales` (
   `sale_price` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `save_return`
+--
+
+CREATE TABLE `save_return` (
+  `id` int(11) NOT NULL,
+  `inventory_id` varchar(255) NOT NULL,
+  `invoice_number` varchar(255) DEFAULT NULL,
+  `cost` varchar(255) DEFAULT NULL,
+  `unit` varchar(255) DEFAULT NULL,
+  `kg` varchar(255) DEFAULT NULL,
+  `gram` varchar(255) DEFAULT NULL,
+  `rate` varchar(255) DEFAULT NULL,
+  `exc_tax` varchar(255) DEFAULT NULL,
+  `inc_code` varchar(255) DEFAULT NULL,
+  `net_total` varchar(255) DEFAULT NULL,
+  `amount_credit` varchar(255) DEFAULT NULL,
+  `cash_recieved` varchar(255) DEFAULT NULL,
+  `cheque_amount` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `service`
+--
+
+CREATE TABLE `service` (
+  `id` int(11) NOT NULL,
+  `bullet_1` varchar(255) DEFAULT NULL,
+  `bullet_2` varchar(255) DEFAULT NULL,
+  `bullet_3` varchar(255) DEFAULT NULL,
+  `bullet_4` varchar(255) DEFAULT NULL,
+  `bullet_5` varchar(255) DEFAULT NULL,
+  `bullet_6` varchar(255) DEFAULT NULL,
+  `heading` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -640,7 +665,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `role_id`, `phone_number`, `address`, `joining_date`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'ammarkhan94.ak@gmail.com', '$2y$10$/EsUzRn5r3ExIPUENuCzDuYUb9WQlGhu1FydCaNLghi4wx2A7lRLe', 1, '03313960846', 'Nazimabad', '', 'E6Pf623CbBGm9T0vaf2U0aPNZ5IJ1sR5sZeIuPIDAjyYSa2qtu5Ezd7McKzn', '2018-04-17 07:29:23', '2018-04-17 07:29:23'),
+(1, 'admin', 'ammarkhan94.ak@gmail.com', '$2y$10$/EsUzRn5r3ExIPUENuCzDuYUb9WQlGhu1FydCaNLghi4wx2A7lRLe', 1, '03313960846', 'Nazimabad', '', 'uEpJdZ980iUEKCdfeh4kjVyGbyc7Riek0vJsO3KWiFCHNXbReJYfYy3dxgek', '2018-04-17 07:29:23', '2018-04-17 07:29:23'),
 (6, 'jack sparrow', 'jack_sparrow@gmail.com', '$2y$10$alUOqRP/kDpvvD.8DkIdx.D99R3IvXAgPkXvggHHfT3QU2ynImWiK', 2, '0012454214', 'new york', '2018-04-17', 'ATmdh3q3216vJpwWk9FRNh56pf8VB4KJ2F9kRNaFL5NIazK7ZPPqvmF2chXR', '2018-04-17 11:10:18', '2018-05-23 05:09:44'),
 (7, 'wennie', 'wennie@minibig.com', '$2y$10$mTzJuRiqYwlWv38fTLOrHuUrRU93RWwxccg0DxBxy5rzIFJnFgLkq', 4, '002125412415', 'Malir Cant', '2018-04-26', 'Ad6O7a4PmrIYi1xTQiOR1PbHrFx0pb469jAmSEJ2FisOVeztpvrexRN1q2fv', '2018-04-24 09:07:01', '2018-04-24 09:07:32'),
 (8, 'Marny Cunningham', 'vyju@mailinator.net', '$2y$10$5U48NYjUAg4hi1p8P6o4YeX4neON8Kp.6OpdRW.9vrNbn9Gve5gVu', 2, '453', 'Sint maxime assumenda eu et ut quia labore sapiente reiciendis eius laboris accusantium qui quis neque', '1982-02-07', NULL, '2018-04-24 12:54:31', '2018-04-24 12:54:31');
@@ -716,6 +741,12 @@ ALTER TABLE `customer_payment_status`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `exchange_invoice`
+--
+ALTER TABLE `exchange_invoice`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `inventory`
 --
 ALTER TABLE `inventory`
@@ -761,6 +792,18 @@ ALTER TABLE `roles`
 -- Indexes for table `sales`
 --
 ALTER TABLE `sales`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `save_return`
+--
+ALTER TABLE `save_return`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `service`
+--
+ALTER TABLE `service`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -818,7 +861,7 @@ ALTER TABLE `bank`
 -- AUTO_INCREMENT for table `barrel`
 --
 ALTER TABLE `barrel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `brand`
 --
@@ -865,25 +908,30 @@ ALTER TABLE `customer_orders`
 ALTER TABLE `customer_payment_status`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `exchange_invoice`
+--
+ALTER TABLE `exchange_invoice`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `invoice_number`
 --
 ALTER TABLE `invoice_number`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `item_purchase_type`
 --
 ALTER TABLE `item_purchase_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `migrations`
 --
@@ -903,6 +951,16 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `save_return`
+--
+ALTER TABLE `save_return`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `service`
+--
+ALTER TABLE `service`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `sub_category_charter`
