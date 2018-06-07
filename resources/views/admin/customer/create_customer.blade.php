@@ -51,10 +51,10 @@
                                     <h4 class="m-t-0 header-title"><b>Create Customer</b></h4>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-group" style="margin-bottom: 0px !important;">
+                                    <!-- <div class="form-group" style="margin-bottom: 0px !important;">
                                         <label class="col-md-offset-6 col-md-3 control-label">CID:</label>
                                         <label class="col-md-3 control-label" style="text-align: left;">CID</label>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="col-md-12">

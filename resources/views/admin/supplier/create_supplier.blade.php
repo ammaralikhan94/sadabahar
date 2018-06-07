@@ -49,10 +49,10 @@
                                     <h4 class="m-t-0 header-title"><b>Create Supplier</b></h4>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-group" style="margin-bottom: 0px !important;">
+                                    <!-- <div class="form-group" style="margin-bottom: 0px !important;">
                                         <label class="col-md-offset-6 col-md-3 control-label">SID:</label>
                                         <label class="col-md-3 control-label" style="text-align: left;">SID</label>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="col-md-12">
