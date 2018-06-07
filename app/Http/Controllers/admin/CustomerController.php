@@ -20,8 +20,8 @@ class CustomerController extends Controller
 
     public function create_customer()
     {	
-    	
-    	return view('admin.customer.create_customer');
+    	$customer  = Customer::get();
+    	return view('admin.customer.create_customer',compact('customer'));
     }
 
     /*Add new customer*/
