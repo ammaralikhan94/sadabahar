@@ -26,7 +26,7 @@
                         <form class="form-horizontal" action="{{route('update_supplier')}}" method="POST">
                         	{{csrf_field()}}
                             <div class="form-group col-md-6">
-                                <label class="col-md-3 control-label">Name</label>
+                                <label class="col-md-3 control-label">Supplier Name</label>
                                 <div class="col-md-9">
                                     <input type="text" class="form-control" name="name" value="{{$supplier->name}}" required="">
                                 </div>
@@ -48,14 +48,14 @@
                             </div>
  --}}
                             <div class="form-group col-md-6">
-                                <label class="col-md-3 control-label">Number</label>
+                                <label class="col-md-3 control-label">Contact Number</label>
                                 <div class="col-md-9">
                                     <input type="number" class="form-control" name="phone_number" value="{{$supplier->phone_number}}" required="">
                                 </div>
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label class="col-md-3 control-label">Location</label>
+                                <label class="col-md-3 control-label">Address</label>
                                 <div class="col-md-9">
                                     <input type="text" class="form-control" name="address" placeholder="address" value="{{$supplier->address}}"  required="">
                                 </div>
@@ -98,7 +98,7 @@
 
                              {{-- Payment Amount Limit --}}
                             <div class="form-group col-md-6" id="credit_due_date" <?php  if($supplier->payment_mode == 'credit_limit'){echo '';}else{?> style="display: none"<?php }?>    id="credit_limit" >
-                                <label class="col-md-3 control-label">credit due date</label>
+                                <label class="col-md-3 control-label">Credit Due Date</label>
                                 <div class="col-md-9">
                                     <input type="numebr" class="form-control" name="credit_due_date" value="{{$supplier_amount_limit->credit_date_limit}}"  >
                                 </div>
@@ -122,9 +122,8 @@
                             </div>
                             {{-- Payment Mode End--}}
 
-                            <div class="form-group col-md-6">
-                            	<label class="col-md-3 control-label"></label>
-                                <div class="col-md-9">
+                            <div class="form-group col-md-12">
+                                <div class="col-md-offset-10 col-md-2">
                                     <input type="submit" class="form-control btn btn-success"  placeholder="placeholder" value="Save">
                                 </div>
                             </div>
