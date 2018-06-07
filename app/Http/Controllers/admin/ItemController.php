@@ -10,7 +10,8 @@ class ItemController extends Controller
 {	
 	/*view add item form*/
     public function create_items(){
-    	return view('admin.items.create_items');
+        $items = Item_purchase_type::get();
+    	return view('admin.items.create_items', compact('items'));
     }
 
     /*Insert Item Form*/
