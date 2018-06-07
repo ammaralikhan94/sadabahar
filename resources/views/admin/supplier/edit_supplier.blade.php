@@ -2,6 +2,20 @@
 @section('title')
 	Edit - Supplier
 @endsection
+
+@section('customCss')
+<style type="text/css">
+
+    hr{
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+
+</style>
+@endsection
+
+
 @section('content')
 @if ($message = Session::get('success'))
     <div class="alert alert-success alert-block">
@@ -21,6 +35,9 @@
         <div class="col-sm-12">
             <div class="card-box">
                 <h4 class="m-t-0 header-title"><b>Edit Supplier</b></h4>
+                <div class="col-md-12">
+                    <hr>
+                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <form class="form-horizontal" action="{{route('update_supplier')}}" method="POST">
