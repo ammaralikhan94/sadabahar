@@ -20,16 +20,16 @@ File: Menu
   min-height: 62px;
 }
 #topnav .has-submenu.active a {
-  color: #5fbeaa;
+  color: #001f3e;
 }
 #topnav .has-submenu.active a i {
-  color: #5fbeaa;
+  color: #2ba7df ;
 }
 #topnav .has-submenu.active .submenu li.active > a {
-  color: #5fbeaa;
+  color: #2ba7df ;
 }
 #topnav .topbar-main {
-  background-color: #36404a;
+  background-color: #001f3e;
 }
 #topnav .topbar-main .logo {
   color: #ffffff !important;
@@ -45,7 +45,7 @@ File: Menu
   text-align: center;
 }
 #topnav .topbar-main .logo i {
-  color: #5fbeaa;
+  color: #2ba7df ;
 }
 #topnav .topbar-main .badge {
   position: absolute;
@@ -141,8 +141,8 @@ File: Menu
   border: 2px solid #f05050;
 }
 #topnav .topbar-main .noti-dark {
-  color: #36404a;
-  border: 2px solid #36404a;
+  color: #001f3e;
+  border: 2px solid #001f3e;
 }
 #topnav .topbar-main .noti-purple {
   color: #7266ba;
@@ -153,8 +153,8 @@ File: Menu
   border: 2px solid #fb6d9d;
 }
 #topnav .topbar-main .noti-custom {
-  color: #5fbeaa;
-  border: 2px solid #5fbeaa;
+  color: #2ba7df ;
+  border: 2px solid #2ba7df ;
 }
 #topnav .topbar-main .noti-inverse {
   color: #4c5667;
@@ -203,13 +203,13 @@ File: Menu
   background-color: transparent;
 }
 #topnav .navbar-toggle:hover span {
-  background-color: #5fbeaa;
+  background-color: #2ba7df ;
 }
 #topnav .navbar-toggle:focus {
   background-color: transparent;
 }
 #topnav .navbar-toggle:focus span {
-  background-color: #5fbeaa;
+  background-color: #2ba7df ;
 }
 #topnav .navbar-toggle .lines {
   width: 25px;
@@ -257,7 +257,7 @@ File: Menu
 }
 #topnav .navigation-menu > li > a {
   display: block;
-  color: #36404a;
+  color: #001f3e;
   font-weight: 500;
   -webkit-transition: all .3s ease;
   transition: all .3s ease;
@@ -266,22 +266,22 @@ File: Menu
   padding-right: 25px;
 }
 #topnav .navigation-menu > li > a:hover {
-  color: #5fbeaa;
+  color: #2ba7df ;
 }
 #topnav .navigation-menu > li > a:hover i {
-  color: #5fbeaa;
+  color: #2ba7df ;
 }
 #topnav .navigation-menu > li > a:focus {
-  color: #5fbeaa;
+  color: #2ba7df ;
 }
 #topnav .navigation-menu > li > a:focus i {
-  color: #5fbeaa;
+  color: #2ba7df ;
 }
 #topnav .navigation-menu > li > a:active {
-  color: #5fbeaa;
+  color: #2ba7df ;
 }
 #topnav .navigation-menu > li > a:active i {
-  color: #5fbeaa;
+  color: #2ba7df ;
 }
 #topnav .navigation-menu > li > a i {
   display: block;
@@ -296,8 +296,8 @@ File: Menu
 }
 @media (min-width: 992px) {
   #topnav .navigation-menu > li > a {
-    padding-top: 22px;
-    padding-bottom: 22px;
+    padding-top: 12px;
+    padding-bottom: 12px;
   }
 }
 /*
@@ -318,10 +318,10 @@ File: Menu
     padding-left: 0px;
   }
   #topnav .navigation-menu > li:hover a {
-    color: #5fbeaa;
+    color: #2ba7df ;
   }
   #topnav .navigation-menu > li:hover a i {
-    color: #5fbeaa;
+    color: #2ba7df ;
   }
   #topnav .navigation-menu > li .submenu {
     position: absolute;
@@ -380,7 +380,7 @@ File: Menu
     color: #494e53;
   }
   #topnav .navigation-menu > li .submenu li a:hover {
-    color: #5fbeaa;
+    color: #2ba7df ;
   }
   #topnav .navigation-menu > li .submenu li span {
     display: block;
@@ -416,7 +416,7 @@ File: Menu
     float: none;
   }
   #topnav .navigation-menu > li > a {
-    color: #36404a;
+    color: #001f3e;
     padding: 15px;
   }
   #topnav .navigation-menu > li > a i {
@@ -438,10 +438,10 @@ File: Menu
     display: block;
     position: relative;
     padding: 7px 20px;
-    color: #36404a;
+    color: #001f3e;
   }
   #topnav .navigation-menu > li .submenu li a:hover {
-    color: #5fbeaa;
+    color: #2ba7df ;
   }
   #topnav .navigation-menu > li .submenu li.has-submenu > a:after {
     content: "\e64b";
@@ -473,7 +473,7 @@ File: Menu
     color: #79818a;
   }
   #topnav .navigation-menu > li.has-submenu.open > a {
-    color: #5fbeaa;
+    color: #2ba7df ;
   }
   #topnav .navbar-header {
     float: left;
@@ -531,5 +531,9 @@ File: Menu
   color: #98a6ad;
 }
 .footer ul li a:hover {
-  color: #5fbeaa;
+  color: #2ba7df ;
+}
+
+.btn-success{
+  background-color: #2ba7df !important;
 }

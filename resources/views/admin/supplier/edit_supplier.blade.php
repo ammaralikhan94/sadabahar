@@ -26,44 +26,44 @@
                         <form class="form-horizontal" action="{{route('update_supplier')}}" method="POST">
                         	{{csrf_field()}}
                             <div class="form-group col-md-6">
-                                <label class="col-md-2 control-label">Name</label>
-                                <div class="col-md-10">
+                                <label class="col-md-3 control-label">Name</label>
+                                <div class="col-md-9">
                                     <input type="text" class="form-control" name="name" value="{{$supplier->name}}" required="">
                                 </div>
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label class="col-md-2 control-label">Company Name</label>
-                                <div class="col-md-10">
+                                <label class="col-md-3 control-label">Company Name</label>
+                                <div class="col-md-9">
                                     <input type="text" class="form-control" name="company_name" value="{{$supplier->company_name}}" required="">
                                 </div>
                             </div>
                            
                             <input type="hidden" name="supplier_id" value="{{$supplier->id}}">
                             {{-- <div class="form-group col-md-6">
-                                <label class="col-md-2 control-label" for="example-email">Password</label>
-                                <div class="col-md-10">
+                                <label class="col-md-3 control-label" for="example-email">Password</label>
+                                <div class="col-md-9">
                                     <input type="password"  name="password" value="{{$user->password}}" class="form-control" placeholder="Passowrd"  required="">
                                 </div>
                             </div>
  --}}
                             <div class="form-group col-md-6">
-                                <label class="col-md-2 control-label">Number</label>
-                                <div class="col-md-10">
+                                <label class="col-md-3 control-label">Number</label>
+                                <div class="col-md-9">
                                     <input type="number" class="form-control" name="phone_number" value="{{$supplier->phone_number}}" required="">
                                 </div>
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label class="col-md-2 control-label">Location</label>
-                                <div class="col-md-10">
+                                <label class="col-md-3 control-label">Location</label>
+                                <div class="col-md-9">
                                     <input type="text" class="form-control" name="address" placeholder="address" value="{{$supplier->address}}"  required="">
                                 </div>
                             </div>
 
                            {{--  <div class="form-group col-md-6">
-                                <label class="col-md-2 control-label">Cheque Status</label>
-                                <div class="col-md-10">
+                                <label class="col-md-3 control-label">Cheque Status</label>
+                                <div class="col-md-9">
                                     <select class="form-control" required="" name="cheque_status" id="payment_status">
                                         <option value="">Select Payment Status</option>
                                         <option value="cleared" {{($supplier->cheque_status == 'cleared')?'selected':''}}>Cleared</option>
@@ -74,8 +74,8 @@
                             </div> --}}
 
                             <div class="form-group col-md-6" style="display: none">
-                                <label class="col-md-2 control-label">Payment Mode</label>
-                                <div class="col-md-10">
+                                <label class="col-md-3 control-label">Payment Mode</label>
+                                <div class="col-md-9">
                                     <select class="form-control" required="" name="payment_mode" id="payment_mode">
                                         <option value="">Select Payment Mode</option>
                                         <option value="cash" {{($supplier->payment_mode == 'cash')?'selected':''}}>Cash</option>
@@ -89,8 +89,8 @@
 
                            {{-- Payment Amount Limit --}}
                             <div class="form-group col-md-6" id="credit_limit" <?php  if($supplier->payment_mode == 'credit_limit'){echo '';}else{?> style="display: none"<?php }?>    id="credit_limit" >
-                                <label class="col-md-2 control-label">Amount limit</label>
-                                <div class="col-md-10">
+                                <label class="col-md-3 control-label">Amount limit</label>
+                                <div class="col-md-9">
                                     <input type="numebr" class="form-control" name="supplier_amount_limit" value="{{$supplier_amount_limit->supplier_amount_limit}}"  >
                                 </div>
                             </div>
@@ -98,8 +98,8 @@
 
                              {{-- Payment Amount Limit --}}
                             <div class="form-group col-md-6" id="credit_due_date" <?php  if($supplier->payment_mode == 'credit_limit'){echo '';}else{?> style="display: none"<?php }?>    id="credit_limit" >
-                                <label class="col-md-2 control-label">credit due date</label>
-                                <div class="col-md-10">
+                                <label class="col-md-3 control-label">credit due date</label>
+                                <div class="col-md-9">
                                     <input type="numebr" class="form-control" name="credit_due_date" value="{{$supplier_amount_limit->credit_date_limit}}"  >
                                 </div>
                             </div>
@@ -108,23 +108,23 @@
 
                             {{-- Payment Mode --}}
                             <div class="form-group col-md-6" id="cheque_due_date"   <?php  if($supplier->payment_mode == 'credit_limit'){echo '';}else{?> style="display: none"<?php }?>  >
-                                <label class="col-md-2 control-label">Due Cheque Days</label>
-                                <div class="col-md-10">
+                                <label class="col-md-3 control-label">Due Cheque Days</label>
+                                <div class="col-md-9">
                                     <input type="text" class="form-control" name="cheque_date_limit" placeholder="Cheque Due Date" value="{{$Supplier_cheques->cheque_date_limit}}"  >
                                 </div>
                             </div>
 
                              <div class="form-group col-md-6" id="cheque_amount_limit" <?php  if($supplier->payment_mode == 'credit_limit'){echo '';}else{?> style="display: none"<?php }?> >
-                                <label class="col-md-2 control-label">Due Cheque Amount</label>
-                                <div class="col-md-10">
+                                <label class="col-md-3 control-label">Due Cheque Amount</label>
+                                <div class="col-md-9">
                                     <input type="text" class="form-control" name="cheque_amount_limit" placeholder="cheque amount limit" value="{{$Supplier_cheques->cheque_amount_limit}}"  >
                                 </div>
                             </div>
                             {{-- Payment Mode End--}}
 
                             <div class="form-group col-md-6">
-                            	<label class="col-md-2 control-label"></label>
-                                <div class="col-md-10">
+                            	<label class="col-md-3 control-label"></label>
+                                <div class="col-md-9">
                                     <input type="submit" class="form-control btn btn-success"  placeholder="placeholder" value="Save">
                                 </div>
                             </div>

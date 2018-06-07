@@ -22,7 +22,8 @@ class SupplierController extends Controller
 
     public function create_supplier()
     {	
-    	return view('admin.supplier.create_supplier');
+        $supplier  = Supplier::get();
+    	return view('admin.supplier.create_supplier',compact('supplier'));
     }
 
     public function insert_supplier(Request $request)

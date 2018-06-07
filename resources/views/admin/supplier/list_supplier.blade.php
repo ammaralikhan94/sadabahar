@@ -1,6 +1,6 @@
 @extends('layouts.admin_layout')
 @section('title')
-	Add - Suppleir
+	Add - Supplier
 @endsection
 @section('customCss')
         <!-- DataTables -->
@@ -31,7 +31,7 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="card-box table-responsive">
-            <h4 class="m-t-0 header-title"><b>Suppleir</b></h4>
+            <h4 class="m-t-0 header-title"><b>Supplier</b></h4>
             <table id="subadmin_table" class="table table-striped table-bordered">
                 <thead>
                 <tr>
