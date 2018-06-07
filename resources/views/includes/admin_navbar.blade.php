@@ -18,7 +18,7 @@
                     <li>
                         <ul>
                             <li><a href="{{route('create_supplier')}}"><i class="fa  fa-truck "></i> Add Supplier</a></li>
-                            <li><a href="{{route('list_supplier')}}"><i class="fa  fa-list  "></i> List Supplier</a></li>
+                            <!-- <li><a href="{{route('list_supplier')}}"><i class="fa  fa-list  "></i> List Supplier</a></li> -->
                         </ul>
                     </li>
                 </ul>       
@@ -29,7 +29,7 @@
                     <li>
                         <ul>
                             <li><a href="{{route('create_customer')}}"><i class="fa fa-street-view"></i> Add Customer</a></li>
-                            <li><a href="{{route('list_customer')}}"><i class="fa  fa-list  "></i>  List Customer</a></li>
+                            <!-- <li><a href="{{route('list_customer')}}"><i class="fa  fa-list  "></i>  List Customer</a></li> -->
                         </ul>
                     </li>
                 </ul>       
@@ -63,7 +63,7 @@
                     <li>
                         <ul>
                             <li><a href="{{route('create_items')}}"><i class="fa fa-wrench"></i> Add Storage Type</a></li>
-                            <li><a href="{{route('list_items')}}"><i class="fa  fa-list  "></i>  List Storage Type</a></li>
+                            <!-- <li><a href="{{route('list_items')}}"><i class="fa  fa-list  "></i>  List Storage Type</a></li> -->
                         </ul>
                     </li>
                 </ul>       

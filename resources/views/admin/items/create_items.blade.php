@@ -39,7 +39,7 @@ Add - Inventory
 </div>
 @endif
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-7">
         <div class="card-box">
             <div class="row">
                 <div class="col-md-12">
@@ -92,7 +92,7 @@ Add - Inventory
             </div>
         </div>
     </div>
-    <div class="col-sm-12">
+    <div class="col-sm-5">
         <div class="card-box table-responsive">
             <h4 class="m-t-0 header-title"><b>Items Type</b></h4>
             <table id="subadmin_table" class="table table-striped table-bordered">
@@ -112,7 +112,7 @@ Add - Inventory
                     <td>{{$val->item_name}}</td>
                     <td>{{$val->item_type}}</td>
                     <td>{{$val->item_purchase_type}}</td>
-                    <td><a class="table-icons" href="{{route('edit_item' , ['id' => $val->id])}}"><i class="fa fa-edit"></a> <a class="table-icons" href="{{route('delete_item_type' , ['id' => $val->id])}}"><i class="fa fa-trash"></a></td>
+                    <td><a class="table-icons" href="{{route('edit_item' , ['id' => $val->id])}}"><i class="fa fa-edit"></i></a> <a class="table-icons" href="{{route('delete_item_type' , ['id' => $val->id])}}"><i class="fa fa-trash"></i></a></td>
                 </tr>
                 @endforeach
                 </tbody>

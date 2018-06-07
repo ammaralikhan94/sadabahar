@@ -41,7 +41,7 @@
     </div>
 @endif
 <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-7">
             <div class="card-box">
                 <div class="row">
                     <div class="col-md-12">
@@ -182,7 +182,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-12">
+        <div class="col-sm-5">
             <div class="card-box table-responsive">
                 <h4 class="m-t-0 header-title"><b>Customer List</b></h4>
                 <table id="subadmin_table" class="table table-striped table-bordered">
