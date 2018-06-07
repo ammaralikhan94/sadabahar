@@ -4,6 +4,15 @@
 @endsection
 @section('customCss')
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- DataTables -->
+        <link href="{{URL('/')}}/backend/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+        <link href="{{URL('/')}}/backend/plugins/datatables/buttons.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="{{URL('/')}}/backend/plugins/datatables/fixedHeader.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="{{URL('/')}}/backend/plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="{{URL('/')}}/backend/plugins/datatables/scroller.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="{{URL('/')}}/backend/plugins/datatables/dataTables.colVis.css" rel="stylesheet" type="text/css"/>
+        <link href="{{URL('/')}}/backend/plugins/datatables/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="{{URL('/')}}/backend/plugins/datatables/fixedColumns.dataTables.min.css" rel="stylesheet" type="text/css"/>
 <style type="text/css">
     input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
@@ -349,8 +358,35 @@ hr{
                                     </div>
                                 </div>  
                             </div>
+
+                            <div class="col-md-6">
+                                <div class="card-box table-responsive">
+                                    <h4 class="m-t-0 header-title"><b>Items Type</b></h4>
+                                    <table id="subadmin_table" class="table table-striped table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Item Name</th>
+                                            <th>Item Type</th>
+                                            <th>Item Purchase Type</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                        <tr>
+                                            <td>asdfsad</td>
+                                            <td>adsfa</td>
+                                            <td>asdfas</td>
+                                            <td>asdfasd</td>
+                                            <td>asdfas</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                            
-                            <div class="col-md-offset-6 col-md-6">
+                            <div class="col-md-6">
                                 <div class="card-box clearfix">
                                     <div class="form-group col-md-12">
                                         <label class="col-md-5 control-label">Carriage and Freight</label>
@@ -559,6 +595,29 @@ hr{
     {{-- Modal for new item --}}
 @section('customScript')
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="{{URL('/')}}/backend/plugins/datatables/jquery.dataTables.min.js"></script>
+        <script src="{{URL('/')}}/backend/plugins/datatables/dataTables.bootstrap.js"></script>
+        <script src="{{URL('/')}}/backend/plugins/datatables/dataTables.buttons.min.js"></script>
+        <script src="{{URL('/')}}/backend/plugins/datatables/buttons.bootstrap.min.js"></script>
+        <script src="{{URL('/')}}/backend/plugins/datatables/jszip.min.js"></script>
+        <script src="{{URL('/')}}/backend/plugins/datatables/pdfmake.min.js"></script>
+        <script src="{{URL('/')}}/backend/plugins/datatables/vfs_fonts.js"></script>
+        <script src="{{URL('/')}}/backend/plugins/datatables/buttons.html5.min.js"></script>
+        <script src="{{URL('/')}}/backend/plugins/datatables/buttons.print.min.js"></script>
+        <script src="{{URL('/')}}/backend/plugins/datatables/dataTables.fixedHeader.min.js"></script>
+        <script src="{{URL('/')}}/backend/plugins/datatables/dataTables.keyTable.min.js"></script>
+        <script src="{{URL('/')}}/backend/plugins/datatables/dataTables.responsive.min.js"></script>
+        <script src="{{URL('/')}}/backend/plugins/datatables/responsive.bootstrap.min.js"></script>
+        <script src="{{URL('/')}}/backend/plugins/datatables/dataTables.scroller.min.js"></script>
+        <script src="{{URL('/')}}/backend/plugins/datatables/dataTables.colVis.js"></script>
+        <script src="{{URL('/')}}/backend/plugins/datatables/dataTables.fixedColumns.min.js"></script>
+
+        <script src="{{URL('/')}}/backend/pages/datatables.init.js"></script>
+    <script type="text/javascript">
+        $('#subadmin_table').DataTable();
+    </script>
+
+    
 <script>
     $(document).on('click','[name="vendor"]',function (){
         type = $(this).attr('id');
