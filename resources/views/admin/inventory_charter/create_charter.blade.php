@@ -68,16 +68,15 @@
                                         <button class="btn btn-danger fa fa-list-alt"></button>
                                     </div>
                                     <div class="col-md-8">
-                                        <button type="button" id="submit_parent" class="btn btn-success fa fa-plus pull-right"> </button>
-                                        <button class="btn btn-danger fa fa-trash pull-right"></button>
-                                        <button class="btn btn-info fa fa-save pull-right"></button>
-                                        <button class="btn btn-warning fa fa-close pull-right"></button>
+                                        <button class="btn btn-danger fa fa-trash pull-right" id="delete_main"></button>
+                                        <button class="btn btn-info fa fa-save pull-right"  id="submit_parent" ></button>
+                                        <button class="btn btn-warning fa fa-close pull-right" id="cancel_main"></button>
                                     </div>
                                 </div>                             
                                 <div class="col-md-12">
                                     <label class="col-md-4">Main Category Code</label>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control amount" name="category_id" id="category_id" placeholder="Category ID" value="{{$count+1}}" style="width: 100px;"  required="" readonly="">
+                                        <input type="text" class="form-control amount" name="category_id" id="category_id" placeholder="Category ID" value="{{($count == '')?$count+1:$count}}" style="width: 100px;"  required="" readonly="">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -116,10 +115,10 @@
                                         <button class="btn btn-danger fa fa-list-alt"></button>
                                     </div>
                                     <div class="col-md-8">
-                                        <button class="btn btn-success fa fa-plus pull-right" id="submit_child"></button>
+                                        
                                         <button type="button" class="btn btn-danger fa fa-trash pull-right" id="delete_sub"></button>
-                                        <button class="btn btn-info fa fa-save pull-right"></button>
-                                        <button class="btn btn-warning fa fa-close pull-right"></button>
+                                        <button class="btn btn-info fa fa-save pull-right" id="submit_child"></button>
+                                        <button class="btn btn-warning fa fa-close pull-right" id="submit_child_cancel"></button>
                                     </div>
                                 </div>                            
                                 <div class="col-md-12">
@@ -152,19 +151,18 @@
                             <div class="form-group col-md-6">
                                 <label>Item</label>
                                 <select multiple="" class="form-control" required="" id="item">
-                                    <option value="">Select Item</option>                                       
+                                    
                                 </select>
                             </div>
                             <div class="col-md-6">
                                 <div class="col-md-offset-3 col-md-9 form-group">
                                     {{-- <button class="btn btn-success fa fa-plus pull-right"></button> --}}
-                                    <button type="button" class="btn btn-success fa fa-line-chart"></button>
-                                    <button type="button" class="btn btn-danger fa fa-list-alt"></button>
+                                    <button type="button" class="btn btn-success fa fa-line-chart" ></button>
+                                    <button type="button" class="btn btn-danger fa fa-list-alt" ></button>
                                     <button type="button" class="btn btn-warning fa fa-search"></button>
                                     <button type="button" class="btn btn-danger fa fa-trash pull-right" id="delete_item"></button>
-                                    <button type="button" class="btn btn-success fa fa-plus pull-right"></button>
-                                    <button class="btn btn-info fa fa-save pull-right"></button>
-                                    <button class="btn btn-warning fa fa-close pull-right"></button>
+                                    <button class="btn btn-info fa fa-save pull-right" id="item_submit"></button>
+                                    <button class="btn btn-warning fa fa-close pull-right" id="cancel_item"></button>
                                 </div>
                                 <div class="form-group">    
                                     <label class="col-md-3 control-label">Item Code</label>
@@ -226,7 +224,7 @@
                                         </label>
                                     </div>
                                 </div>
-                                <button type="button" class="btn btn-success pull-right" id="item_submit">Submit</button>
+                                <button type="button" class="btn btn-success pull-right" >Submit</button>
                             </div>
                     </div>
                 </div>
@@ -281,12 +279,32 @@
         });
     </script>
     {{-- PARENT CATEGORY INSERT FUNCTION END --}}
-
+    <script type="text/javascript">
+        $(document).on('click','#submit_child_cancel',function (){
+            $('#sub_name').val('');
+        });
+        $(document).on('click','#cancel_main',function (){
+           $('#category_name').val('');
+        })
+        $(document).on('click','#cancel_item',function (){
+            $('#select_inventory :selected').val('');
+            $('#sub_select :selected').val('');
+            $("#item_code").val('');
+            $("#item_name").val('');
+            $("#item_description").val('');
+            $("#brand_name").val('');
+            $("#purchase_price").val('');
+            $("#selling_price").val('');
+            $("#measurment_unit").val('');
+            $("#status").val('');
+            $("#status").attr('checked', false);
+        })
+    </script>
     {{-- SUB CATEGORY INSERT FUNCTION --}}
     <script type="text/javascript">
         $(document).on('click','#submit_child',function (){
             category_name = $('#sub_name').val();
-            parent_id = $('#parent_id').val();
+            parent_id = $('#category_id').val();
             $.ajax({
                type:'POST',
                url:'{{route('insert_sub_charter')}}',
@@ -306,6 +324,9 @@
 
         $(document).on('change','#select_inventory',function(){
             parent_id = $('#select_inventory :selected').val();
+            text = $('#select_inventory :selected').text();
+            
+            $('#category_name').val(text);
             $('#parent_id').val(parent_id); 
             $.ajax({
                type:'POST',
@@ -316,7 +337,7 @@
                },
                success:function(data){
                 console.log(data);
-                $('#sub_select').find('option').remove().end().append('<option value="">Select Sub Inventory Category</option>');
+                $('#sub_select').find('option').remove().end().append('');
                 $.each( JSON.parse(data), function( index, value ){
                       $('#sub_select').append(`<option value="`+value.id+`">`+value.name+`</option>`);
                     });
@@ -387,6 +408,8 @@
             parent_id = $('#sub_select :selected').val();
             parent_text = $('#sub_select :selected').text();
             item_code = (Math.random().toString(36).substr(2, 2));
+            text = $('#sub_select :selected').text();
+            $('#sub_name').val(text);
             $('#parent_id').val(parent_id); 
             $.ajax({
                type:'POST',
@@ -465,7 +488,32 @@
                 }
             });
         });
-
+        $(document).on('click','#delete_main',function (){
+            select_inventory = $('#select_inventory :selected').val();
+             $.ajax({
+               type:'POST',
+               url:'{{route('delete_main')}}',
+               data:{
+                    "_token": "{{ csrf_token() }}",
+                    'select_inventory' : select_inventory
+               },
+               success:function(data){
+                $('#category_name').val('');
+                data = JSON.parse(data);
+                $("#item_code").val('');
+                $("#item_name").val('');
+                $("#item_description").val('');
+                $("#brand_name").val('');
+                $("#purchase_price").val('');
+                $("#selling_price").val('');
+                $("#measurment_unit").val('');
+                $("#status").val('');
+                $("#status").attr('checked', false);
+                $('#select_inventory').find('option:selected').remove().end();
+                $('#item').find('option').remove().end().append('<option value="">Select Item</option>');
+                }
+            });
+        });
         $(document).on('click','#delete_sub',function (){
             sub_select = $('#sub_select :selected').val();
             $.ajax({
@@ -498,14 +546,14 @@
                    },
                    success:function(data){
                     console.log(data);
-                    $('#sub_select').find('option').remove().end().append('<option value="">Select Sub Inventory Category</option>');
+                    $('#sub_select').find('option').remove().end().append('');
                     $.each( JSON.parse(data), function( index, value ){
                           $('#sub_select').append(`<option value="`+value.id+`">`+value.name+`</option>`);
                         });
                     }
                 });
                 $('#parent_id').val('');
-                $('#item').find('option').remove().end().append('<option value="">Select Item</option>');
+                 $('#sub_select').find('option:selected').remove().end();
                 }
             });
         });

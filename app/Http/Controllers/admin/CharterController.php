@@ -14,7 +14,7 @@ class CharterController extends Controller
 {
     /*View create Page*/
     public function create_charter(){
-    	$count = CategoryCharter::count();
+    	$count = CategoryCharter::orderBy('id', 'desc')->value('id');
     	$parent_category = CategoryCharter::get();
         $brand= Brand::get();
     	return view('admin.inventory_charter.create_charter',compact('count','parent_category','brand'));
@@ -25,8 +25,8 @@ class CharterController extends Controller
     	CategoryCharter::create([
     		'name' => $request->category_name
     	]);
-    	$count = CategoryCharter::count();
-    	echo json_encode($count+1);
+    	$count = CategoryCharter::orderBy('id', 'desc')->value('id');
+    	echo json_encode($count);
     }
 
     /*Sub category Inventory*/
@@ -112,6 +112,14 @@ class CharterController extends Controller
     public function delete_sub(){
         Sub_category_charter::where('id',$_POST['sub_select'])->delete();
         Item_charter::where('id',$_POST['sub_select'])->delete();
+        echo json_encode(true);
+    }
+
+
+    public function delete_main(){
+        CategoryCharter::where('id',$_POST['select_inventory'])->delete();
+        Sub_category_charter::where('parent_id',$_POST['select_inventory'])->delete();
+        Item_charter::where('parent_id',$_POST['select_inventory'])->delete();
         echo json_encode(true);
     }
 

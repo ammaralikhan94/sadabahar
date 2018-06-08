@@ -114,6 +114,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/get_item/', ['as' => 'get_item',  'uses' => 'admin\CharterController@get_item']);
 	Route::post('/delete_item/', ['as' => 'delete_item',  'uses' => 'admin\CharterController@delete_item']);
 	Route::post('/delete_sub/', ['as' => 'delete_sub',  'uses' => 'admin\CharterController@delete_sub']);
+	Route::post('/delete_main/', ['as' => 'delete_main',  'uses' => 'admin\CharterController@delete_main']);
 	/*********************************Inventory_charter End*************************************/
 
 	/*********************************Brand Start*************************************/

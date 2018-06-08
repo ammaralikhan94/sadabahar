@@ -42,6 +42,9 @@ hr{
     margin-top: 25px;
 }
 
+.mytable{
+}
+
 </style>
 @endsection
 @section('content')
@@ -258,11 +261,11 @@ hr{
                                              <button type="button" id="add_more" class="btn btn-success fa fa-plus" ></button>
                                          </div>
                                     </div>                                                                               
-                                        <div class="p-20">
+                                        <div class="p-20" style="height: 400px; overflow-y: scroll;">
+                                            
                                             <table class="table m-0">                                                    
                                                 <thead style="background-color: #ccc;">
                                                     <tr>
-                                                        <th>S.No</th>
                                                         <th>Item Code</th>
                                                         <th width="20%">Descrption</th>
                                                         <th>Measurment</th>
@@ -277,42 +280,59 @@ hr{
                                                     </tr>
                                                 </thead>
                                                 <tbody id="add_here">
+                                                    @for($j=1;$j<30;$j++)
                                                     <tr>
-                                                        <th scope="row">1</th>
-                                                        <td><input type="text" id="code_1" class="form-control code" name="item_code[]" required=""></td>
-                                                        <td><input type="text" id="name_1" class="form-control name" name="description[]" required=""></td>
+                                                        <td><input type="text" id="code_{{$j}}" class="form-control code" name="item_code[]" @php if($j == 1){@endphp required="" @php }@endphp></td>
+                                                        <td><input type="text" id="name_{{$j}}" class="form-control name" name="description[]" @php if($j == 1){@endphp required="" @php }@endphp></td>
                                                         <td>
-                                                            <select name="measurment[]" class="form-control" required="">
+                                                            <select name="measurment[]" class="form-control" @php if($j == 1){@endphp required="" @php }@endphp>
                                                                 <option>Select Mesurement</option>
                                                                 <option value="kg">Kg</option>
                                                                 <option value="kg">Liter</option>
                                                             </select>
                                                         </td>
-                                                        <td><select name="storage_type[]" id="storage_type_1" class="form-control add_item_type" required=""> 
+                                                        <td><select name="storage_type[]" id="storage_type_{{$j}}" class="form-control add_item_type" @php if($j == 1){@endphp required="" @php }@endphp> 
                                                             <option value="">Select Storage type</option>
                                                             @foreach($item_type as $key => $val)
                                                                 <option value="{{$val->item_name}}">{{$val->item_name}}</option>
                                                             @endforeach
                                                         </select></td>
-                                                        <td><input type="number" id="storeage_quantity_1" class="form-control storeage_quantity" name="storeage_quantity[]" required=""></td>
-                                                        <td><input type="number" id="quantity_1" class="form-control quantity" name="quantity[]" required=""></td>
-                                                        <td><input type="number" id="cost_1" class="form-control cost" name="cost[]" required=""></td>
-                                                        <td> <input type="hidden"   id="unit_1" class="form-control unit" name="unit[]" >
-                                                            <select class="form-control kg" id="kg_1" name="kg[]"{{--  style="display: none" --}}>
+                                                        <td><input type="number" id="storeage_quantity_{{$j}}" class="form-control storeage_quantity" name="storeage_quantity[]" @php if($j == 1){@endphp required="" @php }@endphp></td>
+                                                        <td><input type="number" id="quantity_{{$j}}" class="form-control quantity" name="quantity[]" @php if($j == 1){@endphp required="" @php }@endphp></td>
+                                                        <td><input type="number" id="cost_{{$j}}" class="form-control cost" name="cost[]" @php if($j == 1){@endphp required="" @php }@endphp></td>
+                                                        <td> <input type="hidden"   id="unit_{{$j}}" class="form-control unit" name="unit[]" >
+                                                            <select class="form-control kg" id="kg_{{$j}}" name="kg[]"{{--  style="display: none" --}}>
                                                                 <option value="">unit</option>
                                                                 @for($i=1;$i<100;$i++)
                                                                 <option>{{$i}}</option>
                                                                 @endfor
                                                             </select>
-                                                            <input type="text" id="gram_1" class="form-control gram" name="gram[]" {{-- style="display: none;"  --}}/></td>
-                                                        <td><input type="number" id="rate_1" class="form-control rate calculate" name="rate[]" required=""></td>
-                                                        <td><input type="text"   id="exc_tax_1" class="form-control calculate exc_tax" name="exc_tax[]" required=""></td>
-                                                        <td><input type="text"  d="inc_code_1" class="form-control calculate inc_code" name="inc_code[]"></td>
+                                                            <input type="text" id="gram_{{$j}}" class="form-control gram" name="gram[]" {{-- style="display: none;"  --}}/></td>
+                                                        <td><input type="number" id="rate_{{$j}}" class="form-control rate calculate" name="rate[]" @php if($j == 1){@endphp required="" @php }@endphp></td>
+                                                        <td><input type="text"   id="exc_tax_{{$j}}" class="form-control calculate exc_tax" name="exc_tax[]" @php if($j == 1){@endphp required="" @php }@endphp></td>
+                                                        <td><input type="text"  id="inc_code_{{$j}}" class="form-control calculate inc_code" name="inc_code[]"></td>
                                                     </tr>
+                                                    @endfor                                                        
+                                                </tbody>
+                                            </table>
+                                        
+                                         <div>
+                                            <strong id="append_unit"></strong>
+                                        </div>
+                                        </div>     
+                                        <div class="col-md-12" >
+                                            <table class="table m-0">
+                                                <tbody>
                                                     <thead style="background-color: #ccc;">
-                                                    <tr>
-                                                        <th  colspan="9"></th>
-                                                        
+                                                        <tr>
+                                                        <th colspan="9"></th>
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th></th>
                                                         <th id="total_rs">Total</th>
                                                         <th id="total_rs_ex">Value Excl. Tax</th>
                                                         <th id="tax_rs">Value incl. Tax</th>
@@ -320,10 +340,7 @@ hr{
                                                     </thead>
                                                 </tbody>
                                             </table>
-                                             <div>
-                                                <strong id="append_unit"></strong>
-                                            </div>
-                                        </div>                
+                                        </div>           
                                     </div>
                                 </div>  
                             </div>
