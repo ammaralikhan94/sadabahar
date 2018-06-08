@@ -385,19 +385,17 @@ hr{
                                     </table> --}}
 
                                      @php 
-                                     if(isset($val->payment_cheque) && !empty($val->payment_cheque)){
                                         $cheque_amount = explode(',',$inventory[0]['cheque_amount']);
                                         $bank_name = explode(',',$inventory[0]['bank_name']);
                                         $cheque_number = explode(',',$inventory[0]['cheque_number']);
                                         $cheque_image = explode(',',$inventory[0]['cheque_image']);
                                         $limit_cheque_date = explode(',',$inventory[0]['limit_cheque_date']);
                                         $new_count = count($cheque_number);
-                                     }
                                     @endphp 
                                       @php 
                                       if(isset($val->carriage) && !empty($val->carriage)){
                                     @endphp
-                                      <p class="text-right"><b>Carriage:</b> {{$val->carriage}} </p><br>
+                                      <p class="text-right"><b>Carriage:</b> $val->carriage </p><br>
                                       @php }@endphp 
                                       @php 
                                       if(isset($val->net_total) && !empty($val->net_total)){
@@ -427,7 +425,7 @@ hr{
                                       @php }@endphp 
                                       
                                     @php
-                                        if(isset($val->payment_cheque) && !empty($val->payment_cheque)){
+                                      if(isset($inventory[0]['cheque_amount']) && !empty($inventory[0]['cheque_amount'])){
                                     @endphp
                                      @for($i=0;$i<$new_count;$i++)  
                                       <p class="text-right"><b>Cheque Amount:</b> {{$cheque_amount[$i]}}
@@ -519,13 +517,13 @@ hr{
         <div class="modal-body">
           <div class="col-md-12" >
             <div class="card-box clearfix" id="add_cheque_here">
-                                                                     
+                @for($i=0;$i<$new_count;$i++)                                                        
                     <div class="form-group col-md-3">
                         <label class="col-md-12 control-label">Bank Name</label>
                         <div class="col-md-12">
                             <select class="form-control" name="bank_name[]">
                                 @foreach($bank as $key => $val)
-                                    <option value="{{$val->bank_name}}" >{{$val->bank_name}}</option>
+                                    <option value="{{$val->bank_name}}" {{($bank_name[$i] == $val->bank_name)?'selected':''}}>{{$val->bank_name}}</option>
                                 @endforeach
                             </select>
                         </div>                                
@@ -533,25 +531,25 @@ hr{
                     <div class="form-group col-md-2">
                         <label class="col-md-12 control-label">Cheque Number</label>
                         <div class="col-md-12">
-                            <input type="text" class="form-control" name="cheque_number[]"  placeholder="Cheque Number" >
+                            <input type="text" class="form-control" name="cheque_number[]"  placeholder="Cheque Number" value="{{$cheque_number[$i]}}">
                         </div>                                
                     </div>
                     <div class="form-group col-md-2">
                         <label class="col-md-12 control-label">Cheque Amount</label>
                         <div class="col-md-12">
-                            <input type="text" class="form-control" name="cheque_amount[]"  placeholder="Cheque Amount" >
+                            <input type="text" class="form-control" name="cheque_amount[]"  placeholder="Cheque Amount" value="{{$cheque_amount[$i]}}">
                         </div>                                
                     </div>
                     <div class="form-group col-md-2">
                         <label class="col-md-12 control-label">Cheque Image</label>
                         <div class="col-md-12">
-                            <input type="file" class="form-control" name="cheque_image[]"  placeholder="Cheque Image"  >
+                            <input type="file" class="form-control" name="cheque_image[]"  placeholder="Cheque Image"  value="{{$cheque_image[$i]}}">
                         </div>                                
                     </div>
                     <div class="form-group col-md-2">
                         <label class="col-md-12 control-label">Cheque Date Limit</label>
                         <div class="col-md-12">
-                            <input type="date" class="form-control" name="limit_cheque_date[]"  placeholder="Cheque Date Limit" >
+                            <input type="date" class="form-control" name="limit_cheque_date[]"  placeholder="Cheque Date Limit" value="{{$limit_cheque_date[$i]}}"  >
                         </div>                                
                     </div>
                     <div class="form-group col-md-1">
@@ -560,7 +558,7 @@ hr{
                             <button type="button"  class="btn btn-success fa fa-plus modal-plus add_more_cheques" ></button>
                         </div>                                
                     </div>
-                
+                @endfor
             </div>
         </div>
         </div>
@@ -853,17 +851,11 @@ hr{
         /*alert(measure_type);*/
         unit = parseInt($('#kg_'+id+' option:selected').val());
         cost = parseInt($('#cost_'+id).val());
-        value =$('#gram_'+id).val();
-        
-        if(value == ''){
-        rate = parseFloat($('#cost_'+id).val()) *   $('#kg_'+id).val();
-        }
-        else{
-            gram = parseFloat(value)/1000;
-            new_rate = parseFloat($('#cost_'+id).val()) * gram;
-            rate = unit * cost;
-            rate = rate + new_rate;    
-        }
+        value = parseInt($('#gram_'+id).val());
+        gram = parseFloat(value)/1000;
+        new_rate = parseFloat($('#cost_'+id).val()) * gram;
+        rate = unit * cost;
+        rate = rate + new_rate;
         $('#rate_'+id).val(rate);  
         
         $('#exc_tax_'+id).val(rate);  
@@ -888,17 +880,10 @@ hr{
         id = $(this).attr('id');
         id = id.substring(5);
         value = $(this).val();
-        if(value == ''){
-            /*gram = parseFloat(value)/1000;*/
-            new_rate = parseFloat($('#cost_'+id).val()) * $('#kg_'+id).val();
-           
-           /* new_rate = parseInt(new_rate) + parseInt(rate);*/
-        }else{
-            gram = parseFloat(value)/1000;
-            new_rate = parseFloat($('#cost_'+id).val()) * gram;
-            rate = $('#rate_'+id).val();
-            new_rate = parseInt(new_rate) + parseInt(rate);
-        }
+        gram = parseFloat(value)/1000;
+        new_rate = parseFloat($('#cost_'+id).val()) * gram;
+        rate = $('#rate_'+id).val();
+        new_rate = parseInt(new_rate) + parseInt(rate);
         
         $('#total_rs').html('Balance:  '+Math.abs(new_rate));
         $('#total_rs_ex').html('Balance:  '+Math.abs(new_rate));

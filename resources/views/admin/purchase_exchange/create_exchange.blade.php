@@ -856,7 +856,7 @@ hr{
                  if(data == null){
                     return false;
                 }
-                   $('#code_'+id).val(data);
+                $('#code_'+id.substring(5)).val(data);
                }
             });
     });

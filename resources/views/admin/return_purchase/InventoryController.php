@@ -124,9 +124,6 @@ class InventoryController extends Controller
             if($check_previous_barrel != '' ){
                 $total_barrel = $quantity + $check_previous_barrel->total_barrel;
                 if($gram != '' || $kg != ''){
-                    if($gram == '' ){
-                        $gram = 0;
-                    }
                     $purchased_unit= $gram / 1000;
                     $purchased_unit = $kg + $purchased_unit;
                     $current_volume = $purchased_unit + $check_previous_barrel->current_volume;
@@ -500,9 +497,6 @@ class InventoryController extends Controller
                 ]);
                 $item  = Barrel::where('chemical_name',$description)->first();
                 if($kg != '' || $gram != '' ){
-                    if($gram == ''){
-                        $gram = 0 ;
-                    }
                     $gram = $gram / 1000;
                     $kg = $kg + $gram ; 
                     $current_volume  = $item->current_volume - $kg;

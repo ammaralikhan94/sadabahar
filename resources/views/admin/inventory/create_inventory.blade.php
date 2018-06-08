@@ -257,7 +257,7 @@ hr{
                                                             <input type="text" id="gram_1" class="form-control gram" name="gram[]" {{-- style="display: none;"  --}}/></td>
                                                         <td><input type="number" id="rate_1" class="form-control rate calculate" name="rate[]" required=""></td>
                                                         <td><input type="text"   id="exc_tax_1" class="form-control calculate exc_tax" name="exc_tax[]" required=""></td>
-                                                        <td><input type="text"  class="form-control calculate inc_code" name="inc_code[]"></td>
+                                                        <td><input type="text"  d="inc_code_1" class="form-control calculate inc_code" name="inc_code[]"></td>
                                                     </tr>
                                                     <thead style="background-color: #ccc;">
                                                     <tr>
@@ -639,7 +639,7 @@ hr{
                 console.log(id);
                    $('#storeage_quantity_'+id).val(data.item_type);
                    $('#quantity_'+id).attr('max',data.item_type);
-                   $('#append_unit').html('');
+                   
                    if(data.item_purchase_type == 'kg'){
                     $('#unit_'+id).hide();
                     $('#kg_'+id).show('slow');

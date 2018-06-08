@@ -2,20 +2,6 @@
 @section('title')
     Edit - Customer
 @endsection
-
-@section('customCss')
-<style type="text/css">
-
-    hr{
-        margin-top: 10px;
-        margin-bottom: 10px;
-    }
-
-
-</style>
-@endsection
-
-
 @section('content')
 @if ($message = Session::get('success'))
     <div class="alert alert-success alert-block">
@@ -35,37 +21,34 @@
         <div class="col-sm-12">
             <div class="card-box">
                 <h4 class="m-t-0 header-title"><b>Edit Customer</b></h4>
-                <div class="col-md-12">
-                    <hr>
-                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <form class="form-horizontal" action="{{route('update_customer')}}" method="post">
                             {{csrf_field()}}
                             <div class="form-group col-md-6">
-                                <label class="col-md-3 control-label">Customer Name</label>
-                                <div class="col-md-9">
+                                <label class="col-md-2 control-label">Name</label>
+                                <div class="col-md-10">
                                     <input type="text" class="form-control" name="name" value="{{$customer->name}}" required="">
                                 </div>
                             </div>
                     
                             <div class="form-group col-md-6">
-                                <label class="col-md-3 control-label">Phone Number</label>
-                                <div class="col-md-9">
+                                <label class="col-md-2 control-label">Number</label>
+                                <div class="col-md-10">
                                     <input type="number" class="form-control" value="{{$customer->phone_number}}" name="phone_number" placeholder="Number" required="">
                                 </div>
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label class="col-md-3 control-label">Address</label>
-                                <div class="col-md-9">
+                                <label class="col-md-2 control-label">Location</label>
+                                <div class="col-md-10">
                                     <input type="text" class="form-control" value="{{$customer->address}}" name="address" placeholder="address"  required="">
                                 </div>
                             </div>
 
                             <div class="form-group col-md-6" style="display: none">
-                                <label class="col-md-3 control-label">Payment Status</label>
-                                <div class="col-md-9">
+                                <label class="col-md-2 control-label">Payment Status</label>
+                                <div class="col-md-10">
                                     <select class="form-control"  id="payment_status" name="cheque_status">
                                         <option value="">Select Payment Status</option>
                                         <option value="cleared">Cleared</option>
@@ -76,22 +59,22 @@
                             </div>
                             
                             <div class="form-group col-md-6" style="display: none" id="due_date" >
-                                <label class="col-md-3 control-label">Due Date</label>
-                                <div class="col-md-9">
+                                <label class="col-md-2 control-label">Due Date</label>
+                                <div class="col-md-10">
                                     <input type="date" class="form-control" name="due_date" placeholder="due date" value="0"  >
                                 </div>
                             </div>
 
                             <div class="form-group col-md-6" style="display: none" id="due_amount" >
-                                <label class="col-md-3 control-label">Due Amount</label>
-                                <div class="col-md-9">
+                                <label class="col-md-2 control-label">Due Amount</label>
+                                <div class="col-md-10">
                                     <input type="numebr" class="form-control" name="due_amount" value="0"  >
                                 </div>
                             </div>
                             
                             <div class="form-group col-md-6">
-                                <label class="col-md-3 control-label">Payment Terms</label>
-                                <div class="col-md-9">
+                                <label class="col-md-2 control-label">Payment Mode</label>
+                                <div class="col-md-10">
                                     <select class="form-control" required="" name="payment_mode" id="payment_mode">
                                         <option value="">Select Payment Mode</option>
                                         <option value="cash" {{($customer->payment_mode = 'cash')?'selected':''}}>Cash</option>
@@ -101,36 +84,37 @@
                             </div>
 
                             <div class="form-group col-md-6" style="display: none" id="credit_limit" >
-                                <label class="col-md-3 control-label">Credit Amount limit</label>
-                                <div class="col-md-9">
+                                <label class="col-md-2 control-label">Credit Amount limit</label>
+                                <div class="col-md-10">
                                     <input type="numebr" class="form-control" value="{{$customer_amount_limit->customer_amount_limit}}" name="customer_amount_limit" value="0"  >
                                 </div>
                             </div>
 
                             <div class="form-group col-md-6" style="display: none" id="credit_date_limit" >
-                                <label class="col-md-3 control-label">Credit Date limit</label>
-                                <div class="col-md-9">
+                                <label class="col-md-2 control-label">Credit Date limit</label>
+                                <div class="col-md-10">
                                     <input type="numebr" class="form-control" value="{{$customer_amount_limit->credit_date_limit}}" name="credit_date_limit" value="0"  >
                                 </div>
                             </div>
                             <input type="hidden" name="customer_id" value="{{$customer->id}}">
                             <div class="form-group col-md-6" style="display: none" id="cheque_date_limit" >
-                                <label class="col-md-3 control-label">Due Days Cheque limit</label>
-                                <div class="col-md-9">
+                                <label class="col-md-2 control-label">Due Days Cheque limit</label>
+                                <div class="col-md-10">
                                     <input type="number" class="form-control" value="{{$customer_cheque_bounce->cheque_date_limit}}" name="cheque_date_limit" placeholder="In days"  >
                                 </div>
                             </div>
 
                             <div class="form-group col-md-6" style="display: none" id="cheque_amount_limit" >
-                                <label class="col-md-3 control-label">Cheque Amount limit</label>
-                                <div class="col-md-9">
+                                <label class="col-md-2 control-label">Due Cheque Amount limit</label>
+                                <div class="col-md-10">
                                     <input type="numebr" class="form-control" value="{{$customer_cheque_bounce->cheque_date_amount}}" name="cheque_date_amount" value="0"  >
                                 </div>
                             </div>
 
 
                             <div class="form-group col-md-6 pull-right">
-                                <div class="col-md-offset-9 col-md-3">
+                                <label class="col-md-2 control-label"></label>
+                                <div class="col-md-10">
                                     <input type="submit" class="form-control btn btn-success"  placeholder="placeholder" value="Save">
                                 </div>
                             </div>

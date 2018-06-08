@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
 use App\Roles;
-use Hash;
 use App\User;
 
 class SubadminController extends Controller
@@ -24,7 +23,7 @@ class SubadminController extends Controller
     }
 
     public function insertSubadmin(Request $request)
-    {	  
+    {	
     	User::create([
     		'name' => $request->name,
     		'email' => $request->email,
@@ -49,7 +48,7 @@ class SubadminController extends Controller
     	User::where('id' , $request->user_id)->update([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            //'password' => bcrypt($request->password),
             'role_id' => $request->role_id,
             'phone_number' => $request->phone_number,
             'address' => $request->address,

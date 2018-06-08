@@ -32,7 +32,6 @@ class CustomerController extends Controller
             'phone_number' => $request->phone_number,
             'address' => $request->address,
             'cheque_status' => $request->cheque_status,
-            'company_name' => $request->company_name,
             'payment_mode' => $request->payment_mode
     	])->id;
         Customer_cheque_bounce::create([
@@ -43,8 +42,6 @@ class CustomerController extends Controller
         Customer_amount_limit::create([
             'customer_id' => $customer_id,
             'customer_amount_limit' => $request->customer_amount_limit,
-            'credit_date_limit' => $request->credit_date_limit,
-            
         ]);
     	return redirect()->back()->with('success' , 'Customer added successfully !!');
     }
@@ -64,12 +61,10 @@ class CustomerController extends Controller
             'phone_number' => $request->phone_number,
             'address' => $request->address,
             'cheque_status' => $request->cheque_status,
-            'company_name' => $request->company_name,
             'payment_mode' => $request->payment_mode
         ]);
         Customer_amount_limit::where('customer_id' , $request->customer_id)->update([
             'customer_amount_limit' => $request->customer_amount_limit,
-            'credit_date_limit' => $request->credit_date_limit,
         ]);
         Customer_cheque_bounce::where('customer_id' , $request->customer_id)->update([
             'cheque_date_limit' => $request->cheque_date_limit,
