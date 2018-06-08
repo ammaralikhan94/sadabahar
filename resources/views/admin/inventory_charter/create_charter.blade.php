@@ -18,8 +18,8 @@
 
     <style type="text/css">
         
-        .fa-plus, .fa-trash{
-            margin-top: 28px;
+        .fa-plus, .fa-trash, {
+            /*margin-top: 28px;*/
         }
         hr {
             margin-top: 13px !important;
@@ -54,25 +54,38 @@
                             {{-- PARENT INVENTORY START --}}
                             <div class="form-group col-md-6">
                                 <label>Inventory Category</label>
-                                <select class="form-control" required="" name="inventory_charter" id="select_inventory">
+                                <select multiple class="form-control" required="" name="inventory_charter" id="select_inventory">
                                     <option value="">Select Inventory Category</option>    
                                     @foreach($parent_category as $key => $val )
                                         <option value="{{$val->id}}">{{$val->name}}</option>    
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="form-group col-md-6">                                
-                                <div class="col-md-2">
-                                    <label>Code</label>
-                                    <input type="text" class="form-control amount" name="category_id" id="category_id" placeholder="Category ID" value="{{$count+1}}"  required="" readonly="">
+                            <div class="form-group col-md-6">   
+                                <div class="col-md-12">
+                                    <div class="col-md-4">
+                                        <button type="button" class="btn btn-success fa fa-line-chart"></button>
+                                        <button class="btn btn-danger fa fa-list-alt"></button>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <button type="button" id="submit_parent" class="btn btn-success fa fa-plus pull-right"> </button>
+                                        <button class="btn btn-danger fa fa-trash pull-right"></button>
+                                        <button class="btn btn-info fa fa-save pull-right"></button>
+                                        <button class="btn btn-warning fa fa-close pull-right"></button>
+                                    </div>
+                                </div>                             
+                                <div class="col-md-12">
+                                    <label class="col-md-4">Main Category Code</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control amount" name="category_id" id="category_id" placeholder="Category ID" value="{{$count+1}}" style="width: 100px;"  required="" readonly="">
+                                    </div>
                                 </div>
-                                <div class="col-md-8">
-                                    <label>Category Name</label>
-                                    <input type="text" class="form-control amount" name="category_name" id="category_name" placeholder="Category Name"  required="">
-                                </div>
-                                <div class="col-md-2">
-                                    <button type="button" id="submit_parent" class="btn btn-success fa fa-plus" > </button><button class="btn btn-danger fa fa-trash pull-right"></button>
-                                </div>
+                                <div class="col-md-12">
+                                    <label  class="col-md-4">Main Category Name</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control amount" name="category_name" id="category_name" placeholder="Category Name"  required="">
+                                    </div>
+                                </div>                                
                             </div>
                             <div class="col-md-12">
                                 <hr>
@@ -93,22 +106,35 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Sub Category Name</label>
-                                <select class="form-control" required="" name="supplier" id="sub_select">
+                                <select multiple class="form-control" required="" name="supplier" id="sub_select">
                                     <option value="">Select Sub Inventory Category</option>                                       
                                 </select>
                             </div>
-                            <div class="form-group col-md-6">                                
-                                <div class="col-md-2">
-                                    <label>Code</label>
-                                    <input type="text" class="form-control" name="parent_id" id="parent_id" placeholder="Category ID"  required="" readonly="">
+                            <div class="form-group col-md-6">    
+                                <div class="col-md-12">
+                                    <div class="col-md-4">
+                                        <button type="button" class="btn btn-success fa fa-line-chart"></button>
+                                        <button class="btn btn-danger fa fa-list-alt"></button>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <button class="btn btn-success fa fa-plus pull-right" id="submit_child"></button>
+                                        <button type="button" class="btn btn-danger fa fa-trash pull-right" id="delete_sub"></button>
+                                        <button class="btn btn-info fa fa-save pull-right"></button>
+                                        <button class="btn btn-warning fa fa-close pull-right"></button>
+                                    </div>
+                                </div>                            
+                                <div class="col-md-12">
+                                    <label class="col-md-4">Sub Category Code</label>
+                                    <div class="col-md-8">
+                                        <input style="width: 100px;" type="text" class="form-control" name="parent_id" id="parent_id" placeholder="Category ID"  required="" readonly="">
+                                    </div>
                                 </div>
-                                <div class="col-md-8">
-                                    <label>Sub Category Name</label>
-                                    <input type="text" class="form-control" name="name" id="sub_name" placeholder="Category Name"  required="">
-                                </div>
-                                <div class="col-md-2">
-                                    <button class="btn btn-success fa fa-plus" id="submit_child"></button><button type="button" class="btn btn-danger fa fa-trash pull-right" id="delete_sub"></button>
-                                </div>
+                                <div class="col-md-12">
+                                    <label class="col-md-4">Sub Category Name</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" name="name" id="sub_name" placeholder="Category Name"  required="">
+                                    </div>
+                                </div>                                
                             </div>
                             {{-- PARENT INVENTORY END --}}
                             <div class="col-md-12">
@@ -117,20 +143,30 @@
                             <div class="col-md-6">
                                 <h4 class="m-t-0 header-title"><b>List of Inventory Items</b></h4>
                             </div>
-                            <div class="col-md-6">
+                            <!-- <div class="col-md-6">
                                 {{-- <button class="btn btn-success fa fa-plus pull-right"></button> --}}
                                 <button type="button" class="btn btn-danger fa fa-trash pull-right" id="delete_item" style="margin-top: 0px !important"></button>
-                            </div>
+                            </div> -->
                             <div class="col-md-12">
                                 <hr>
-                            </div>
+                            </div>                            
                             <div class="form-group col-md-6">
                                 <label>Item</label>
-                                <select class="form-control" required="" id="item">
+                                <select multiple="" class="form-control" required="" id="item">
                                     <option value="">Select Item</option>                                       
                                 </select>
                             </div>
                             <div class="col-md-6">
+                                <div class="col-md-offset-3 col-md-9 form-group">
+                                    {{-- <button class="btn btn-success fa fa-plus pull-right"></button> --}}
+                                    <button type="button" class="btn btn-success fa fa-line-chart"></button>
+                                    <button type="button" class="btn btn-danger fa fa-list-alt"></button>
+                                    <button type="button" class="btn btn-warning fa fa-search"></button>
+                                    <button type="button" class="btn btn-danger fa fa-trash pull-right" id="delete_item"></button>
+                                    <button type="button" class="btn btn-success fa fa-plus pull-right"></button>
+                                    <button class="btn btn-info fa fa-save pull-right"></button>
+                                    <button class="btn btn-warning fa fa-close pull-right"></button>
+                                </div>
                                 <div class="form-group">    
                                     <label class="col-md-3 control-label">Item Code</label>
                                     <div class="col-md-9">
