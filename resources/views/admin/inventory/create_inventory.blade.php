@@ -4,6 +4,9 @@
 @endsection
 @section('customCss')
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- Plugin Css-->
+<link rel="stylesheet" href="{{URL('/')}}/backend/plugins/magnific-popup/css/magnific-popup.css" />
+<link rel="stylesheet" href="{{URL('/')}}/backend/plugins/jquery-datatables-editable/datatables.css" />
 <style type="text/css">
     input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
@@ -60,21 +63,42 @@ hr{
         <div class="col-sm-12">
             <div class="card-box">
                 <!-- <a class="btn btn-success pull-right" href="{{route('create_inventory')}}" target="_blank">Add More Purchase</a> -->
+                
                 <div class="new-purchase">
                     <div class="col-md-3">
                         <h4 class="m-t-0 header-title" style="margin-top: 10px !important;"><b>Create Purchase</b></h4>
                     </div>
                     <div class="col-md-4">
+                        <a href="#" target="_blank" class="btn btn-success pull-right" style="margin-left: 10px !important;" {{-- data-toggle="modal" data-target="#myModal" --}}>Add Purchase Item</a>
                         <a href="{{route('create_charter')}}" target="_blank" class="btn btn-danger pull-right" {{-- data-toggle="modal" data-target="#myModal" --}}>Add  Item Type</a>
                     </div>
-                    <div class="col-md-5 pull-right">
-                        <div class="col-md-5">
+                    <div class="col-md-5">
+                        <button class="btn btn-danger fa fa-search pull-right"></button>
+                        <button class="btn btn-warning fa fa-print pull-right"></button>
+                        <button type="button" class="btn btn-success pull-right fa fa-line-chart"></button>
+                        <button class="btn btn-danger fa fa-list-alt pull-right"></button>                      
+                        <button type="button" id="submit_parent" class="btn btn-success fa fa-plus pull-right"> </button>
+                        <button class="btn btn-danger fa fa-trash pull-right"></button>
+                        <button class="btn btn-info fa fa-save pull-right"></button>
+                        <button class="btn btn-warning fa fa-close pull-right"></button>                        
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <hr>
+                </div>
+                <div class="new-purchase">
+                    <div class="col-md-3">
+                        <h4 class="m-t-0 header-title"><b>Supplier Details</b></h4>
+                    </div>
+                    
+                    <div class="col-md-9 pull-right">
+                        <div class="col-md-6">
                             <h4 class="m-t-0 header-title" style="margin-top: 10px !important; text-align: right;"><b>Purchase Order No</b></h4>
                         </div>
                         <div class="col-md-2">
                             <input type="text" class="form-control pull-right" name="invoice_number" value="{{$invoice_number}}" readonly="" readonly="">
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <h4 class="m-t-0 header-title" style="margin-top: 10px !important;text-align: right;"><b>D.O.P</b></h4>
                         </div>
                         <div class="col-md-3">
@@ -85,37 +109,63 @@ hr{
                 <div class="col-md-12">
                     <hr>
                 </div>
-                <div class="new-purchase">
-                    <div class="col-md-12">
-                        <h4 class="m-t-0 header-title"><b>Supplier Details</b></h4>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <hr>
-                </div>
                 <div class="row">
                     <div class="col-md-12">
                             {{csrf_field()}}
-                            <div class="form-group col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group col-md-12">
                                 
-                                <div class="col-md-2">
-                                    <label>Supplier</label>
-                                    <input type="radio"  name="vendor" checked="" id="supplier">
-                                    <label>Customer</label>
-                                    <input type="radio"  name="vendor"  id="customer">
+                                    <div class="col-md-4">
+                                        <label>Supplier</label>
+                                        <input type="radio"  name="vendor" checked="" id="supplier">
+                                        <label>Customer</label>
+                                        <input type="radio"  name="vendor"  id="customer">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group col-md-12" id="type_supplier">
+                                    <label class="col-md-2 control-label">Supplier</label>
+                                    <div class="col-md-4">
+                                        <select class="form-control" required="" name="supplier">
+                                            <option value="">Select Supplier</option>   
+                                            @foreach($supplier as $key => $sup)
+                                                <option value="{{$sup->id}}">{{$sup->name}}</option>   
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                            
-                            <div class="form-group col-md-12" id="type_supplier">
-                                <label class="col-md-1 control-label">Supplier</label>
-                                <div class="col-md-2">
-                                    <select class="form-control" required="" name="supplier">
-                                        <option value="">Select Supplier</option>   
-                                        @foreach($supplier as $key => $sup)
-                                            <option value="{{$sup->id}}">{{$sup->name}}</option>   
-                                        @endforeach
-                                    </select>
+
+                            <div class="col-md-6">
+                                <div class="form-group col-md-6">
+                                    <!-- <label class="col-md-4 control-label">Scode</label> -->
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control" name="supinvoice" id="supinvoice" placeholder="Supplier Invoice Number"  required="" readonly="">
+                                    </div>                                
                                 </div>
+                                <div class="form-group col-md-6">
+                                    <!-- <label class="col-md-3 control-label">Name</label> -->
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control" name="invoice_date" id="invoice_date" placeholder="Dated"  required="" readonly="">
+                                    </div>                                
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <!-- <label class="col-md-4 control-label">Scode</label> -->
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control" name="purchase-order" id="purchase-order" placeholder="Purchase Order Number"  required="" readonly="">
+                                    </div>                                
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <!-- <label class="col-md-3 control-label">Name</label> -->
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control" name="order_date" id="order_date" placeholder="Dated"  required="" readonly="">
+                                    </div>                                
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <hr>
                             </div>
 
                             <div class="form-group col-md-12" id="type_customer" style="display: none;">
@@ -276,6 +326,46 @@ hr{
                                         </div>                
                                     </div>
                                 </div>  
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="card-box">
+                                    <h4 class="m-t-0 header-title"><b>Inline Editor</b></h4>
+                                    <p class="text-muted m-b-30 font-13">
+                                        just start typing to edit, or move around with arrow keys or mouse clicks!
+                                    </p>
+
+                                    <div class="table-responsive">
+                                        <table id="mainTable" class="table table-striped m-b-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th><th>Cost</th><th>Profit</th><th>Fun</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Car</td><td>100</td><td>200</td><td>0</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Bike</td><td>330</td><td>240</td><td>1</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Plane</td><td>430</td><td>540</td><td>3</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Yacht</td><td>100</td><td>200</td><td>0</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Segway</td><td>330</td><td>240</td><td>1</td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th><strong>TOTAL</strong></th><th></th><th></th><th></th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                            
                             <div class="col-md-offset-6 col-md-6">
@@ -1187,5 +1277,17 @@ hr{
             });
         });
     </script> 
+
+     <!-- Examples -->
+    <script src="{{URL('/')}}/backend/plugins/magnific-popup/js/jquery.magnific-popup.min.js"></script>
+    <script src="{{URL('/')}}/backend/plugins/jquery-datatables-editable/jquery.dataTables.js"></script>
+    <script src="{{URL('/')}}/backend/plugins/datatables/dataTables.bootstrap.js"></script>
+    <script src="{{URL('/')}}/backend/plugins/tiny-editable/mindmup-editabletable.js"></script>
+    <script src="{{URL('/')}}/backend/plugins/tiny-editable/numeric-input-example.js"></script>
+
+    <script src="{{URL('/')}}/backend/pages/datatables.editable.init.js"></script>
+    <script>
+        $('#mainTable').editableTableWidget().numericInputExample().find('td').focus();
+    </script>
 @endsection
 @endsection
