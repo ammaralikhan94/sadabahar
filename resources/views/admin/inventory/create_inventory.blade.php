@@ -275,7 +275,7 @@ hr{
                                                         <th>Cost Per unit</th>
                                                         <th>unit</th>
                                                         <th>Rate</th>
-                                                        <th>Value Excl. Tax</th>
+                                                        <th>Value Excl. Tax</th>    
                                                         <th>Value incl. Tax</th>
                                                     </tr>
                                                 </thead>
