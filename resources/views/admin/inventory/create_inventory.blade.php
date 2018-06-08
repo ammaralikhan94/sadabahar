@@ -45,6 +45,45 @@ hr{
 .mytable{
 }
 
+.m-0 input{
+    border: none;
+}
+
+.m-0 input:focus{
+    border: 1px solid green;
+}
+
+
+.table.m-0 > tbody > tr > td{
+    border: 1px solid #e3e3e3;
+    padding: 0px;
+}
+
+
+
+table{
+        border-color: #e3e3e3 !important;
+        border:1px solid #e3e3e3;
+        font-size: 12px;
+}
+
+table .form-control {
+    background-color: #FFFFFF;
+    border: 1px solid #E3E3E3;
+    border-radius: 0px;
+    color: #565656;
+    padding: 0px 0px;
+    height: 25px;
+    max-width: 100%;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    -webkit-transition: all 300ms linear;
+    -moz-transition: all 300ms linear;
+    -o-transition: all 300ms linear;
+    -ms-transition: all 300ms linear;
+    transition: all 300ms linear;
+}
+
 </style>
 @endsection
 @section('content')
@@ -72,8 +111,8 @@ hr{
                         <h4 class="m-t-0 header-title" style="margin-top: 10px !important;"><b>Create Purchase</b></h4>
                     </div>
                     <div class="col-md-4">
-                        <a href="#" target="_blank" class="btn btn-success pull-right" style="margin-left: 10px !important;" {{-- data-toggle="modal" data-target="#myModal" --}}>Add Purchase Item</a>
-                        <a href="{{route('create_charter')}}" target="_blank" class="btn btn-danger pull-right" {{-- data-toggle="modal" data-target="#myModal" --}}>Add  Item Type</a>
+                        <a href="#" target="_blank" class="btn btn-success pull-right" style="margin-left: 10px !important;" {{-- data-toggle="modal" data-target="#myModal" --}}>Add New Supplier</a>
+                        <a href="{{route('create_charter')}}" target="_blank" class="btn btn-danger pull-right" {{-- data-toggle="modal" data-target="#myModal" --}}>Add  New Item</a>
                     </div>
                     <div class="col-md-5">
                         <button class="btn btn-danger fa fa-search pull-right"></button>
@@ -272,8 +311,8 @@ hr{
                                                         <th width="10%">Storage Type</th>
                                                         <th width="10%">Storage Quantity</th>
                                                         <th>Quantity</th>
-                                                        <th>Cost Per unit</th>
-                                                        <th>unit</th>
+                                                        <th>Price Per unit</th>
+                                                        <th>Unit &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (gram)</th>
                                                         <th>Rate</th>
                                                         <th>Value Excl. Tax</th>
                                                         <th>Value incl. Tax</th>
@@ -300,7 +339,7 @@ hr{
                                                         <td><input type="number" id="storeage_quantity_{{$j}}" class="form-control storeage_quantity" name="storeage_quantity[]" @php if($j == 1){@endphp required="" @php }@endphp></td>
                                                         <td><input type="number" id="quantity_{{$j}}" class="form-control quantity" name="quantity[]" @php if($j == 1){@endphp required="" @php }@endphp></td>
                                                         <td><input type="number" id="cost_{{$j}}" class="form-control cost" name="cost[]" @php if($j == 1){@endphp required="" @php }@endphp></td>
-                                                        <td> <input type="hidden"   id="unit_{{$j}}" class="form-control unit" name="unit[]" >
+                                                        <td style="display: flex;"> <input type="hidden"   id="unit_{{$j}}" class="form-control unit" name="unit[]" >
                                                             <select class="form-control kg" id="kg_{{$j}}" name="kg[]"{{--  style="display: none" --}}>
                                                                 <option value="">unit</option>
                                                                 @for($i=1;$i<100;$i++)

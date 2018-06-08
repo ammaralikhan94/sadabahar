@@ -12,6 +12,8 @@
         <link href="{{URL('/')}}/backend/plugins/datatables/dataTables.colVis.css" rel="stylesheet" type="text/css"/>
         <link href="{{URL('/')}}/backend/plugins/datatables/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="{{URL('/')}}/backend/plugins/datatables/fixedColumns.dataTables.min.css" rel="stylesheet" type="text/css"/>
+
+        
 @endsection
 @section('content')
 @if ($message = Session::get('success'))
@@ -44,7 +46,7 @@
                 <tr>
                     <td>{{$key+ 1}}</td>
                     <td>{{$val->invoice_number}}</td>
-                    <td><a class="btn btn-primary" href="{{route('view_invoice_purchase' , ['id' => $val->invoice_number])}}">View Purchase</a> <a class="btn btn-danger" href="{{route('delete_inventory' , ['id' => $val->id])}}">Delete</a></td>
+                    <td><a class="table-icons" href="{{route('view_invoice_purchase' , ['id' => $val->invoice_number])}}"><i class="fa fa-eye"></i></a> <a class="table-icons" href="{{route('delete_inventory' , ['id' => $val->id])}}"><i class="fa fa-trash"></i></a></td>
                 </tr>
                 @endforeach
                {{--  @foreach($item_charter as $key => $value)
