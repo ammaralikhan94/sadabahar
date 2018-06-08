@@ -22,7 +22,7 @@
             /*margin-top: 28px;*/
         }
         hr {
-            margin-top: 13px !important;
+            margin-top: 5px !important;
             margin-bottom: 20px;
             border: 0;
             border-top: 1px solid #eee;
@@ -41,21 +41,21 @@
                 <div class="row">
                     <div class="col-md-12">
                         	{{csrf_field()}}
-                            <div class="col-md-6">
+                            <!-- <div class="col-md-6">
                                 <h4 class="m-t-0 header-title"><b>Inventory Categories</b></h4>
-                            </div>
-                            <div class="col-md-6">
+                            </div> -->
+                            <!-- <div class="col-md-6">
                                 {{-- <button class="btn btn-success fa fa-plus pull-right"></button> --}}
                                 
-                            </div>
-                            <div class="col-md-12">
+                            </div> -->
+                            <!-- <div class="col-md-12">
                                 <hr>
-                            </div>
+                            </div> -->
                             {{-- PARENT INVENTORY START --}}
                             <div class="form-group col-md-6">
                                 <label>Inventory Category</label>
                                 <select multiple class="form-control" required="" name="inventory_charter" id="select_inventory">
-                                    <option value="">Select Inventory Category</option>    
+                                    <!-- <option value="">Select Inventory Category</option>     -->
                                     @foreach($parent_category as $key => $val )
                                         <option value="{{$val->id}}">{{$val->name}}</option>    
                                     @endforeach
@@ -94,20 +94,19 @@
 
 
                             {{-- PARENT INVENTORY START --}}
-                            <div class="col-md-6">
+                            <!-- <div class="col-md-6">
                                 <h4 class="m-t-0 header-title"><b>Sub Inventory Categories</b></h4>
-                            </div>
-                            <div class="col-md-6">
+                            </div> -->
+                            <!-- <div class="col-md-6">
                                 {{-- <button class="btn btn-success fa fa-plus pull-right"></button> --}}
-                                <!-- <button type="button" class="btn btn-danger fa fa-trash pull-right" id="delete_sub"></button> -->
-                            </div>
-                            <div class="col-md-12">
+                            </div> -->
+                            <!-- <div class="col-md-12">
                                 <hr>
-                            </div>
+                            </div> -->
                             <div class="form-group col-md-6">
                                 <label>Sub Category Name</label>
                                 <select multiple class="form-control" required="" name="supplier" id="sub_select">
-                                    <option value="">Select Sub Inventory Category</option>                                       
+                                    <!-- <option value="">Select Sub Inventory Category</option>                                        -->
                                 </select>
                             </div>
                             <div class="form-group col-md-6">    
@@ -140,16 +139,16 @@
                             <div class="col-md-12">
                                 <hr>
                             </div>
-                            <div class="col-md-6">
+                            <!-- <div class="col-md-6">
                                 <h4 class="m-t-0 header-title"><b>List of Inventory Items</b></h4>
-                            </div>
+                            </div> -->
                             <!-- <div class="col-md-6">
                                 {{-- <button class="btn btn-success fa fa-plus pull-right"></button> --}}
                                 <button type="button" class="btn btn-danger fa fa-trash pull-right" id="delete_item" style="margin-top: 0px !important"></button>
                             </div> -->
-                            <div class="col-md-12">
+                            <!-- <div class="col-md-12">
                                 <hr>
-                            </div>                            
+                            </div> -->                            
                             <div class="form-group col-md-6">
                                 <label>Item</label>
                                 <select multiple="" class="form-control" required="" id="item">
