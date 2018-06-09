@@ -441,7 +441,8 @@ class InventoryController extends Controller
 
     // *************************BANK CREATE*********************************************
     public function create_bank(){
-        return view('admin.bank.create_bank');
+        $bank = Bank::get();
+        return view('admin.bank.create_bank',compact('bank'));
     }
 
      public function insert_bank(Request $request){
