@@ -45,6 +45,45 @@ hr{
 .mytable{
 }
 
+.m-0 input{
+    border: none;
+}
+
+.m-0 input:focus{
+    border: 1px solid green;
+}
+
+
+.table.m-0 > tbody > tr > td{
+    border: 1px solid #e3e3e3;
+    padding: 0px;
+}
+
+
+
+table{
+        border-color: #e3e3e3 !important;
+        border:1px solid #e3e3e3;
+        font-size: 12px;
+}
+
+table .form-control {
+    background-color: #FFFFFF;
+    border: 1px solid #E3E3E3;
+    border-radius: 0px;
+    color: #565656;
+    padding: 0px 0px;
+    height: 25px;
+    max-width: 100%;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    -webkit-transition: all 300ms linear;
+    -moz-transition: all 300ms linear;
+    -o-transition: all 300ms linear;
+    -ms-transition: all 300ms linear;
+    transition: all 300ms linear;
+}
+
 </style>
 @endsection
 @section('content')
@@ -72,8 +111,13 @@ hr{
                         <h4 class="m-t-0 header-title" style="margin-top: 10px !important;"><b>Create Purchase</b></h4>
                     </div>
                     <div class="col-md-4">
+<<<<<<< HEAD
                         <a  href="{{route('create_charter')}}" target="_blank" class="btn btn-success pull-right" style="margin-left: 10px !important;" {{-- data-toggle="modal" data-target="#myModal" --}}>Add New Item</a>
                         <a href="{{route('create_supplier')}}" target="_blank" class="btn btn-danger pull-right" {{-- data-toggle="modal" data-target="#myModal" --}}>Add New Supplier</a>
+=======
+                        <a href="#" target="_blank" class="btn btn-success pull-right" style="margin-left: 10px !important;" {{-- data-toggle="modal" data-target="#myModal" --}}>Add New Supplier</a>
+                        <a href="{{route('create_charter')}}" target="_blank" class="btn btn-danger pull-right" {{-- data-toggle="modal" data-target="#myModal" --}}>Add  New Item</a>
+>>>>>>> 910a256f71056ef94f605010724325421f071963
                     </div>
 
                     <div class="col-md-5">
@@ -260,11 +304,11 @@ hr{
                             <div class="col-sm-12">
                                 <div class="card-box" style="padding: 0px 20px 0px 20px;">
                                     <div class="row">    
-                                    <div class="col-md-12">
+                                    <!-- <div class="col-md-12">
                                          <div class="table-plus">
                                              <button type="button" id="add_more" class="btn btn-success fa fa-plus" ></button>
                                          </div>
-                                    </div>                                                                               
+                                    </div> -->                                                                               
                                         <div class="p-20" style="height: 400px; overflow-y: scroll;">
                                             
                                             <table class="table m-0">                                                    
@@ -276,8 +320,8 @@ hr{
                                                         <th width="10%">Storage Type</th>
                                                         <th width="10%">Storage Quantity</th>
                                                         <th>Quantity</th>
-                                                        <th>Cost Per unit</th>
-                                                        <th>unit</th>
+                                                        <th>Price Per unit</th>
+                                                        <th>Unit &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (gram)</th>
                                                         <th>Rate</th>
                                                         <th>Value Excl. Tax</th>    
                                                         <th>Value incl. Tax</th>
@@ -304,7 +348,7 @@ hr{
                                                         <td><input type="number" id="storeage_quantity_{{$j}}" class="form-control storeage_quantity" name="storeage_quantity[]" @php if($j == 1){@endphp required="" @php }@endphp></td>
                                                         <td><input type="number" id="quantity_{{$j}}" class="form-control quantity" name="quantity[]" @php if($j == 1){@endphp required="" @php }@endphp></td>
                                                         <td><input type="number" id="cost_{{$j}}" class="form-control cost" name="cost[]" @php if($j == 1){@endphp required="" @php }@endphp></td>
-                                                        <td> <input type="hidden"   id="unit_{{$j}}" class="form-control unit" name="unit[]" >
+                                                        <td style="display: flex;"> <input type="hidden"   id="unit_{{$j}}" class="form-control unit" name="unit[]" >
                                                             <select class="form-control kg" id="kg_{{$j}}" name="kg[]"{{--  style="display: none" --}}>
                                                                 <option value="">unit</option>
                                                                 @for($i=1;$i<100;$i++)
@@ -347,7 +391,11 @@ hr{
                                         </div>           
                                     </div>
                                 </div>  
+<<<<<<< HEAD
                             </div>
+=======
+                            </div>                            
+>>>>>>> 910a256f71056ef94f605010724325421f071963
                            
                             <div class="col-md-offset-6 col-md-6">
                                 <div class="card-box clearfix">
@@ -1270,9 +1318,9 @@ hr{
     <script src="{{URL('/')}}/backend/plugins/tiny-editable/mindmup-editabletable.js"></script>
     <script src="{{URL('/')}}/backend/plugins/tiny-editable/numeric-input-example.js"></script>
 
-    <script src="{{URL('/')}}/backend/pages/datatables.editable.init.js"></script>
+    <!-- <script src="{{URL('/')}}/backend/pages/datatables.editable.init.js"></script>
     <script>
         $('#mainTable').editableTableWidget().numericInputExample().find('td').focus();
-    </script>
+    </script> -->
 @endsection
 @endsection

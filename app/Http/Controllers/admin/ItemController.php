@@ -58,7 +58,7 @@ class ItemController extends Controller
     /*Delete item*/
     public function delete_item_type($id){
     	Item_purchase_type::where('id' , $id)->delete();
-    	return redirect()->back()->with('success' , 'Item Purchase Type deleted  added successfully !');
+    	return redirect()->back()->with('success' , 'Item Purchase Type deleted successfully !');
     }
 
     

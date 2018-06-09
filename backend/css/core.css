@@ -725,8 +725,8 @@ textarea.form-control {
 .pagination > .active > span:hover,
 .pagination > .active > a:focus,
 .pagination > .active > span:focus {
-  background-color: #5fbeaa;
-  border-color: #5fbeaa;
+  background-color: #001f3e;
+  border-color: #001f3e;
 }
 .pager li > a,
 .pager li > span {
@@ -1525,4 +1525,10 @@ table.table-bordered.dataTable{
 
 .table-icons{
   margin-right: 5px;
+}
+
+
+
+.table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
+    color: #282828;
 }

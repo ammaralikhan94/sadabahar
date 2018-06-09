@@ -47,6 +47,44 @@ hr{
 .modal-plus{
     margin-top: 25px;
 }
+.m-0 input{
+            border: none;
+}
+
+.m-0 input:focus{
+    border: 1px solid green;
+}
+
+
+.table.m-0 > tbody > tr > td{
+    border: 1px solid #e3e3e3;
+    padding: 0px;
+}
+
+
+
+table{
+        border-color: #e3e3e3 !important;
+        border:1px solid #e3e3e3;
+        font-size: 12px;
+}
+
+table .form-control {
+    background-color: #FFFFFF;
+    border: 1px solid #E3E3E3;
+    border-radius: 0px;
+    color: #565656;
+    padding: 0px 0px;
+    height: 25px;
+    max-width: 100%;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    -webkit-transition: all 300ms linear;
+    -moz-transition: all 300ms linear;
+    -o-transition: all 300ms linear;
+    -ms-transition: all 300ms linear;
+    transition: all 300ms linear;
+}
 
 </style>
 @endsection
@@ -264,7 +302,7 @@ hr{
                                                         <td><input type="number" id="storeage_quantity_{{$count}}" class="form-control storeage_quantity"  required="" value="{{App\item_purchase_type::where('item_name',$val->storage_type)->value('item_type') * $val->quantity}}"></td>
                                                         <td><input type="number" id="quantity_{{$count}}" class="form-control quantity"  required="" value="{{$val->quantity}}"></td>
                                                         <td><input type="number" id="cost_{{$count}}" class="form-control cost"  required="" value="{{$val->cost}}"></td>
-                                                        <td>
+                                                        <td style="display: flex">
                                                             <input type="text" id="unit_{{$count}}" class="form-control unit"  value="{{$val->purchase_unit}}" @php if(empty($val->purchase_unit)){ @endphp
                                                                         style="display: none;" 
 
@@ -312,7 +350,7 @@ hr{
                                                         <td><input type="number" id="storeage_quantity_{{$return}}" class="form-control storeage_quantity"  required="" value="{{App\item_purchase_type::where('item_name',$inventory->storage_type)->value('item_type') * $inventory->quantity}}"></td>
                                                         <td><input type="number" id="quantity_{{$return}}" class="form-control quantity"  required="" value="{{$inventory->quantity}}"></td>
                                                         <td><input type="number" id="cost_{{$return}}" class="form-control cost"  required="" value="{{$item->cost}}"></td>
-                                                        <td>
+                                                        <td  style="display: flex;">
                                                             <input type="text" id="unit_{{$return}}" class="form-control unit"  value="{{$item->purchase_unit}}" @php if(empty($item->purchase_unit)){ @endphp
                                                                         style="display: none;" 
 

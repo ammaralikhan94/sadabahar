@@ -45,27 +45,21 @@ Add - Inventory
                 <div class="col-md-12">
                     <form class="form-horizontal" action="{{route('insert_item_type')}}" method="post">
                         <div class="col-md-12">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <h4 class="m-t-0 header-title"><b>Create Item Type</b></h4>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group" style="margin-bottom: 0px !important;">
-                                    <label class="col-md-offset-6 col-md-3 control-label">SID:</label>
-                                    <label class="col-md-3 control-label" style="text-align: left;">SID</label>
-                                </div>
-                            </div>
+                            </div>                            
                         </div>
                         <div class="col-md-12">
                             <hr>
                         </div>
                         {{csrf_field()}}
-                        <div class="form-group col-md-4">
-                            <label class="col-md-3 control-label">Item Name</label>
-                            <div class="col-md-9">
+                        <div class="form-group col-md-6">
+                            <label class="col-md-4 control-label">Item Name</label>
+                            <div class="col-md-8">
                                 <input type="text" class="form-control" name="item_name" required="">
                             </div>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-6">
                             <label class="col-md-5 control-label">Item purchase type</label>
                             <div class="col-md-7">
                                 <select class="form-control" name="item_purchase_type">
@@ -75,14 +69,14 @@ Add - Inventory
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-6">
                             <label class="col-md-4 control-label">Item strength</label>
                             <div class="col-md-8">
                                 <input type="number" class="form-control" name="item_type"  required="">
                             </div>
                         </div>
-                        <div class="form-group col-md-12">
-                            <div class="col-md-offset-10 col-md-2">
+                        <div class="form-group col-md-6">
+                            <div class="col-md-offset-8 col-md-4">
                                 <input type="submit" class="form-control btn btn-success"  placeholder="placeholder" value="Save">
                             </div>
                         </div>
