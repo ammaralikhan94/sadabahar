@@ -125,7 +125,8 @@ class CharterController extends Controller
 
      /*Create Brand*/
     public function create_brand(){
-    	return view('admin.brand.create_brand');
+        $brand= Brand::get();
+    	return view('admin.brand.create_brand',compact('brand'));
     }
 
     /*Create Brand*/
