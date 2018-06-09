@@ -228,10 +228,11 @@ hr{
                                                     </tr>
                                                 </thead>
                                                 <tbody id="add_here">
+                                                    @for($j=0;$j<20;$j++)
                                                     <tr>
                                                         <th scope="row">1</th>
-                                                        <td><input type="text" id="code_1" class="form-control code" name="item_code[]" required=""></td>
-                                                        <td><input type="text" id="name_1" class="form-control name" name="description[]" required=""></td>
+                                                        <td><input type="text" id="code_{{$j}}" class="form-control code" name="item_code[]" required=""></td>
+                                                        <td><input type="text" id="name_{{$j}}" class="form-control name" name="description[]" required=""></td>
                                                         <td>
                                                             <select name="measurment[]" class="form-control" required="">
                                                                 <option>Select Mesurement</option>
@@ -239,29 +240,30 @@ hr{
                                                                 <option value="kg">Liter</option>
                                                             </select>
                                                         </td>
-                                                        <td><select name="storage_type[]" id="storage_type_1" class="form-control add_item_type" required=""> 
+                                                        <td><select name="storage_type[]" id="storage_type_{{$j}}" class="form-control add_item_type" required=""> 
                                                             <option value="">Select Storage type</option>
                                                             @foreach($item_type as $key => $val)
                                                                 <option value="{{$val->item_name}}">{{$val->item_name}}</option>
                                                             @endforeach
                                                         </select></td>
-                                                        <td><input type="number" id="storeage_quantity_1" class="form-control storeage_quantity" name="storeage_quantity[]" required=""></td>
-                                                        <td><input type="number" id="quantity_1" class="form-control quantity" name="quantity[]" required=""></td>
-                                                        <td><input type="number" id="cost_1" class="form-control cost" name="cost[]" required=""></td>
-                                                        <td> <input type="hidden"   id="unit_1" class="form-control unit" name="unit[]" >
-                                                            <select class="form-control kg" id="kg_1" name="kg[]"{{--  style="display: none" --}}>
+                                                        <td><input type="number" id="storeage_quantity_{{$j}}" class="form-control storeage_quantity" name="storeage_quantity[]" required=""></td>
+                                                        <td><input type="number" id="quantity_{{$j}}" class="form-control quantity" name="quantity[]" required=""></td>
+                                                        <td><input type="number" id="cost_{{$j}}" class="form-control cost" name="cost[]" required=""></td>
+                                                        <td> <input type="hidden"   id="unit_{{$j}}" class="form-control unit" name="unit[]" >
+                                                            <select class="form-control kg" id="kg_{{$j}}" name="kg[]"{{--  style="display: none" --}}>
                                                                 <option value="">unit</option>
                                                                 @for($i=1;$i<100;$i++)
                                                                 <option>{{$i}}</option>
                                                                 @endfor
                                                             </select>
-                                                            <input type="text" id="gram_1" class="form-control gram" name="gram[]" {{-- style="display: none;"  --}}/></td>
-                                                        <td><input type="number" id="rate_1" class="form-control rate calculate" name="rate[]" required=""></td>
-                                                        <td><input type="text"   id="exc_tax_1" class="form-control calculate exc_tax" name="exc_tax[]" required=""></td>
-                                                        <td><input type="text"  id="inc_code_1" class="form-control calculate inc_code" name="inc_code[]"></td>
-                                                        <td> IN<input type="radio"  name="exchange[]" value="in" id="in_1"  class="in" >
-                                                             OUT<input type="radio"  name="exchange[]   " value="out"  id="out_1" class="out" ></td>
+                                                            <input type="text" id="gram_{{$j}}" class="form-control gram" name="gram[]" {{-- style="display: none;"  --}}/></td>
+                                                        <td><input type="number" id="rate_{{$j}}" class="form-control rate calculate" name="rate[]" required=""></td>
+                                                        <td><input type="text"   id="exc_tax_{{$j}}" class="form-control calculate exc_tax" name="exc_tax[]" required=""></td>
+                                                        <td><input type="text"  id="inc_code_{{$j}}" class="form-control calculate inc_code" name="inc_code[]"></td>
+                                                        <td> IN<input type="radio"  name="exchange[]" value="in" id="in_{{$j}}"  class="in" >
+                                                             OUT<input type="radio"  name="exchange[]   " value="out"  id="out_{{$j}}" class="out" ></td>
                                                     </tr>
+                                                    @endfor
                                                     <thead style="background-color: #ccc;">
                                                     <tr>
                                                         <th  colspan="10"></th>

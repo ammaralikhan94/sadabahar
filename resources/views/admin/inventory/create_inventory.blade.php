@@ -117,8 +117,8 @@ table .form-control {
                     <div class="col-md-5">
                         <button class="btn btn-danger fa fa-search pull-right"></button>
                         <button class="btn btn-warning fa fa-print pull-right"></button>
-                        <button type="button" class="btn btn-success pull-right fa fa-line-chart"></button>
-                        <button class="btn btn-danger fa fa-list-alt pull-right" id="posted"></button>                      
+                        <button type="button" class="btn btn-success pull-right fa fa-line-chart" id="posted_remove"></button>
+                        <button type="button" class="btn btn-danger fa fa-list-alt pull-right" id="posted"></button>                      
                         <button type="button" id="submit_parent" class="btn btn-success fa fa-plus pull-right"> </button>
                         <button class="btn btn-danger fa fa-trash pull-right"></button>
                         <button class="btn btn-info fa fa-save pull-right"></button>
@@ -587,9 +587,15 @@ table .form-control {
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
     $(document).on('click','#posted',function(){
-        
         $('[name="posted"]').val(1);
+        $('#posted_image').show();
+    });
+</script>
 
+<script type="text/javascript">
+    $(document).on('click','#posted_remove',function(){
+        $('[name="posted"]').val(0);
+        $('#posted_image').hide();
     });
 </script>
 <script>

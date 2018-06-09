@@ -114,7 +114,8 @@ class InventoryController extends Controller
                 'unit_purchased' => $rate,
                 'exc_tax' => $exc_tax,
                 'bank_name' => $bank_name,
-                'inc_code' => $inc_code
+                'inc_code' => $inc_code,
+                'inc_code' => $request->posted
             ])->id;
                 Invoice_number::insert([
                     'inventory_id' =>  $inventory_id,
