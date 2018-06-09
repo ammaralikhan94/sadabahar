@@ -578,12 +578,15 @@ table .form-control {
         <button type="button" class="btn btn-danger" id="close_modal" data-dismiss="modal">Close</button>
       </div>
 
-    </div>
+    </div> 
   </div>
 </div>
     {{-- Modal for new item --}}
 @section('customScript')
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript">
+    
+</script>
 <script>
     $(document).on('click','[name="vendor"]',function (){
         type = $(this).attr('id');
