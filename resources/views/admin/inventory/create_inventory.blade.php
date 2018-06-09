@@ -118,12 +118,15 @@ table .form-control {
                         <button class="btn btn-danger fa fa-search pull-right"></button>
                         <button class="btn btn-warning fa fa-print pull-right"></button>
                         <button type="button" class="btn btn-success pull-right fa fa-line-chart"></button>
-                        <button class="btn btn-danger fa fa-list-alt pull-right"></button>                      
+                        <button class="btn btn-danger fa fa-list-alt pull-right" id="posted"></button>                      
                         <button type="button" id="submit_parent" class="btn btn-success fa fa-plus pull-right"> </button>
                         <button class="btn btn-danger fa fa-trash pull-right"></button>
                         <button class="btn btn-info fa fa-save pull-right"></button>
                         <button class="btn btn-warning fa fa-close pull-right"></button>                        
                     </div>
+                </div>
+                <div id="posted_image">
+                    <img src="{{URL('/')}}/backend/posted.jpg" width="200" height="100">
                 </div>
                 <div class="col-md-12">
                     <hr>
