@@ -59,6 +59,9 @@ hr{
     padding: 0px;
 }
 
+.table>thead>tr>th{
+    padding: 6px;
+}
 
 
 table{
