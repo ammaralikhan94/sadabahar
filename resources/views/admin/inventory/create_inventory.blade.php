@@ -125,7 +125,7 @@ table .form-control {
                         <button class="btn btn-warning fa fa-close pull-right"></button>                        
                     </div>
                 </div>
-                <div id="posted_image">
+                <div id="posted_image" style="display: none">
                     <img src="{{URL('/')}}/backend/posted.jpg" width="200" height="100">
                 </div>
                 <div class="col-md-12">
