@@ -294,7 +294,7 @@ table .form-control {
                             </div>
                             <div class="col-sm-12">
                                 <div class="card-box" style="padding: 0px 20px 0px 20px;">
-                                    <div class="row">    
+                                    <div class="row">      
                                     <!-- <div class="col-md-12">
                                          <div class="table-plus">
                                              <button type="button" id="add_more" class="btn btn-success fa fa-plus" ></button>
