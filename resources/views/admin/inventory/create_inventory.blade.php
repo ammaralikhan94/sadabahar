@@ -295,11 +295,11 @@ table .form-control {
                             <div class="col-sm-12">
                                 <div class="card-box" style="padding: 0px 20px 0px 20px;">
                                     <div class="row">    
-                                    <div class="col-md-12">
+                                    <!-- <div class="col-md-12">
                                          <div class="table-plus">
                                              <button type="button" id="add_more" class="btn btn-success fa fa-plus" ></button>
                                          </div>
-                                    </div>                                                                               
+                                    </div> -->                                                                               
                                         <div class="p-20" style="height: 400px; overflow-y: scroll;">
                                             
                                             <table class="table m-0">                                                    
@@ -382,47 +382,7 @@ table .form-control {
                                         </div>           
                                     </div>
                                 </div>  
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="card-box">
-                                    <h4 class="m-t-0 header-title"><b>Inline Editor</b></h4>
-                                    <p class="text-muted m-b-30 font-13">
-                                        just start typing to edit, or move around with arrow keys or mouse clicks!
-                                    </p>
-
-                                    <div class="table-responsive">
-                                        <table id="mainTable" class="table table-striped m-b-0">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th><th>Cost</th><th>Profit</th><th>Fun</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Car</td><td>100</td><td>200</td><td>0</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Bike</td><td>330</td><td>240</td><td>1</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Plane</td><td>430</td><td>540</td><td>3</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Yacht</td><td>100</td><td>200</td><td>0</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Segway</td><td>330</td><td>240</td><td>1</td>
-                                                </tr>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th><strong>TOTAL</strong></th><th></th><th></th><th></th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
+                            </div>                            
                            
                             <div class="col-md-offset-6 col-md-6">
                                 <div class="card-box clearfix">
@@ -1341,9 +1301,9 @@ table .form-control {
     <script src="{{URL('/')}}/backend/plugins/tiny-editable/mindmup-editabletable.js"></script>
     <script src="{{URL('/')}}/backend/plugins/tiny-editable/numeric-input-example.js"></script>
 
-    <script src="{{URL('/')}}/backend/pages/datatables.editable.init.js"></script>
+    <!-- <script src="{{URL('/')}}/backend/pages/datatables.editable.init.js"></script>
     <script>
         $('#mainTable').editableTableWidget().numericInputExample().find('td').focus();
-    </script>
+    </script> -->
 @endsection
 @endsection

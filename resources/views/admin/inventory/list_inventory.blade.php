@@ -12,6 +12,14 @@
         <link href="{{URL('/')}}/backend/plugins/datatables/dataTables.colVis.css" rel="stylesheet" type="text/css"/>
         <link href="{{URL('/')}}/backend/plugins/datatables/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="{{URL('/')}}/backend/plugins/datatables/fixedColumns.dataTables.min.css" rel="stylesheet" type="text/css"/>
+
+        <style type="text/css">
+            .btn-danger, .btn-danger:active, .btn-danger:focus, .btn-danger:hover, .btn-danger.active, .btn-danger.focus, .btn-danger:active, .btn-danger:focus, .btn-danger:hover, .open > .dropdown-toggle.btn-danger {
+                background-color: #f05050 !important;
+                border: 1px solid #f05050 !important;
+                padding: 0px 5px;
+            }
+        </style>
 @endsection
 @section('content')
 @if ($message = Session::get('success'))
@@ -30,7 +38,7 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="card-box table-responsive">
-            <h4 class="m-t-0 header-title"><b>Inventory</b></h4>
+            <h4 class="m-t-0 header-title"><b>List of Items</b></h4>
             <table id="subadmin_table" class="table table-striped table-bordered">
                 <thead>
                 <tr>
@@ -49,7 +57,7 @@
                     <td>{{$val->item_name}}</td>
                     <td>{{$val->item_code}}</td>
                     <td>{{-- {{$val->payment_status}} --}}Active</td>
-                    <td>{{-- <a class="btn btn-primary" href="{{route('edit_inventory' , ['id' => $val->id])}}">Edit</a> --}} <a class="btn btn-danger" href="{{route('delete_inventory' , ['id' => $val->id])}}">Delete</a></td>
+                    <td>{{-- <a class="btn btn-primary" href="{{route('edit_inventory' , ['id' => $val->id])}}">Edit</a> --}} <a class="btn btn-danger" href="{{route('delete_inventory' , ['id' => $val->id])}}"><i class="fa fa-trash"></i></a></td>
                 </tr>
                 @endforeach
                {{--  @foreach($item_charter as $key => $value)

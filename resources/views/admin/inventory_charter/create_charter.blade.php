@@ -34,6 +34,19 @@
         label{
             margin-top: 10px;
         }
+
+        option{
+            text-transform: uppercase;
+        }
+
+        input#category_name, input#category_id, input, #brand_name, #measurment_unit{
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .no-padding{
+            padding: 0px;
+        }
     </style>
     <div class="row">
         <div class="col-sm-12">
@@ -76,7 +89,7 @@
                                 <div class="col-md-12">
                                     <label class="col-md-4">Main Category Code</label>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control amount" name="category_id" id="category_id" placeholder="Category ID" value="{{($count == '')?$count+1:$count}}" style="width: 100px;"  required="" readonly="">
+                                        <input type="text" class="form-control amount" name="category_id" id="category_id" placeholder="Category ID" value="{{($count == '')?$count+1:$count}}" style="width: 60px;"  required="" readonly="">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -124,7 +137,7 @@
                                 <div class="col-md-12">
                                     <label class="col-md-4">Sub Category Code</label>
                                     <div class="col-md-8">
-                                        <input style="width: 100px;" type="text" class="form-control" name="parent_id" id="parent_id" placeholder="Category ID"  required="" readonly="">
+                                        <input style="width: 60px;" type="text" class="form-control" name="parent_id" id="parent_id" placeholder="Category ID"  required="" readonly="">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -216,7 +229,7 @@
                                     </div>                                    
                                 </div>
                                 <div class="col-md-12">
-                                    <label class="col-md-3 control-label">Inactive Item</label>
+                                    <label class="col-md-3 no-padding control-label">Inactive Item</label>
                                     <div class="checkbox radio-inline">
                                         <input  type="checkbox" name="status" id="status">
                                         <label for="checkbox0">
