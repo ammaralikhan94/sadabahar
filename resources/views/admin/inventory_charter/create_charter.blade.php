@@ -237,7 +237,7 @@
                                         </label>
                                     </div>
                                 </div>
-                                <button type="button" class="btn btn-success pull-right" >Submit</button>
+                               {{--  <button type="button" class="btn btn-success pull-right" >Submit</button> --}}
                             </div>
                     </div>
                 </div>
@@ -392,7 +392,7 @@
                     'status'             :  status
                 },
                     success:function(data){
-                        $('#select_inventory :selected').val('');
+                       /* $('#select_inventory :selected').val('');
                         $('#sub_select :selected').val('');
                         $("#item_code").val('');
                         $("#item_name").val('');
@@ -402,7 +402,7 @@
                         $("#selling_price").val('');
                         $("#measurment_unit").val('');
                         $("#status").val('');
-                        $("#status").attr('checked', false);
+                        $("#status").attr('checked', false);*/
                         data = JSON.parse(data);
                         if(data.status == 'updated'){
 

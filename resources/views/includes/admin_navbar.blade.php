@@ -13,15 +13,7 @@
                 </ul>
             </li> --}}
            <li class="has-submenu">
-                <a href="#"><i class="fa  fa-truck "></i>Supplier</a>
-                <ul class="submenu megamenu">
-                    <li>
-                        <ul>
-                            <li><a href="{{route('create_supplier')}}"><i class="fa  fa-truck "></i> Add Supplier</a></li>
-                            <!-- <li><a href="{{route('list_supplier')}}"><i class="fa  fa-list  "></i> List Supplier</a></li> -->
-                        </ul>
-                    </li>
-                </ul>       
+               <li><a href="{{route('create_supplier')}}"><i class="fa  fa-truck "></i> Add Supplier</a></li>
             </li> 
             <li class="has-submenu">
                 <a href="#"><i class="fa fa-street-view"></i>Customer</a>
@@ -68,16 +60,14 @@
                     </li>
                 </ul>       
             </li>  
-            <li class="has-submenu">
-                <a href="{{route('list_barrel')}}"><i class="fa  fa-bitbucket"></i>Inventory</a></li>   
-            </li>  
+           
              <li class="has-submenu">
                 <a href="{{route('list_barrel')}}"><i class="fa  fa-bitbucket"></i>Inventory</a></li>
             </li>  
-             <li class="has-submenu">
+             {{-- <li class="has-submenu">
                 <a href="{{route('get_invoice')}}"><i class="fa  fa-bitbucket"></i>Invoice</a></li>
                       
-            </li>  
+            </li>   --}}
             {{-- <li class="has-submenu">
              <a href="#"><i class="fa  fa-money"></i>Expense</a>
                 <ul class="submenu megamenu">

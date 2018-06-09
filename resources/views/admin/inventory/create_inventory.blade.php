@@ -105,25 +105,34 @@ table .form-control {
         <div class="col-sm-12">
             <div class="card-box">
                 <!-- <a class="btn btn-success pull-right" href="{{route('create_inventory')}}" target="_blank">Add More Purchase</a> -->
-                
+                  
                 <div class="new-purchase">
                     <div class="col-md-3">
                         <h4 class="m-t-0 header-title" style="margin-top: 10px !important;"><b>Create Purchase</b></h4>
                     </div>
                     <div class="col-md-4">
+<<<<<<< HEAD
+                        <a  href="{{route('create_charter')}}" target="_blank" class="btn btn-success pull-right" style="margin-left: 10px !important;" {{-- data-toggle="modal" data-target="#myModal" --}}>Add New Item</a>
+                        <a href="{{route('create_supplier')}}" target="_blank" class="btn btn-danger pull-right" {{-- data-toggle="modal" data-target="#myModal" --}}>Add New Supplier</a>
+=======
                         <a href="#" target="_blank" class="btn btn-success pull-right" style="margin-left: 10px !important;" {{-- data-toggle="modal" data-target="#myModal" --}}>Add New Supplier</a>
                         <a href="{{route('create_charter')}}" target="_blank" class="btn btn-danger pull-right" {{-- data-toggle="modal" data-target="#myModal" --}}>Add  New Item</a>
+>>>>>>> 910a256f71056ef94f605010724325421f071963
                     </div>
+
                     <div class="col-md-5">
                         <button class="btn btn-danger fa fa-search pull-right"></button>
                         <button class="btn btn-warning fa fa-print pull-right"></button>
                         <button type="button" class="btn btn-success pull-right fa fa-line-chart"></button>
-                        <button class="btn btn-danger fa fa-list-alt pull-right"></button>                      
+                        <button class="btn btn-danger fa fa-list-alt pull-right" id="posted"></button>                      
                         <button type="button" id="submit_parent" class="btn btn-success fa fa-plus pull-right"> </button>
                         <button class="btn btn-danger fa fa-trash pull-right"></button>
                         <button class="btn btn-info fa fa-save pull-right"></button>
                         <button class="btn btn-warning fa fa-close pull-right"></button>                        
                     </div>
+                </div>
+                <div id="posted" style="display: none">
+                <img src="{{URL('/')}}/backend/posted.jpg" width="200" height="100">
                 </div>
                 <div class="col-md-12">
                     <hr>
@@ -314,7 +323,7 @@ table .form-control {
                                                         <th>Price Per unit</th>
                                                         <th>Unit &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (gram)</th>
                                                         <th>Rate</th>
-                                                        <th>Value Excl. Tax</th>
+                                                        <th>Value Excl. Tax</th>    
                                                         <th>Value incl. Tax</th>
                                                     </tr>
                                                 </thead>
@@ -382,7 +391,11 @@ table .form-control {
                                         </div>           
                                     </div>
                                 </div>  
+<<<<<<< HEAD
+                            </div>
+=======
                             </div>                            
+>>>>>>> 910a256f71056ef94f605010724325421f071963
                            
                             <div class="col-md-offset-6 col-md-6">
                                 <div class="card-box clearfix">
@@ -582,6 +595,10 @@ table .form-control {
 @section('customScript')
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
+    $(document).on('click','#posted',function (){
+
+    });
+
     $(document).on('click','[name="vendor"]',function (){
         type = $(this).attr('id');
         if(type == 'customer'){
