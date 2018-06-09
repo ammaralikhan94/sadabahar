@@ -243,6 +243,7 @@ table .form-control {
                                         <!-- <label class="col-md-7 control-label">Company Name</label> -->
                                         <div class="col-md-12">
                                             <input type="text" class="form-control" name="company_name" id="company_name" placeholder="Company Name"  required="" readonly="">
+                                            <input type="hidden" class="form-control" name="posted" value="0">
                                         </div>                                
                                     </div>
                                     <div class="form-group col-md-12">
@@ -585,7 +586,11 @@ table .form-control {
 @section('customScript')
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
-    
+    $(document).on('click','#posted',function(){
+        
+        $('[name="posted"]').val(1);
+
+    });
 </script>
 <script>
     $(document).on('click','[name="vendor"]',function (){

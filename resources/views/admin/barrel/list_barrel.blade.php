@@ -35,32 +35,22 @@
                 <thead>
                 <tr>
                     <th>#</th>
+                    <th>Item Name</th>
                     <th>Storage Type</th>
-                    <th>Storage Strength</th>
                     <th>Storage unit</th>
-                    <th>Chemical Name</th>
-                    <th>Empty Barrel</th>
                     <th>Total Barrel</th>
                     <th>Current volume</th>
-                    <th>Total volume</th>
-                    <th>Filled volume</th>
-                    <th>Volume Remaining</th>
                 </tr>
                 </thead>
                 <tbody>
                     @foreach($barrel as $key => $val)
                 <tr>
                     <td>{{$key + 1}}</td>
-                    <td>{{$val->barrel_type}}</td>
-                    <td>{{$val->barrel_strength}}</td>
-                    <td>{{$val->barrel_measure}}</td>
                     <td>{{$val->chemical_name}}</td>
-                    <td>{{$val->empty_barrel}}</td>
+                    <td>{{$val->barrel_type}}</td>
+                    <td>{{$val->barrel_measure}}</td>
                     <td>{{$val->total_barrel}}</td>
                     <td>{{$val->current_volume}}</td>
-                    <td>{{$val->total_volume}}</td>
-                    <td>{{$val->current_volume}}</td>
-                    <td>{{$val->remaining_volume}}</td>
                 </tr>
                 @endforeach
                 </tbody>
