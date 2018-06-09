@@ -66,25 +66,29 @@ hr{
         <div class="col-sm-12">
             <div class="card-box">
                 <!-- <a class="btn btn-success pull-right" href="{{route('create_inventory')}}" target="_blank">Add More Purchase</a> -->
-                
+                  
                 <div class="new-purchase">
                     <div class="col-md-3">
                         <h4 class="m-t-0 header-title" style="margin-top: 10px !important;"><b>Create Purchase</b></h4>
                     </div>
                     <div class="col-md-4">
-                        <a href="#" target="_blank" class="btn btn-success pull-right" style="margin-left: 10px !important;" {{-- data-toggle="modal" data-target="#myModal" --}}>Add Purchase Item</a>
-                        <a href="{{route('create_charter')}}" target="_blank" class="btn btn-danger pull-right" {{-- data-toggle="modal" data-target="#myModal" --}}>Add  Item Type</a>
+                        <a  href="{{route('create_charter')}}" target="_blank" class="btn btn-success pull-right" style="margin-left: 10px !important;" {{-- data-toggle="modal" data-target="#myModal" --}}>Add New Item</a>
+                        <a href="{{route('create_supplier')}}" target="_blank" class="btn btn-danger pull-right" {{-- data-toggle="modal" data-target="#myModal" --}}>Add New Supplier</a>
                     </div>
+
                     <div class="col-md-5">
                         <button class="btn btn-danger fa fa-search pull-right"></button>
                         <button class="btn btn-warning fa fa-print pull-right"></button>
                         <button type="button" class="btn btn-success pull-right fa fa-line-chart"></button>
-                        <button class="btn btn-danger fa fa-list-alt pull-right"></button>                      
+                        <button class="btn btn-danger fa fa-list-alt pull-right" id="posted"></button>                      
                         <button type="button" id="submit_parent" class="btn btn-success fa fa-plus pull-right"> </button>
                         <button class="btn btn-danger fa fa-trash pull-right"></button>
                         <button class="btn btn-info fa fa-save pull-right"></button>
                         <button class="btn btn-warning fa fa-close pull-right"></button>                        
                     </div>
+                </div>
+                <div id="posted" style="display: none">
+                <img src="{{URL('/')}}/backend/posted.jpg" width="200" height="100">
                 </div>
                 <div class="col-md-12">
                     <hr>
@@ -344,46 +348,6 @@ hr{
                                     </div>
                                 </div>  
                             </div>
-                            <div class="col-sm-12">
-                                <div class="card-box">
-                                    <h4 class="m-t-0 header-title"><b>Inline Editor</b></h4>
-                                    <p class="text-muted m-b-30 font-13">
-                                        just start typing to edit, or move around with arrow keys or mouse clicks!
-                                    </p>
-
-                                    <div class="table-responsive">
-                                        <table id="mainTable" class="table table-striped m-b-0">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th><th>Cost</th><th>Profit</th><th>Fun</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Car</td><td>100</td><td>200</td><td>0</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Bike</td><td>330</td><td>240</td><td>1</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Plane</td><td>430</td><td>540</td><td>3</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Yacht</td><td>100</td><td>200</td><td>0</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Segway</td><td>330</td><td>240</td><td>1</td>
-                                                </tr>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th><strong>TOTAL</strong></th><th></th><th></th><th></th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
                            
                             <div class="col-md-offset-6 col-md-6">
                                 <div class="card-box clearfix">
@@ -583,6 +547,10 @@ hr{
 @section('customScript')
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
+    $(document).on('click','#posted',function (){
+
+    });
+
     $(document).on('click','[name="vendor"]',function (){
         type = $(this).attr('id');
         if(type == 'customer'){

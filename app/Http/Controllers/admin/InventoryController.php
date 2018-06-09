@@ -334,8 +334,18 @@ class InventoryController extends Controller
 
 	/*Delete Inventory*/
 	public function delete_inventory($id){
-		Inventory::where('id',$id)->delete();
-		return redirect()->back()->with('success' , 'Item deleted successfully !');
+        $item_name  = Inventory::where('id',$id)->value('item_name');
+        $check_item = Barrel::where('chemical_name',$item_name)->value('chemical_name');
+        $current_volume = Barrel::where('chemical_name',$item_name)->value('current_volume');
+        if(empty($check_item) || $current_volume == 0){
+            Inventory::where('id',$id)->delete();
+            Barrel::where('chemical_name',$item_name)->delete();
+            Item_charter::where('item_name',$item_name)->delete();
+            return redirect()->back()->with('success' , 'Item deleted successfully !');
+        }else{
+            return redirect()->back()->with('error' , 'Please empty stock to delete this item!');
+        }
+		
 	}
 
 

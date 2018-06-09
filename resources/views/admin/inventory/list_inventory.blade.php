@@ -34,7 +34,7 @@
             <table id="subadmin_table" class="table table-striped table-bordered">
                 <thead>
                 <tr>
-                    <th>#</th>
+                    <th>Code</th>
                     <th>Product Name</th>
                     <th>Item Code</th>
                     <th>Status</th>
@@ -45,7 +45,7 @@
                     @foreach($inventory as $key => $val)
                 <tr>
                     
-                    <td>{{$val->key + 1}}</td>
+                    <td>{{$val->item_code}}</td>
                     <td>{{$val->item_name}}</td>
                     <td>{{$val->item_code}}</td>
                     <td>{{-- {{$val->payment_status}} --}}Active</td>
