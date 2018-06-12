@@ -44,8 +44,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <form class="form-horizontal" action="{{route('insert_supplier')}}" method="post">
-                            <div class="col-md-12">
-                                <div class="col-md-6">
+                            <div class="col-md-12 no-padding">
+                                <div class="col-md-6 no-padding">
                                     <h4 class="m-t-0 header-title"><b>Create Supplier</b></h4>
                                 </div>
                                 <div class="col-md-6">
@@ -74,7 +74,7 @@
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label class="col-md-3 control-label">Company</label>
+                                <label class="col-md-3  control-label">Company</label>
                                 <div class="col-md-9">
                                     <input type="text" class="form-control" name="company_name" required="">
                                 </div>

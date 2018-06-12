@@ -8,7 +8,7 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="btn-group pull-right m-t-15">
-            <button type="button" class="btn btn-default dropdown-toggle waves-effect" data-toggle="dropdown" aria-expanded="false">Settings <span class="m-l-5"><i class="fa fa-cog"></i></span></button>
+            <!-- <button type="button" class="btn btn-default dropdown-toggle waves-effect" data-toggle="dropdown" aria-expanded="false">Settings <span class="m-l-5"><i class="fa fa-cog"></i></span></button> -->
             <ul class="dropdown-menu drop-menu-right" role="menu">
                 <li><a href="#">Action</a></li>
                 <li><a href="#">Another action</a></li>
@@ -23,31 +23,31 @@
 </div>
 <div class="row">
     <div class="col-lg-3 col-sm-6">
-        <div class="widget-panel widget-style-2 bg-white">
-            <i class="md md-attach-money text-primary"></i>
-            <h2 class="m-0 text-dark counter font-600">{{App\Supplier::count()}}</h2>
-            <div class="text-muted m-t-5">Total Suppliers</div>
+        <div class="widget-panel widget-style-2 bg-danger">
+            <i class="fa fa-truck text-primary"></i>
+            <h2 class="m-0 text-white counter font-600">{{App\Supplier::count()}}</h2>
+            <div class="text-white m-t-5">Total Suppliers</div>
         </div>
     </div>
     <div class="col-lg-3 col-sm-6">
-        <div class="widget-panel widget-style-2 bg-white">
-            <i class="md md-add-shopping-cart text-pink"></i>
-            <h2 class="m-0 text-dark counter font-600">{{App\Customer::count()}}</h2>
-            <div class="text-muted m-t-5">Total Customers</div>
+        <div class="widget-panel widget-style-2 bg-purple">
+            <i class="fa fa-street-view text-pink"></i>
+            <h2 class="m-0 text-white counter font-600">{{App\Customer::count()}}</h2>
+            <div class="text-white m-t-5">Total Customers</div>
         </div>
     </div>
     <div class="col-lg-3 col-sm-6">
-        <div class="widget-panel widget-style-2 bg-white">
-            <i class="md md-store-mall-directory text-info"></i>
-            <h2 class="m-0 text-dark counter font-600">{{App\Barrel::count()}}</h2>
-            <div class="text-muted m-t-5">Inventory</div>
+        <div class="widget-panel widget-style-2 bg-success">
+            <i class="fa  fa-bitbucket text-info"></i>
+            <h2 class="m-0 text-white counter font-600">{{App\Barrel::count()}}</h2>
+            <div class="text-white m-t-5">Inventory</div>
         </div>
     </div>
     <div class="col-lg-3 col-sm-6">
-        <div class="widget-panel widget-style-2 bg-white">
-            <i class="md md-account-child text-custom"></i>
-            <h2 class="m-0 text-dark counter font-600">{{App\Brand::count()}}</h2>
-            <div class="text-muted m-t-5">Brands</div>
+        <div class="widget-panel widget-style-2 bg-info">
+            <i class="fa fa-tag text-custom"></i>
+            <h2 class="m-0 text-white counter font-600">{{App\Brand::count()}}</h2>
+            <div class="text-white m-t-5">Brands</div>
         </div>
     </div>
 </div>

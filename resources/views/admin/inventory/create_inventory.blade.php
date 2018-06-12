@@ -379,9 +379,10 @@ table .form-control {
                                                         <th></th>
                                                         <th></th>
                                                         <th></th>
-                                                        <th id="total_rs">Total</th>
-                                                        <th id="total_rs_ex">Value Excl. Tax</th>
-                                                        <th id="tax_rs">Value incl. Tax</th>
+                                                        <th id="total_rs" style="text-align: right;width: 8%;">Total</th>
+                                                        <th id="total_rs_ex" style="text-align: right;width: 7%;">Value Excl. Tax</th>
+                                                        <th id="tax_rs" style="text-align: right;width: 7%;">Value incl. Tax</th>
+                                                        <th style="width: 2%;"></th>
                                                         </tr>
                                                     </thead>
                                                 </tbody>
