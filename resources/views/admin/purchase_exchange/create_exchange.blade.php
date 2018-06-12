@@ -39,6 +39,64 @@ hr{
     margin-top: 25px;
 }
 
+
+.mytable{
+}
+
+.m-0 input{
+    border: none;
+}
+
+.m-0 input:focus{
+    border: 1px solid green;
+}
+
+
+.table.m-0 > tbody > tr > td{
+    border: 1px solid #e3e3e3;
+    padding: 0px;
+}
+
+.table.m-0 tr{
+    transition: all ease .4s;
+}
+
+
+.table.m-0 tr:hover{
+    transition: all ease .4s;
+    background-color: #03a7f0;
+    color: #fff;
+}
+
+.table.m-0 tr:hover th{
+    transition: all ease .4s;
+    color: #fff;
+}
+
+
+table{
+        border-color: #e3e3e3 !important;
+        border:1px solid #e3e3e3;
+        font-size: 12px;
+}
+
+table .form-control {
+    background-color: #FFFFFF;
+    border: 1px solid #E3E3E3;
+    border-radius: 0px;
+    color: #565656;
+    padding: 0px 0px;
+    height: 25px;
+    max-width: 100%;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    -webkit-transition: all 300ms linear;
+    -moz-transition: all 300ms linear;
+    -o-transition: all 300ms linear;
+    -ms-transition: all 300ms linear;
+    transition: all 300ms linear;
+}   
+
 </style>
 @endsection
 @section('content')
@@ -203,12 +261,12 @@ hr{
                             <div class="col-sm-12">
                                 <div class="card-box" style="padding: 0px 20px 0px 20px;">
                                     <div class="row">    
-                                    <div class="col-md-12">
+                                    <!-- <div class="col-md-12">
                                          <div class="table-plus">
                                              <button type="button" id="add_more" class="btn btn-success fa fa-plus" ></button>
                                          </div>
-                                    </div>                                                                               
-                                        <div class="p-20">
+                                    </div> -->                                                                               
+                                        <div class="p-20" style="height: 400px; overflow-y: scroll;">
                                             <table class="table m-0">                                                    
                                                 <thead style="background-color: #ccc;">
                                                     <tr>
@@ -249,7 +307,7 @@ hr{
                                                         <td><input type="number" id="storeage_quantity_{{$j}}" class="form-control storeage_quantity" name="storeage_quantity[]" required=""></td>
                                                         <td><input type="number" id="quantity_{{$j}}" class="form-control quantity" name="quantity[]" required=""></td>
                                                         <td><input type="number" id="cost_{{$j}}" class="form-control cost" name="cost[]" required=""></td>
-                                                        <td> <input type="hidden"   id="unit_{{$j}}" class="form-control unit" name="unit[]" >
+                                                        <td style="display: flex;"> <input type="hidden"   id="unit_{{$j}}" class="form-control unit" name="unit[]" >
                                                             <select class="form-control kg" id="kg_{{$j}}" name="kg[]"{{--  style="display: none" --}}>
                                                                 <option value="">unit</option>
                                                                 @for($i=1;$i<100;$i++)
@@ -260,8 +318,8 @@ hr{
                                                         <td><input type="number" id="rate_{{$j}}" class="form-control rate calculate" name="rate[]" required=""></td>
                                                         <td><input type="text"   id="exc_tax_{{$j}}" class="form-control calculate exc_tax" name="exc_tax[]" required=""></td>
                                                         <td><input type="text"  id="inc_code_{{$j}}" class="form-control calculate inc_code" name="inc_code[]"></td>
-                                                        <td> IN<input type="radio"  name="exchange[]" value="in" id="in_{{$j}}"  class="in" >
-                                                             OUT<input type="radio"  name="exchange[]   " value="out"  id="out_{{$j}}" class="out" ></td>
+                                                        <td> <input type="radio"  name="exchange[]" value="in" id="in_{{$j}}"  class="in" >IN
+                                                             <input type="radio"  name="exchange[]   " value="out"  id="out_{{$j}}" class="out" >OUT</td>
                                                     </tr>
                                                     @endfor
                                                     <thead style="background-color: #ccc;">

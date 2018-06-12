@@ -5,7 +5,7 @@ Email: coderthemes@gmail.com
 File: Menu
 */
 .wrapper {
-  padding-top: 170px;
+  padding-top: 140px;
 }
 #topnav {
   position: fixed;
@@ -29,7 +29,7 @@ File: Menu
   color: #2ba7df ;
 }
 #topnav .topbar-main {
-  background-color: #001f3e;
+  background: linear-gradient(268deg, #03a9f3, #104b65) !important;
 }
 #topnav .topbar-main .logo {
   color: #ffffff !important;
@@ -255,10 +255,15 @@ File: Menu
   display: block;
   position: relative;
 }
+
+#topnav .navigation-menu > li:hover {
+  background-color: #001f3e;
+}
 #topnav .navigation-menu > li > a {
   display: block;
   color: #001f3e;
   font-weight: 500;
+  font-size: 12px;
   -webkit-transition: all .3s ease;
   transition: all .3s ease;
   line-height: 20px;
@@ -296,8 +301,8 @@ File: Menu
 }
 @media (min-width: 992px) {
   #topnav .navigation-menu > li > a {
-    padding-top: 12px;
-    padding-bottom: 12px;
+    padding-top: 6px;
+    padding-bottom: 6px;
   }
 }
 /*
@@ -315,13 +320,14 @@ File: Menu
     margin-right: 10px;
   }
   #topnav .navigation-menu > li:first-of-type a {
-    padding-left: 0px;
+    padding-left: 25px;
   }
+
   #topnav .navigation-menu > li:hover a {
-    color: #2ba7df ;
+    color: #fff ;
   }
   #topnav .navigation-menu > li:hover a i {
-    color: #2ba7df ;
+    color: #fff ;
   }
   #topnav .navigation-menu > li .submenu {
     position: absolute;
@@ -329,7 +335,7 @@ File: Menu
     left: 0;
     z-index: 1000;
     border: 1px solid #e7e7e7;
-    padding: 15px 0;
+    padding: 0px 0;
     list-style: none;
     min-width: 200px;
     visibility: hidden;
@@ -373,14 +379,15 @@ File: Menu
   }
   #topnav .navigation-menu > li .submenu li a {
     display: block;
-    padding: 8px 25px;
+    padding: 7px 25px;
     clear: both;
+    font-size: 12px;
     white-space: nowrap;
     font-weight: 500;
     color: #494e53;
   }
   #topnav .navigation-menu > li .submenu li a:hover {
-    color: #2ba7df ;
+    color: #fff ;
   }
   #topnav .navigation-menu > li .submenu li span {
     display: block;
@@ -542,4 +549,49 @@ File: Menu
   background-color: #81c868 !important;
 }
 
+.btn-warning:hover{
+  background-color: #f05050 !important;
+}
+
+.btn-danger:hover{
+  background-color:#ffbd4a !important;
+}
  
+/*#topnav .navigation-menu > li .submenu li a:hover{
+  background-color: #001f3e;
+}
+*/
+.bg-danger-hvr:hover{
+  background-color: #f05050 !important;
+}
+
+.bg-warning-hvr:hover{
+  background-color: #ffbd4a !important;
+}
+
+.bg-info-hvr:hover{
+  background-color: #34d3eb !important;
+}
+
+.bg-success-hvr:hover{
+  background-color: #81c868 !important;
+}
+
+.bg-inverse-hvr:hover{
+  background-color: #4c5667 !important;
+}
+
+.bg-purple-hvr:hover{
+  background-color: #7266ba !important;
+}
+
+.navbar-c-items a{
+  color: #fff !important;
+}
+#mysearch::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #fff !important;
+}
+
+#topnav .navigation-menu > li .submenu li a i{
+  margin-right: 10px;
+}
