@@ -45,22 +45,28 @@ Add - Inventory
                 <div class="col-md-12">
                     <form class="form-horizontal" action="{{route('insert_item_type')}}" method="post">
                         <div class="col-md-12">
-                            <div class="col-md-12">
-                                <h4 class="m-t-0 header-title"><b>Create Item Type</b></h4>
-                            </div>                            
+                            <div class="col-md-6">
+                                <h4 class="m-t-0 header-title"><b>Create Packing Type</b></h4>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group" style="margin-bottom: 0px !important;">
+                                    <label class="col-md-offset-6 col-md-3 control-label">SID:</label>
+                                    <label class="col-md-3 control-label" style="text-align: left;">SID</label>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-12">
                             <hr>
                         </div>
                         {{csrf_field()}}
-                        <div class="form-group col-md-6">
-                            <label class="col-md-4 control-label">Item Name</label>
-                            <div class="col-md-8">
+                        <div class="form-group col-md-4">
+                            <label class="col-md-3 control-label">Packing Name</label>
+                            <div class="col-md-9">
                                 <input type="text" class="form-control" name="item_name" required="">
                             </div>
                         </div>
-                        <div class="form-group col-md-6">
-                            <label class="col-md-5 control-label">Item purchase type</label>
+                        <div class="form-group col-md-4">
+                            <label class="col-md-5 control-label">Packing purchase type</label>
                             <div class="col-md-7">
                                 <select class="form-control" name="item_purchase_type">
                                     <option value="liter">Liter</option>
@@ -69,14 +75,14 @@ Add - Inventory
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group col-md-6">
-                            <label class="col-md-4 control-label">Item strength</label>
+                        <div class="form-group col-md-4">
+                            <label class="col-md-4 control-label">Packing strength</label>
                             <div class="col-md-8">
                                 <input type="number" class="form-control" name="item_type"  required="">
                             </div>
                         </div>
-                        <div class="form-group col-md-6">
-                            <div class="col-md-offset-8 col-md-4">
+                        <div class="form-group col-md-12">
+                            <div class="col-md-offset-10 col-md-2">
                                 <input type="submit" class="form-control btn btn-success"  placeholder="placeholder" value="Save">
                             </div>
                         </div>
@@ -88,14 +94,14 @@ Add - Inventory
     </div>
     <div class="col-sm-5">
         <div class="card-box table-responsive">
-            <h4 class="m-t-0 header-title"><b>Items Type</b></h4>
+            <h4 class="m-t-0 header-title"><b>Packing Type</b></h4>
             <table id="subadmin_table" class="table table-striped table-bordered">
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Item Name</th>
-                    <th>Item Type</th>
-                    <th>Item Purchase Type</th>
+                    <th>Packing Name</th>
+                    <th>Packing Type</th>
+                    <th>Packing Purchase Type</th>
                     <th>Action</th>
                 </tr>
                 </thead>

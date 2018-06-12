@@ -50,15 +50,8 @@
                 </ul>       
             </li>  --}}
             <li class="has-submenu">
-             <a href="#"><i class="fa fa-wrench"></i>Storage Type</a>
-                <ul class="submenu megamenu">
-                    <li>
-                        <ul>
-                            <li><a href="{{route('create_items')}}"><i class="fa fa-wrench"></i> Add Storage Type</a></li>
-                            <!-- <li><a href="{{route('list_items')}}"><i class="fa  fa-list  "></i>  List Storage Type</a></li> -->
-                        </ul>
-                    </li>
-                </ul>       
+                <li><a href="{{route('create_items')}}"><i class="fa fa-wrench"></i> Add Storage Type</a></li>
+                <!-- <li><a href="{{route('list_items')}}"><i class="fa  fa-list  "></i>  List Storage Type</a></li> -->
             </li>  
            
              <li class="has-submenu">
