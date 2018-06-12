@@ -263,6 +263,7 @@ File: Menu
   display: block;
   color: #001f3e;
   font-weight: 500;
+  font-size: 12px;
   -webkit-transition: all .3s ease;
   transition: all .3s ease;
   line-height: 20px;
@@ -300,8 +301,8 @@ File: Menu
 }
 @media (min-width: 992px) {
   #topnav .navigation-menu > li > a {
-    padding-top: 12px;
-    padding-bottom: 12px;
+    padding-top: 6px;
+    padding-bottom: 6px;
   }
 }
 /*
@@ -378,8 +379,9 @@ File: Menu
   }
   #topnav .navigation-menu > li .submenu li a {
     display: block;
-    padding: 10px 25px;
+    padding: 7px 25px;
     clear: both;
+    font-size: 12px;
     white-space: nowrap;
     font-weight: 500;
     color: #494e53;
@@ -588,4 +590,8 @@ File: Menu
 }
 #mysearch::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   color: #fff !important;
+}
+
+#topnav .navigation-menu > li .submenu li a i{
+  margin-right: 10px;
 }

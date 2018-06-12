@@ -57,6 +57,21 @@ hr{
     padding: 0px;
 }
 
+.table.m-0 tr{
+    transition: all ease .4s;
+}
+
+
+.table.m-0 tr:hover{
+    transition: all ease .4s;
+    background-color: #03a7f0;
+    color: #fff;
+}
+
+.table.m-0 tr:hover th{
+    transition: all ease .4s;
+    color: #fff;
+}
 
 
 table{
@@ -303,8 +318,8 @@ table .form-control {
                                                         <td><input type="number" id="rate_{{$j}}" class="form-control rate calculate" name="rate[]" required=""></td>
                                                         <td><input type="text"   id="exc_tax_{{$j}}" class="form-control calculate exc_tax" name="exc_tax[]" required=""></td>
                                                         <td><input type="text"  id="inc_code_{{$j}}" class="form-control calculate inc_code" name="inc_code[]"></td>
-                                                        <td> IN<input type="radio"  name="exchange[]" value="in" id="in_{{$j}}"  class="in" >
-                                                             OUT<input type="radio"  name="exchange[]   " value="out"  id="out_{{$j}}" class="out" ></td>
+                                                        <td> <input type="radio"  name="exchange[]" value="in" id="in_{{$j}}"  class="in" >IN
+                                                             <input type="radio"  name="exchange[]   " value="out"  id="out_{{$j}}" class="out" >OUT</td>
                                                     </tr>
                                                     @endfor
                                                     <thead style="background-color: #ccc;">

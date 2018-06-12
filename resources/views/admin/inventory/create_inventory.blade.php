@@ -63,6 +63,21 @@ hr{
     padding: 6px;
 }
 
+.table.m-0 tr{
+    transition: all ease .4s;
+}
+
+
+.table.m-0 tr:hover{
+    transition: all ease .4s;
+    background-color: #03a7f0;
+}
+
+.table.m-0 tr:hover th{
+    transition: all ease .4s;
+    color: #fff;
+}
+
 
 table{
         border-color: #e3e3e3 !important;
@@ -379,7 +394,7 @@ table .form-control {
                                                         <th></th>
                                                         <th></th>
                                                         <th></th>
-                                                        <th id="total_rs" style="text-align: right;width: 8%;">Total</th>
+                                                        <th id="total_rs" style="text-align: right;width: 7%;">Total</th>
                                                         <th id="total_rs_ex" style="text-align: right;width: 7%;">Value Excl. Tax</th>
                                                         <th id="tax_rs" style="text-align: right;width: 7%;">Value incl. Tax</th>
                                                         <th style="width: 2%;"></th>
