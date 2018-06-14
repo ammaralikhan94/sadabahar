@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 07, 2018 at 11:58 AM
+-- Generation Time: Jun 14, 2018 at 03:03 PM
 -- Server version: 10.1.10-MariaDB
 -- PHP Version: 7.0.3
 
@@ -79,6 +79,14 @@ CREATE TABLE `barrel` (
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `barrel`
+--
+
+INSERT INTO `barrel` (`id`, `barrel_type`, `barrel_strength`, `barrel_measure`, `chemical_name`, `empty_barrel`, `fully_occupied_barrel`, `total_barrel`, `item_purchase_type`, `current_volume`, `current_unit`, `total_volume`, `remaining_volume`, `purchase_unit`, `unit_purchased`, `added_by`, `created_at`, `updated_at`) VALUES
+(1, 'drum', '25', 'kg', 'samad bond', 0, 1, 1, 'new', 4.3, 'drum', 25, 20.7, '1.2', '3.1', 1, '2018-06-14 10:48:05', '2018-06-14 10:48:05'),
+(2, 'bottle', '5', 'kg', 'samad bond', 0, 1, 2, 'new', 4, 'bottle', 10, 6, '2', '2', 1, '2018-06-14 11:51:31', '2018-06-14 11:51:31');
+
 -- --------------------------------------------------------
 
 --
@@ -131,7 +139,7 @@ CREATE TABLE `category_charter` (
 --
 
 INSERT INTO `category_charter` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'Bond', '2018-06-01 19:03:37', '2018-06-01 19:03:37');
+(1, 'PACKING', '2018-06-08 10:05:57', '2018-06-08 10:05:57');
 
 -- --------------------------------------------------------
 
@@ -308,16 +316,26 @@ CREATE TABLE `inventory` (
   `exc_tax` varchar(255) DEFAULT NULL,
   `inc_code` varchar(255) DEFAULT NULL,
   `storeage_quantity` varchar(255) DEFAULT NULL,
-  `return_inventory` varchar(255) DEFAULT NULL
+  `return_inventory` varchar(255) DEFAULT NULL,
+  `posted` varchar(255) DEFAULT NULL,
+  `storage` varchar(255) DEFAULT NULL,
+  `supplier_invoice_number` varchar(255) DEFAULT NULL,
+  `supplier_invoice_date` varchar(255) DEFAULT NULL,
+  `supplier_order_number` varchar(255) DEFAULT NULL,
+  `supplier_order_date` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `inventory`
 --
 
-INSERT INTO `inventory` (`id`, `invoice_number`, `item_code`, `item_name`, `storage_type`, `dop`, `quantity`, `cost`, `kg`, `gram`, `cash_recieved`, `supplier`, `customer`, `limit_amount`, `cheque_number`, `cheque_amount`, `cheque_image`, `limit_cheque_date`, `payment_cash`, `payment_credit`, `payment_cheque`, `purchase_amount`, `due_date`, `due_amount`, `purchasing_type`, `purchase_unit`, `unit_purchased`, `purchased_gram`, `carriage`, `net_total`, `amount_credit`, `credit_date_limit`, `bank_name`, `created_at`, `updated_at`, `exc_tax`, `inc_code`, `storeage_quantity`, `return_inventory`) VALUES
-(1, NULL, '3n', 'sulphur', NULL, '05-06-2018', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Kg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-06-05 13:35:27', '2018-06-05 13:35:27', NULL, NULL, NULL, '0'),
-(12, NULL, 'k3', 'basket', NULL, '05-06-2018', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Kg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-06-05 15:54:30', '2018-06-05 15:54:30', NULL, NULL, NULL, NULL);
+INSERT INTO `inventory` (`id`, `invoice_number`, `item_code`, `item_name`, `storage_type`, `dop`, `quantity`, `cost`, `kg`, `gram`, `cash_recieved`, `supplier`, `customer`, `limit_amount`, `cheque_number`, `cheque_amount`, `cheque_image`, `limit_cheque_date`, `payment_cash`, `payment_credit`, `payment_cheque`, `purchase_amount`, `due_date`, `due_amount`, `purchasing_type`, `purchase_unit`, `unit_purchased`, `purchased_gram`, `carriage`, `net_total`, `amount_credit`, `credit_date_limit`, `bank_name`, `created_at`, `updated_at`, `exc_tax`, `inc_code`, `storeage_quantity`, `return_inventory`, `posted`, `storage`, `supplier_invoice_number`, `supplier_invoice_date`, `supplier_order_number`, `supplier_order_date`) VALUES
+(1, NULL, '2e', 'samad bond', NULL, '14-06-2018', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Kg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-06-14 10:08:03', '2018-06-14 10:08:03', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, '1', '2e', 'samad bond', 'drum', '25-5-2018', 1, 100, '1', '200', 120, 1, NULL, NULL, '', '', '', '', 'on', NULL, NULL, NULL, NULL, NULL, 'kg', '', '120', NULL, NULL, 120, NULL, NULL, 'Habib Bank', '2018-06-14 10:09:08', '2018-06-14 10:09:08', '120', '0', '25', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(3, '2', '2e', 'samad bond', 'drum', '25-5-2018', 0, 250, '3', '100', 775, 1, NULL, NULL, '', '', '', '', 'on', NULL, NULL, NULL, NULL, NULL, 'kg', '', '775', NULL, NULL, 775, NULL, NULL, 'Habib Bank', '2018-06-14 10:48:05', '2018-06-14 10:48:05', '775', '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(4, NULL, 'm8', 'rr', NULL, '14-06-2018', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Kg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-06-14 11:21:55', '2018-06-14 11:21:55', NULL, NULL, NULL, NULL, NULL, 'liter', NULL, NULL, NULL, NULL),
+(5, '3', '2e', 'samad bond', 'bottle', '25-5-2018', 1, 100, '2', '', 200, 1, NULL, NULL, '', '', '', '', 'on', NULL, NULL, NULL, NULL, NULL, 'kg', '', '200', NULL, NULL, 200, NULL, NULL, 'Habib Bank', '2018-06-14 12:21:36', '2018-06-14 11:47:36', '200', '0', '5', NULL, NULL, NULL, 'asasasasa', '2018-06-14\n', 'aaaaa', '2018-06-23'),
+(6, '3', '2e', 'samad bond', 'bottle', '25-5-2018', 1, 100, '2', '', 200, 1, NULL, NULL, '', '', '', '', 'on', NULL, NULL, NULL, NULL, NULL, 'kg', '', '200', NULL, NULL, 200, NULL, NULL, 'Habib Bank', '2018-06-14 11:51:31', '2018-06-14 11:51:31', '200', '0', '5', NULL, NULL, NULL, 'asasasasa', '2018-06-14', 'aaaaa', '2018-06-23');
 
 -- --------------------------------------------------------
 
@@ -331,6 +349,16 @@ CREATE TABLE `invoice_number` (
   `invoice_number` int(11) NOT NULL,
   `invoice_type` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `invoice_number`
+--
+
+INSERT INTO `invoice_number` (`id`, `inventory_id`, `invoice_number`, `invoice_type`) VALUES
+(1, 2, 1, NULL),
+(2, 3, 2, NULL),
+(3, 5, 3, NULL),
+(4, 6, 3, NULL);
 
 -- --------------------------------------------------------
 
@@ -352,16 +380,17 @@ CREATE TABLE `items` (
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `parent_id` int(11) NOT NULL,
   `sub_id` int(11) NOT NULL,
-  `supplier` varchar(255) NOT NULL DEFAULT 'sadabahar'
+  `supplier` varchar(255) NOT NULL DEFAULT 'sadabahar',
+  `storage` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `items`
 --
 
-INSERT INTO `items` (`id`, `item_code`, `item_name`, `item_description`, `brand_name`, `purchase_price`, `selling_price`, `measurment_unit`, `status`, `created_at`, `updated_at`, `parent_id`, `sub_id`, `supplier`) VALUES
-(5, '3n', 'sulphur', 'test chemical', 'wiki', '200', '500', 'Kg', '0', '2018-06-05 13:35:27', '2018-06-05 13:35:27', 1, 1, 'sadabahar'),
-(7, 'k3', 'basket', 'test', 'wiki', '200', '500', 'Kg', '0', '2018-06-05 15:54:30', '2018-06-05 15:54:30', 1, 1, 'sadabahar');
+INSERT INTO `items` (`id`, `item_code`, `item_name`, `item_description`, `brand_name`, `purchase_price`, `selling_price`, `measurment_unit`, `status`, `created_at`, `updated_at`, `parent_id`, `sub_id`, `supplier`, `storage`) VALUES
+(1, '2e', 'samad bond', 'new bond extra strong', 'wiki', '2000', '3000', 'Kg', '0', '2018-06-14 10:08:03', '2018-06-14 10:08:03', 1, 1, 'sadabahar', NULL),
+(2, 'm8', 'rr', 'w', 'wiki', '222', '222', 'Kg', '0', '2018-06-14 11:25:19', '2018-06-14 11:25:19', 1, 6, 'sadabahar', 'liter');
 
 -- --------------------------------------------------------
 
@@ -532,7 +561,9 @@ CREATE TABLE `sub_category_charter` (
 --
 
 INSERT INTO `sub_category_charter` (`id`, `parent_id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 1, 'new bonds', '2018-06-01 19:03:46', '2018-06-01 19:03:46');
+(1, 1, 'BOND', '2018-06-08 10:06:06', '2018-06-08 10:06:06'),
+(4, 3, 'asasasa', '2018-06-13 11:52:52', '2018-06-13 11:52:52'),
+(6, 1, 'BOND', '2018-06-14 11:16:39', '2018-06-14 11:16:39');
 
 -- --------------------------------------------------------
 
@@ -861,7 +892,7 @@ ALTER TABLE `bank`
 -- AUTO_INCREMENT for table `barrel`
 --
 ALTER TABLE `barrel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `brand`
 --
@@ -916,17 +947,17 @@ ALTER TABLE `exchange_invoice`
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `invoice_number`
 --
 ALTER TABLE `invoice_number`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `item_purchase_type`
 --
@@ -966,7 +997,7 @@ ALTER TABLE `service`
 -- AUTO_INCREMENT for table `sub_category_charter`
 --
 ALTER TABLE `sub_category_charter`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `supplier`
 --
