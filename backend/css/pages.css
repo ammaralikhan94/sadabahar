@@ -1874,13 +1874,14 @@ File: Pages
    Accounts pages
 ============= */
 .account-pages {
-  background: url("../images/agsquare.png");
+  background: url("../images/inventory-management.jpeg");
+  background-size: cover;
   position: absolute;
   height: 100%;
   width: 100%;
 }
 .wrapper-page {
-  margin: 5% auto;
+  margin: 8% auto;
   position: relative;
   width: 420px;
 }
@@ -2036,4 +2037,28 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.down .hopscotch-bubble-ar
   border: 1px dashed rgba(152, 166, 173, 0.5) !important;
   background-color: rgba(152, 166, 173, 0.2) !important;
   padding: 20px;
+}
+
+.login .card-box {
+    padding: 10px;
+    border: none !important; 
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    background-clip: padding-box;
+    margin-bottom: 20px;
+    background-color: rgba(0,0,0,0.7);
+    box-shadow: 0px 0px 17px 2px rgba(0,0,0,0.5);
+}
+
+.login .checkbox label {
+    display: inline-block;
+    padding-left: 5px;
+    position: relative;
+    font-size: 12px;
+    color: #fff;
+}
+
+.forgot-pass:hover{
+  color: #5fbeaa; 
 }
