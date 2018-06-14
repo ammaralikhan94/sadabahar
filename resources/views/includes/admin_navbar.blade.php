@@ -42,12 +42,12 @@
                 </ul>       
             </li>  --}}
             <li class="has-submenu">
-<<<<<<< HEAD
+
                 <li><a href="{{route('create_items')}}"><i class="fa fa-wrench"></i> Add Storage Type</a></li>
                 <!-- <li><a href="{{route('list_items')}}"><i class="fa  fa-list  "></i>  List Storage Type</a></li> -->
-=======
+
                 <li class="bg-purple-hvr"><a href="{{route('create_items')}}"><i class="fa fa-database"></i>Storage Type</a></li>                       
->>>>>>> b20762eac0e828aab20bd205f0e788f9fdd25cde
+
             </li>  
            
              <li class="has-submenu bg-inverse-hvr">

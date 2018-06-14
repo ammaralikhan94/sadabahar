@@ -65,7 +65,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/get-barrel-type/', ['as' => 'get-barrel-type',  'uses' => 'admin\InventoryController@get_barrel_type']);/*get barrel type AJAX*/
 	Route::post('/get-credit-limit/', ['as' => 'get-credit-limit',  'uses' => 'admin\InventoryController@get_credit_limit']);
 	Route::post('/get-cheque-limit/', ['as' => 'get-cheque-limit',  'uses' => 'admin\InventoryController@get_cheque_limit']);
+	Route::get('/list_purchase/', ['as' => 'list_purchase',  'uses' => 'admin\InventoryController@list_purchase']);
 	Route::post('/get-chemical/', ['as' => 'get-chemical',  'uses' => 'admin\InventoryController@get_chemical']);/*get chemical data from inventory AJAX*/
+	Route::get('/list_purchase/', ['as' => 'list_purchase',  'uses' => 'admin\InventoryController@list_purchase']);
 
 	/*********************************Inventory Ends****************************************/
 

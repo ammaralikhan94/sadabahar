@@ -51,6 +51,7 @@ class InventoryController extends Controller
     public function insert_inventory(Request $request){
         /*dd($_FILES['cheque_image']);*/
         /*dd($_POST);*/
+        
         $count = count($_POST['item_code']);
         if($request->hasfile('cheque_image'))
          {
@@ -115,7 +116,11 @@ class InventoryController extends Controller
                 'exc_tax' => $exc_tax,
                 'bank_name' => $bank_name,
                 'inc_code' => $inc_code,
-                'inc_code' => $request->posted
+                'inc_code' => $request->posted,
+                'supplier_invoice_number' => $request->supplier_invoice_number,
+                'supplier_invoice_date' => $request->supplier_invoice_date,
+                'supplier_order_number' => $request->supplier_order_number,
+                'supplier_order_date' => $request->supplier_order_date
             ])->id;
                 Invoice_number::insert([
                     'inventory_id' =>  $inventory_id,
@@ -242,12 +247,24 @@ class InventoryController extends Controller
 
 	/*Edit Inventory*/
 	public function edit_inventory($id){
-		$inventory = Inventory::find($id);
-		$item_type = Item_purchase_type::get();
-    	$supplier  = Supplier::get();
+		$inventory = Inventory::where('invoice_number',$id)->whereNotNull('invoice_number')->get();
+        $item_type = Item_purchase_type::get();
+        $supplier  = Supplier::get();
+        $customer  = Customer::get();
         $chemical  = Chemical::get();
-		return view('admin.inventory.edit_inventory' , compact('inventory','item_type','supplier','chemical'));
+        $invoice_number = $id;
+        $bank = Bank::get();
+        return view('admin.inventory.edit_inventory' , compact('inventory','item_type','supplier','chemical','customer','invoice_number','bank'));
 	}
+
+    /*List Purchase*/
+    public function list_purchase(){
+        $invoice_number = Invoice_number::distinct()->groupBy('invoice_number')->get();
+        $bank = Bank::get();
+        return view('admin.inventory.list_purchase' , compact('invoice_number','bank'));
+    }
+
+
 
 	/*Update Inventory*/
 	public function update_inventory(Request $request){
@@ -437,7 +454,8 @@ class InventoryController extends Controller
 
     public function get_ajax_chemical_code(){
         $inventory = Inventory::where('item_name', $_POST['item_name'])->value('item_code');
-        return json_encode($inventory);
+        $item = Item_charter::where('item_name', $_POST['item_name'])->get();
+        return json_encode(array('inventory' => $inventory, 'item' => $item));
     }
 
     // *************************BANK CREATE*********************************************

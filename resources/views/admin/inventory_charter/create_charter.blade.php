@@ -228,6 +228,16 @@
                                         </select>
                                     </div>                                    
                                 </div>
+                                <div class="form-group">    
+                                    <label class="col-md-3 control-label">Storage type</label>
+                                    <div class="col-md-9">
+                                          <select name="storage_type" id="storage_type" class="form-control" required="">
+                                            @foreach($item_type as $key => $val)
+                                            <option value="{{$val->item_purchase_type}}">{{$val->item_name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>                                    
+                                </div>
                                 <div class="col-md-12">
                                     <label class="col-md-3 no-padding control-label">Inactive Item</label>
                                     <div class="checkbox radio-inline">
@@ -311,13 +321,18 @@
             $("#measurment_unit").val('');
             $("#status").val('');
             $("#status").attr('checked', false);
+            item_code = (Math.random().toString(36).substr(2, 2));
+            $("#item_code").val(item_code);
+
+
         })
     </script>
     {{-- SUB CATEGORY INSERT FUNCTION --}}
     <script type="text/javascript">
         $(document).on('click','#submit_child',function (){
             category_name = $('#sub_name').val();
-            parent_id = $('#category_id').val();
+            parent_id = $('#parent_id').val();
+            
             $.ajax({
                type:'POST',
                url:'{{route('insert_sub_charter')}}',
@@ -369,6 +384,7 @@
             selling_price       = $("#selling_price").val();
             measurment_unit     = $('#measurment_unit :selected').val();
             status              = $("#status").val();
+            storage_type           = $('#storage_type :selected').val();
             
             if($("#status").prop("checked") == true){
                 status = 1;
@@ -389,7 +405,8 @@
                     'purchase_price'     :  purchase_price,
                     'selling_price'      :  selling_price,
                     'measurment_unit'    :  measurment_unit,
-                    'status'             :  status
+                    'status'             :  status,
+                    'storage_type'       : storage_type
                 },
                     success:function(data){
                        /* $('#select_inventory :selected').val('');
@@ -467,6 +484,7 @@
                 $("#purchase_price").val(data.purchase_price);
                 $("#selling_price").val(data.selling_price);
                 $("#measurment_unit").val(data.measurment_unit);
+                $("#storage_type").val(data.storage);
                 if(data.status == 1){
                     $("#status").attr('checked', true);
                 }else{

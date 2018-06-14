@@ -8,6 +8,7 @@ use App\CategoryCharter;
 use App\Sub_category_charter;
 use App\Item_charter;
 use App\Brand;
+use App\Item_purchase_type;
 use App\Inventory;
 
 class CharterController extends Controller
@@ -16,8 +17,9 @@ class CharterController extends Controller
     public function create_charter(){
     	$count = CategoryCharter::orderBy('id', 'desc')->value('id');
     	$parent_category = CategoryCharter::get();
+        $item_type = Item_purchase_type::get();
         $brand= Brand::get();
-    	return view('admin.inventory_charter.create_charter',compact('count','parent_category','brand'));
+    	return view('admin.inventory_charter.create_charter',compact('count','item_type','parent_category','brand'));
     }
 
     /*insert inventory charter*/
@@ -62,7 +64,6 @@ class CharterController extends Controller
     /*Insert Item*/
     public function insert_item(Request $request){
     	$check_previous = Item_charter::where('parent_id',$request->parent_id)->where('sub_id',$request->sub_id)->where('item_code',$request->item_code)->value('item_code');
-        
     	if($check_previous == ''){
 
     		Item_charter::create([
@@ -76,15 +77,16 @@ class CharterController extends Controller
     		'selling_price' => $request->selling_price,
     		'measurment_unit' => $request->measurment_unit,
     		'status' => $request->status,
+            'storage' => $request->storage_type
     	]);
         Inventory::create([
                 'item_code'=>$request->item_code,
                 'dop' => date('d-m-Y'),
                 'item_name' =>$request->item_name,
-                'purchasing_type' => $request->measurment_unit
+                'purchasing_type' => $request->measurment_unit,
+                'storage' => $request->storage_type
             ]);
-        
-    	echo json_encode(true);
+    	   echo json_encode(true);
     	}else{
     	Item_charter::where('parent_id',$request->parent_id)->where('sub_id',$request->sub_id)->where('item_code',$request->item_code)->update([
     			'parent_id' => $request->parent_id,
@@ -97,6 +99,7 @@ class CharterController extends Controller
 	    		'selling_price' => $request->selling_price,
 	    		'measurment_unit' => $request->measurment_unit,
 	    		'status' => $request->status,
+                'storage' => $request->storage_type
     		]);
     		echo json_encode(array('status' => 'updated'));
     	}

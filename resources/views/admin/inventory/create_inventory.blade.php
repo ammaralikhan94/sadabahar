@@ -136,7 +136,8 @@ table .form-control {
                         <button class="btn btn-danger fa fa-search pull-right"></button>
                         <button class="btn btn-warning fa fa-print pull-right"></button>
                         <button type="button" class="btn btn-success pull-right fa fa-line-chart" id="posted_remove"></button>
-                        <button type="button" class="btn btn-danger fa fa-list-alt pull-right" id="posted"></button>                      
+                        <button type="button" class="btn btn-danger fa fa-list-alt pull-right" id="posted"></button>
+                        <a href="{{route('list_purchase')}}" class="btn btn-danger fa fa-list-alt pull-right" ></a>                      
                         <button type="button" id="submit_parent" class="btn btn-success fa fa-plus pull-right"> </button>
                         <button class="btn btn-danger fa fa-trash pull-right"></button>
                         <button class="btn btn-info fa fa-save pull-right"></button>
@@ -203,26 +204,26 @@ table .form-control {
                                 <div class="form-group col-md-6">
                                     <!-- <label class="col-md-4 control-label">Scode</label> -->
                                     <div class="col-md-12">
-                                        <input type="text" class="form-control" name="supinvoice" id="supinvoice" placeholder="Supplier Invoice Number"  required="" readonly="">
+                                        <input type="text" class="form-control" name="supplier_invoice_number" id="supinvoice" placeholder="Supplier Invoice Number"  required="" >
                                     </div>                                
                                 </div>
                                 <div class="form-group col-md-6">
                                     <!-- <label class="col-md-3 control-label">Name</label> -->
                                     <div class="col-md-12">
-                                        <input type="text" class="form-control" name="invoice_date" id="invoice_date" placeholder="Dated"  required="" readonly="">
+                                        <input type="date" class="form-control" name="supplier_invoice_date" id="invoice_date" placeholder="Dated"  required="" >
                                     </div>                                
                                 </div>
 
                                 <div class="form-group col-md-6">
                                     <!-- <label class="col-md-4 control-label">Scode</label> -->
                                     <div class="col-md-12">
-                                        <input type="text" class="form-control" name="purchase-order" id="purchase-order" placeholder="Purchase Order Number"  required="" readonly="">
+                                        <input type="text" class="form-control" name="supplier_order_number" id="purchase-order" placeholder="Purchase Order Number"  required="" >
                                     </div>                                
                                 </div>
                                 <div class="form-group col-md-6">
                                     <!-- <label class="col-md-3 control-label">Name</label> -->
                                     <div class="col-md-12">
-                                        <input type="text" class="form-control" name="order_date" id="order_date" placeholder="Dated"  required="" readonly="">
+                                        <input type="date" class="form-control" name="supplier_order_date" id="order_date" placeholder="Dated"  required="" >
                                     </div>                                
                                 </div>
                             </div>
@@ -922,20 +923,21 @@ table .form-control {
         id = id.substring(5);
         item_name = $('#name_'+id).val();
         $.ajax({
-               type:'POST',
-               url:'{{route('get_ajax_chemical_code')}}',
-               data:{
-                    "_token": "{{ csrf_token() }}",
-                    'item_name' : item_name
-               },
-               success:function(data){
-                data = JSON.parse(data);
-                 if(data == null){
-                    return false;
-                }
-                   $('#code_'+id).val(data);
-               }
-            });
+           type:'POST',
+           url:'{{route('get_ajax_chemical_code')}}',
+           data:{
+                "_token": "{{ csrf_token() }}",
+                'item_name' : item_name
+           },
+           success:function(data){
+            data = JSON.parse(data);
+            console.log(data);
+             if(data == null){
+                return false;
+            }
+               $('#code_'+id).val(data.inventory);
+           }
+        });
     });
 
     $('.code').autocomplete({
