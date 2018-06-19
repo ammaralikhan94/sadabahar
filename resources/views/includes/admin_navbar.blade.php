@@ -52,8 +52,14 @@
                 <li class="bg-purple-hvr"><a href="{{route('create_items')}}"><i class="fa fa-database"></i>Storage Type</a></li>                       
 
             </li>  
-           
-             <li class="has-submenu bg-inverse-hvr">
+            
+
+            <li class="has-submenu bg-inverse-hvr">
+                <a href="{{route('create_charter')}}"><i class="fa fa-opencart"></i>Add New Item</a></li>
+            </li>  
+
+
+            <li class="has-submenu bg-inverse-hvr">
                 <a href="{{route('list_barrel')}}"><i class="fa  fa-bitbucket"></i>Inventory</a></li>
             </li>  
              {{-- <li class="has-submenu">
