@@ -1,9 +1,12 @@
 @extends('layouts.admin_layout')
 @section('title')
-    Add - Sales
+    Make - Sale
 @endsection
 @section('customCss')
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- Plugin Css-->
+<link rel="stylesheet" href="{{URL('/')}}/backend/plugins/magnific-popup/css/magnific-popup.css" />
+<link rel="stylesheet" href="{{URL('/')}}/backend/plugins/jquery-datatables-editable/datatables.css" />
 <style type="text/css">
     input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
@@ -18,6 +21,87 @@ input[type=number]::-webkit-outer-spin-button {
     padding: 5px;
     color: #fff;
 }
+
+hr{
+        margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+.table-plus{
+    padding: 10px;
+    text-align: right;
+}
+
+#mycheque .modal-dialog {
+    width: 1400px;
+    margin: 30px auto;
+}
+
+.modal-plus{
+    margin-top: 25px;
+}
+
+.mytable{
+}
+
+.m-0 input{
+    border: none;
+}
+
+.m-0 input:focus{
+    border: 1px solid green;
+}
+
+
+.table.m-0 > tbody > tr > td{
+    border: 1px solid #e3e3e3;
+    padding: 0px;
+}
+
+.table>thead>tr>th{
+    padding: 6px;
+}
+
+.table.m-0 tr{
+    transition: all ease .4s;
+}
+
+
+.table.m-0 tr:hover{
+    transition: all ease .4s;
+    background-color: #03a7f0;
+}
+
+.table.m-0 tr:hover th{
+    transition: all ease .4s;
+    color: #fff;
+}
+
+
+table{
+        border-color: #e3e3e3 !important;
+        border:1px solid #e3e3e3;
+        font-size: 12px;
+}
+
+table .form-control {
+    background-color: #FFFFFF;
+    border: 1px solid #E3E3E3;
+    border-radius: 0px;
+    color: #565656;
+    padding: 0px 0px;
+    height: 25px;
+    max-width: 100%;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    -webkit-transition: all 300ms linear;
+    -moz-transition: all 300ms linear;
+    -o-transition: all 300ms linear;
+    -ms-transition: all 300ms linear;
+    transition: all 300ms linear;
+}
+
 </style>
 @endsection
 @section('content')
@@ -34,39 +118,56 @@ input[type=number]::-webkit-outer-spin-button {
                 <strong>{{ $message }}</strong>
         </div>
     @endif
-    <form class="form-horizontal" action="{{route('insert_inventory')}}" method="post">
+    <form class="form-horizontal" action="{{route('insert_inventory')}}" method="post" enctype="multipart/form-data">
 <div class="row">
         <div class="col-sm-12">
             <div class="card-box">
                 <!-- <a class="btn btn-success pull-right" href="{{route('create_inventory')}}" target="_blank">Add More Purchase</a> -->
+                
                 <div class="new-purchase">
                     <div class="col-md-3">
-                        <h4 class="m-t-0 header-title"><b>Create Purchase</b></h4>
+                        <h4 class="m-t-0 header-title" style="margin-top: 10px !important;"><b>Create Sale</b></h4>
                     </div>
-                    <div class="col-md-2">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add  Item Type</button>
+                    <div class="col-md-4">
+                        <a href="#" target="_blank" class="btn btn-success pull-right" style="margin-left: 10px !important;" {{-- data-toggle="modal" data-target="#myModal" --}}>Add New Supplier</a>
+                        <a href="{{route('create_charter')}}" target="_blank" class="btn btn-danger pull-right" {{-- data-toggle="modal" data-target="#myModal" --}}>Add  New Item</a>
                     </div>
                     <div class="col-md-5">
-                        <div class="col-md-4">
-                            <h4 class="m-t-0 header-title"><b>Purchase Order No</b></h4>
-                        </div>
-                        <div class="col-md-2">
-                            <input type="text" class="form-control pull-right" name="invoice_number" value="{{$invoice_number}}" readonly="">
-                        </div>
-                        <div class="col-md-2">
-                            <h4 class="m-t-0 header-title"><b>D.O.P</b></h4>
-                        </div>
-                        <div class="col-md-4">
-                            <input type="text" class="form-control pull-right" name="dop" value="{{date('d-m-Y')}}">
-                        </div>
+                        <button class="btn btn-danger fa fa-search pull-right"></button>
+                        <button class="btn btn-warning fa fa-print pull-right"></button>
+                        <button type="button" class="btn btn-success pull-right fa fa-line-chart" id="posted_remove"></button>
+                        <button type="button" class="btn btn-danger fa fa-list-alt pull-right" id="posted"></button>
+                        <a href="{{route('list_purchase')}}" class="btn btn-danger fa fa-list-alt pull-right" ></a>                      
+                        <button type="button" id="submit_parent" class="btn btn-success fa fa-plus pull-right"> </button>
+                        <button class="btn btn-danger fa fa-trash pull-right"></button>
+                        <button class="btn btn-info fa fa-save pull-right"></button>
+                        <button class="btn btn-warning fa fa-close pull-right"></button>                        
                     </div>
+                </div>
+                <div id="posted_image" style="display: none">
+                    <img src="{{URL('/')}}/backend/posted.jpg" width="200" height="100">
                 </div>
                 <div class="col-md-12">
                     <hr>
                 </div>
                 <div class="new-purchase">
-                    <div class="col-md-12">
-                        <h4 class="m-t-0 header-title"><b>Customer Details</b></h4>
+                    <div class="col-md-3">
+                        <h4 class="m-t-0 header-title"><b>Supplier Details</b></h4>
+                    </div>
+                    
+                    <div class="col-md-9 pull-right">
+                        <div class="col-md-6">
+                            <h4 class="m-t-0 header-title" style="margin-top: 10px !important; text-align: right;"><b>Purchase Order No</b></h4>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control pull-right" name="invoice_number" value="{{$invoice_number}}" readonly="" readonly="">
+                        </div>
+                        <div class="col-md-1">
+                            <h4 class="m-t-0 header-title" style="margin-top: 10px !important;text-align: right;"><b>D.O.P</b></h4>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control pull-right" name="dop" value="{{date('d-m-Y')}}">
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-12">
@@ -75,186 +176,244 @@ input[type=number]::-webkit-outer-spin-button {
                 <div class="row">
                     <div class="col-md-12">
                             {{csrf_field()}}
-                            <div class="form-group col-md-12">
-                                <label class="col-md-1 control-label">Supplier</label>
-                                <div class="col-md-2">
-                                    <select class="form-control" required="" name="supplier">
-                                        <option value="">Select Supplier</option>   
-                                        @foreach($supplier as $key => $sup)
-                                            <option value="{{$sup->id}}">{{$sup->name}}</option>   
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            
                             <div class="col-md-6">
-                                <div class="card-box clearfix">                                                        
-                                    <div class="form-group col-md-3">
-                                        <label class="col-md-4 control-label">Scode</label>
-                                        <div class="col-md-8">
-                                            <input type="text" class="form-control" name="scode" id="scode" placeholder="Scode"  required="">
-                                        </div>                                
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label class="col-md-3 control-label">Name</label>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" name="name" id="name" placeholder="Name"  required="">
-                                        </div>                                
-                                    </div>
-                                    <div class="form-group col-md-5">
-                                        <label class="col-md-7 control-label">Company Name</label>
-                                        <div class="col-md-5">
-                                            <input type="text" class="form-control" name="company_name" id="company_name" placeholder="Company Name"  required="">
-                                        </div>                                
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label class="col-md-4 control-label">Phone No</label>
-                                        <div class="col-md-8">
-                                            <input type="text" class="form-control" name="phone_no" id="phone_no" placeholder="Phone No"  required="">
-                                        </div>                                
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <label class="col-md-2 control-label">Address</label>
-                                        <div class="col-md-10">
-                                            <input type="text" class="form-control" name="address" id="address" placeholder="Address"  required="">
-                                        </div>                                
-                                    </div>
+                                <div class="form-group col-md-12">
                                 
+                                    <div class="col-md-4">
+                                        <label>Supplier</label>
+                                        <input type="radio"  name="vendor" checked="" id="supplier">
+                                        <label>Customer</label>
+                                        <input type="radio"  name="vendor"  id="customer">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group col-md-12" id="type_supplier">
+                                    <label class="col-md-2 control-label">Supplier</label>
+                                    <div class="col-md-4">
+                                        <select class="form-control" required="" name="supplier">
+                                            <option value="">Select Supplier</option>   
+                                            @foreach($supplier as $key => $sup)
+                                                <option value="{{$sup->id}}">{{$sup->name}}</option>   
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
-                                <div class="card-box clearfix">                                         
-                                    <div class="form-group col-md-6">
-                                        <label class="col-md-7 control-label">Credit Balance Limit</label>
-                                        <div class="col-md-5">
-                                            <input type="number" class="form-control" name="credit_balance_limit" id="credit_balance_limit" placeholder="Credit balance limit"  required="">
+                                <div class="form-group col-md-6">
+                                    <!-- <label class="col-md-4 control-label">Scode</label> -->
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control" name="supplier_invoice_number" id="supinvoice" placeholder="Supplier Invoice Number"  required="" >
+                                    </div>                                
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <!-- <label class="col-md-3 control-label">Name</label> -->
+                                    <div class="col-md-12">
+                                        <input type="date" class="form-control" name="supplier_invoice_date" id="invoice_date" placeholder="Dated"  required="" >
+                                    </div>                                
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <!-- <label class="col-md-4 control-label">Scode</label> -->
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control" name="supplier_order_number" id="purchase-order" placeholder="Purchase Order Number"  required="" >
+                                    </div>                                
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <!-- <label class="col-md-3 control-label">Name</label> -->
+                                    <div class="col-md-12">
+                                        <input type="date" class="form-control" name="supplier_order_date" id="order_date" placeholder="Dated"  required="" >
+                                    </div>                                
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <hr>
+                            </div>
+
+                            <div class="form-group col-md-12" id="type_customer" style="display: none;">
+                                <label class="col-md-1 control-label">Customer</label>
+                                <div class="col-md-2">
+                                    <select class="form-control" name="customer">
+                                        <option value="">Select Customer</option>   
+                                        @foreach($customer as $key => $cus)
+                                            <option value="{{$cus->id}}">{{$cus->name}}</option>   
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="card-box clearfix">                                                        
+                                    <div class="form-group col-md-4">
+                                        <!-- <label class="col-md-4 control-label">Scode</label> -->
+                                        <div class="col-md-12">
+                                            <input type="text" class="form-control" name="scode" id="scode" placeholder="scode"  required="" readonly="">
                                         </div>                                
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <label class="col-md-5 control-label">Credit Balance</label>
-                                        <div class="col-md-7">
-                                            <input type="number" class="form-control" name="credit_balance" id="credit_balance" placeholder="Credit Balance"  required="">
+                                    <div class="form-group col-md-4">
+                                        <!-- <label class="col-md-3 control-label">Name</label> -->
+                                        <div class="col-md-12">
+                                            <input type="text" class="form-control" name="name" id="name" placeholder="Full Name"  required="" readonly="">
                                         </div>                                
                                     </div>
-                                     <div class="form-group col-md-6">
-                                        <label class="col-md-6 control-label">PD Cheque Limit</label>
-                                        <div class="col-md-6">
-                                            <input type="number" class="form-control amount" name="pd_cheque_limit" id="pd_cheque_limit" placeholder="Date Cheque Limit"  required="">
+                                    <div class="form-group col-md-5" style="width: 40%">
+                                        <!-- <label class="col-md-7 control-label">Company Name</label> -->
+                                        <div class="col-md-12">
+                                            <input type="text" class="form-control" name="company_name" id="company_name" placeholder="Company Name"  required="" readonly="">
+                                            <input type="hidden" class="form-control" name="posted" value="0">
                                         </div>                                
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <label class="col-md-7 control-label">PD Cheque Balance</label>
-                                        <div class="col-md-5">
-                                            <input type="number" class="form-control amount" name="pd_cheque_balance" id="pd_cheque_balance" placeholder="PD Cheque Balance<"  required="">
+                                    <div class="form-group col-md-12">
+                                        <!-- <label class="col-md-4 control-label">Phone No</label> -->
+                                        <div class="col-md-12">
+                                            <input type="text" class="form-control" name="phone_no" id="phone_no" placeholder="Phone No"  required="" readonly="">
                                         </div>                                
                                     </div>
+                                    <div class="form-group col-md-12">
+                                        <!-- <label class="col-md-2 control-label">Address</label> -->
+                                        <div class="col-md-12">
+                                            <input type="text" class="form-control" name="address" id="address" placeholder="Address"  required="" readonly="">
+                                        </div>                                
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="card-box clearfix" style="padding: 13px;">                                         
+                                    <div class="col-md-12">
+                                        <h4 class="m-t-0 header-title" style="margin-top: 10px !important;"><b>Credit Limit</b></h4>
+                                        <div class="form-group col-md-6">
+                                            <!-- <label class="col-md-7 control-label">Credit Balance Limit</label> -->
+                                            <div class="col-md-12">
+                                                <input type="number" class="form-control" name="credit_balance_limit" id="credit_balance_limit" placeholder="Credit balance limit"  required="" readonly="">
+                                            </div>                                
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <!-- <label class="col-md-5 control-label">Credit Balance</label> -->
+                                            <div class="col-md-12">
+                                                <input type="number" class="form-control" name="credit_balance" id="credit_balance" placeholder="Credit Balance"  required="" readonly="">
+                                            </div>                                
+                                        </div>
+                                    </div>
+                                     <div class="col-md-12">
+                                        <h4 class="m-t-0 header-title" style="margin-top: 10px !important;"><b>Post-dated Cheque Limit</b></h4>
+                                         <div class="form-group col-md-6">
+                                            <!-- <label class="col-md-6 control-label">PD Cheque Limit</label> -->
+                                            <div class="col-md-12">
+                                                <input type="number" class="form-control amount" name="pd_cheque_limit" id="pd_cheque_limit" placeholder="Post-dated Cheque Limit"  required="" readonly="">
+                                            </div>                                
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <!-- <label class="col-md-7 control-label">PD Cheque Balance</label> -->
+                                            <div class="col-md-12">
+                                                <input type="number" class="form-control amount" name="pd_cheque_balance" id="pd_cheque_balance" placeholder="Post-dated Cheque Balance"  required="" readonly="">
+                                            </div>                                
+                                        </div>
+                                     </div>
                                 
                                 </div>
                             </div>
                             <div class="col-sm-12">
-                                <div class="card-box">
-                                    <div class="row">                                                                                    
-                                        <div class="p-20">
+                                <div class="card-box" style="padding: 0px 20px 0px 20px;">
+                                    <div class="row">      
+                                    <!-- <div class="col-md-12">
+                                         <div class="table-plus">
+                                             <button type="button" id="add_more" class="btn btn-success fa fa-plus" ></button>
+                                         </div>
+                                    </div> -->                                                                               
+                                        <div class="p-20" style="height: 400px; overflow-y: scroll;">
+                                            
                                             <table class="table m-0">                                                    
-                                                <thead>
+                                                <thead style="background-color: #ccc;">
                                                     <tr>
-                                                        <th>S.No</th>
                                                         <th>Item Code</th>
                                                         <th width="20%">Descrption</th>
                                                         <th>Measurment</th>
                                                         <th width="10%">Storage Type</th>
+                                                        <th width="10%">Storage Quantity</th>
                                                         <th>Quantity</th>
-                                                        <th>unit</th>
+                                                        <th>Price Per unit</th>
+                                                        <th>Unit &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (gram)</th>
                                                         <th>Rate</th>
                                                         <th>Value Excl. Tax</th>
                                                         <th>Value incl. Tax</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody id="add_here">
+                                                    @for($j=1;$j<30;$j++)
                                                     <tr>
-                                                        <th scope="row">1</th>
-                                                        <td><input type="text" id="code_1" class="form-control code" name="item_code[]"></td>
-                                                        <td><input type="text" id="name_1" class="form-control name" name="description[]"></td>
+                                                        <td><input type="text" id="code_{{$j}}" class="form-control code" name="item_code[]" @php if($j == 1){@endphp required="" @php }@endphp></td>
+                                                        <td><input type="text" id="name_{{$j}}" class="form-control name" name="description[]" @php if($j == 1){@endphp required="" @php }@endphp></td>
                                                         <td>
-                                                            <select name="measurment[]" class="form-control">
+                                                            <select name="measurment[]" class="form-control" @php if($j == 1){@endphp required="" @php }@endphp>
                                                                 <option>Select Mesurement</option>
                                                                 <option value="kg">Kg</option>
-                                                                <option value="liter">Liter</option>
-                                                                <option value="quantity">Quantity</option>
+                                                                <option value="kg">Liter</option>
                                                             </select>
                                                         </td>
-                                                        <td><select name="storage_type[]" class="form-control add_item_type">
+                                                        <td><select name="storage_type[]" id="storage_type_{{$j}}" class="form-control add_item_type" @php if($j == 1){@endphp required="" @php }@endphp> 
+                                                            <option value="">Select Storage type</option>
                                                             @foreach($item_type as $key => $val)
                                                                 <option value="{{$val->item_name}}">{{$val->item_name}}</option>
                                                             @endforeach
                                                         </select></td>
-                                                        <td><input type="number" id="quantity_1" class="form-control quantity" name="quantity[]"></td>
-                                                        <td><input type="text"   id="unit_1" class="form-control unit" name="unit[]"></td>
-                                                        <td><input type="number" id="rate_1" class="form-control rate calculate" name="rate[]"></td>
-                                                        <td><input type="text"  class="form-control calculate exc_tax" name="exc_tax[]"></td>
-                                                        <td><input type="text"  class="form-control calculate inc_code" name="inc_code[]"></td>
+                                                        <td><input type="number" id="storeage_quantity_{{$j}}" class="form-control storeage_quantity" name="storeage_quantity[]" @php if($j == 1){@endphp required="" @php }@endphp></td>
+                                                        <td><input type="number" id="quantity_{{$j}}" class="form-control quantity" name="quantity[]" @php if($j == 1){@endphp required="" @php }@endphp></td>
+                                                        <td><input type="number" id="cost_{{$j}}" class="form-control cost" name="cost[]" @php if($j == 1){@endphp required="" @php }@endphp></td>
+                                                        <td style="display: flex;"> <input type="hidden"   id="unit_{{$j}}" class="form-control unit" name="unit[]" >
+                                                            <select class="form-control kg" id="kg_{{$j}}" name="kg[]"{{--  style="display: none" --}}>
+                                                                <option value="">unit</option>
+                                                                @for($i=1;$i<100;$i++)
+                                                                <option>{{$i}}</option>
+                                                                @endfor
+                                                            </select>
+                                                            <input type="text" id="gram_{{$j}}" class="form-control gram" name="gram[]" {{-- style="display: none;"  --}}/></td>
+                                                        <td><input type="number" id="rate_{{$j}}" class="form-control rate calculate" name="rate[]" @php if($j == 1){@endphp required="" @php }@endphp></td>
+                                                        <td><input type="text"   id="exc_tax_{{$j}}" class="form-control calculate exc_tax" name="exc_tax[]" @php if($j == 1){@endphp required="" @php }@endphp></td>
+                                                        <td><input type="text"  id="inc_code_{{$j}}" class="form-control calculate inc_code" name="inc_code[]"></td>
                                                     </tr>
-                                                    <tr>
-                                                        <th scope="row">2</th>
-                                                        <td><input type="text" id="code_2" class="form-control code" name="item_code[]"></td>
-                                                        <td><input type="text" id="name_2" class="form-control name" name="description[]"></td>
-                                                        <td><select name="measurment[]" class="form-control">
-                                                            <option>Select Mesurement</option>
-                                                            <option value="kg">Kg</option>
-                                                            <option value="liter">Liter</option>
-                                                            <option value="quantity">Quantity</option>
-                                                        </select></td>
-                                                         <td><select name="storage_type[]" class="form-control add_item_type">
-                                                           @foreach($item_type as $key => $val)
-                                                                <option value="{{$val->item_name}}">{{$val->item_name}}</option>
-                                                            @endforeach
-                                                        </select></td>
-                                                        <td><input type="number"  id="quantity_2" class="form-control quantity" name="quantity[]"></td>
-                                                        <td><input type="text"    id="unit_2"     class="form-control unit" name="unit[]"></td>
-                                                        <td><input type="number"    id="rate_2"     class="form-control calculate" name="rate[]"></td>
-                                                        <td><input type="text"  class="form-control calculate exc_tax" name="exc_tax[]"></td>
-                                                        <td><input type="text"  class="form-control calculate inc_code" name="inc_code[]"></td>
-                                                    </tr>
+                                                    @endfor                                                        
                                                 </tbody>
-                                                <thead>
-                                                    <tr>
-                                                       <th scope="row">3</th>
-                                                        <td><input type="text" id="code_3" class="form-control code" name="item_code[]"></td>
-                                                        <td><input type="text" id="name_3" class="form-control name" name="description[]"></td>
-                                                        <td>
-                                                            <select name="measurment[]" class="form-control">
-                                                                <option>Select measurment</option>
-                                                                <option value="kg">Kg</option>
-                                                                <option value="liter">Liter</option>
-                                                                <option value="quantity">Quantity</option>
-                                                            </select>
-                                                        </td>
-                                                         <td><select name="storage_type[]" class="form-control add_item_type">
-                                                            @foreach($item_type as $key => $val)
-                                                                <option value="{{$val->item_name}}">{{$val->item_name}}</option>
-                                                            @endforeach
-                                                        </select></td>
-                                                        <td><input type="number" id="quantity_3" class="form-control quantity" name="quantity[]"></td>
-                                                        <td><input type="text"   id="unit_3"  class="form-control unit" name="unit[]"></td>
-                                                        <td><input type="number"   id="rate_3"  class="form-control rate calculate" name="rate[]"></td>
-                                                        <td><input type="text"   class="form-control calculate exc_tax" name="exc_tax[]"></td>
-                                                        <td><input type="text"   class="form-control calculate inc_code" name="inc_code[]"></td>
-                                                    </tr>
-                                                </thead>
                                             </table>
-                                        </div>         
-                                        <h3 class="pull-right" id="total_rs" style="margin-right: 60px">Amount : </h1>
-                                        <h3 class="pull-right" id="tax_rs" style="margin-right: 200px">Tax Rs : </h1>                               
+                                        
+                                         <div>
+                                            <strong id="append_unit"></strong>
+                                        </div>
+                                        </div>     
+                                        <div class="col-md-12" >
+                                            <table class="table m-0">
+                                                <tbody>
+                                                    <thead style="background-color: #ccc;">
+                                                        <tr>
+                                                        <th colspan="9"></th>
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th id="total_rs" style="text-align: right;width: 7%;">Total</th>
+                                                        <th id="total_rs_ex" style="text-align: right;width: 7%;">Value Excl. Tax</th>
+                                                        <th id="tax_rs" style="text-align: right;width: 7%;">Value incl. Tax</th>
+                                                        <th style="width: 2%;"></th>
+                                                        </tr>
+                                                    </thead>
+                                                </tbody>
+                                            </table>
+                                        </div>           
                                     </div>
-                                </div>
-                            </div>
+                                </div>  
+                            </div>                            
+                           
                             <div class="col-md-offset-6 col-md-6">
                                 <div class="card-box clearfix">
                                     <div class="form-group col-md-12">
                                         <label class="col-md-5 control-label">Carriage and Freight</label>
                                         <div class="col-md-7">
-                                            <input type="number" class="form-control amount" name="carriage" id="carriage" placeholder="Carriage"  required="">
+                                            <input type="number" class="form-control amount" name="carriage" id="carriage" placeholder="Carriage" >
                                         </div>                                
                                     </div>
                                     <div class="form-group col-md-12">
@@ -296,50 +455,91 @@ input[type=number]::-webkit-outer-spin-button {
                                         <label class="col-md-5 control-label">Credit Date Limit</label>
                                         <div class="col-md-7">
                                             <input type="date" class="form-control amount" name="credit_date_limit" id="credit_date_limit" placeholder="Credit Date Limit"  required="">
-                                        </div>                                
+                                        </div>
                                     </div>
                                     <div class="form-group col-md-12" id="cash_recieved" style="display: none;">
                                         <label class="col-md-5 control-label">Cash Recieved</label>
                                         <div class="col-md-7">
-                                            <input type="number" class="form-control amount" name="cash_recieved" id="cash_recieved" placeholder="Cash Recieved"  required="">
+                                            <input type="number" class="form-control amount" name="cash_recieved" id="cash_recieved" placeholder="Cash Recieved"  >
                                         </div>                                  
-                                    </div>
-                                    {{-- *************************POST DATE CHEQUE ************************ --}}
-                                    <div class="form-group col-md-12 show_post_cheques"  style="display: none;">
-                                        <label class="col-md-5 control-label">Cheque Number</label>
-                                        <div class="col-md-7">
-                                            <input type="number" class="form-control" name="cheque_number"  placeholder="Cheque Number"  required="">
-                                        </div>                                
-                                    </div>
-                                    <div class="form-group col-md-12 show_post_cheques"  style="display: none;">
-                                        <label class="col-md-5 control-label">Cheque Image</label>
-                                        <div class="col-md-7">
-                                            <input type="file" class="form-control" name="cheque_image"  placeholder="Cheque Image"  required="">
-                                        </div>                                
-                                    </div>
-                                    <div class="form-group col-md-12 show_post_cheques"  style="display: none;">
-                                        <label class="col-md-5 control-label">Cheque Amount</label>
-                                        <div class="col-md-7">
-                                            <input type="number" class="form-control" name="cheque_amount" id="cheque_amount" placeholder="Cheque Amount"  required="">
-                                        </div>                                
-                                    </div>
-                                    <div class="form-group col-md-12 show_post_cheques"  style="display: none;">
-                                        <label class="col-md-5 control-label">cheque Date Limit</label>
-                                        <div class="col-md-7">
-                                            <input type="date" class="form-control amount" name="limit_cheque_date" id="limit_cheque_date"  placeholder="Limit cheque date"  required="">
-                                        </div>                                
                                     </div>
                                     {{-- *************************POST DATE CHEQUE ************************ --}}
                                     <input type="Submit" value="Submit" class="btn btn-success pull-right">
                                 </div>
                             </div>
 
-                        </form>
+                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    
+
+    {{-- Modal for add cheques --}}
+    <div class="modal fade" id="mycheque" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add Cheques</h4>
+        </div>
+        <div class="modal-body">
+          <div class="col-md-12" >
+            <div class="card-box clearfix" id="add_cheque_here">                                                        
+                <div class="form-group col-md-3">
+                    <label class="col-md-12 control-label">Bank Name</label>
+                    <div class="col-md-12">
+                        <select class="form-control" name="bank_name[]">
+                            @foreach($bank as $key => $val)
+                                <option value="{{$val->bank_name}}">{{$val->bank_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>                                
+                </div>
+                <div class="form-group col-md-2">
+                    <label class="col-md-12 control-label">Cheque Number</label>
+                    <div class="col-md-12">
+                        <input type="text" class="form-control" name="cheque_number[]"  placeholder="Cheque Number"  >
+                    </div>                                
+                </div>
+                <div class="form-group col-md-2">
+                    <label class="col-md-12 control-label">Cheque Amount</label>
+                    <div class="col-md-12">
+                        <input type="text" class="form-control" name="cheque_amount[]"  placeholder="Cheque Amount"  >
+                    </div>                                
+                </div>
+                <div class="form-group col-md-2">
+                    <label class="col-md-12 control-label">Cheque Image</label>
+                    <div class="col-md-12">
+                        <input type="file" class="form-control" name="cheque_image[]"  placeholder="Cheque Image"  >
+                    </div>                                
+                </div>
+                <div class="form-group col-md-2">
+                    <label class="col-md-12 control-label">Cheque Date Limit</label>
+                    <div class="col-md-12">
+                        <input type="date" class="form-control" name="limit_cheque_date[]"  placeholder="Cheque Date Limit"  >
+                    </div>                                
+                </div>
+                <div class="form-group col-md-1">
+                    <label class="col-md-12 control-label"></label>
+                    <div class="col-md-12">
+                        <button type="button"  class="btn btn-success fa fa-plus modal-plus add_more_cheques" ></button>
+                    </div>                                
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{--  --}}
+</form>
+    {{-- Modal for add more cheques --}}
     {{-- Modal for new item --}}
         <div class="modal" id="myModal">
           <div class="modal-dialog">
@@ -392,31 +592,124 @@ input[type=number]::-webkit-outer-spin-button {
                     </div>
                 </div>
             </div>
-</div>
+        </div>
       </div>
       <!-- Modal footer -->
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" id="close_modal" data-dismiss="modal">Close</button>
       </div>
 
-    </div>
+    </div> 
   </div>
 </div>
     {{-- Modal for new item --}}
 @section('customScript')
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript">
+    $(document).on('click','#posted',function(){
+        $('[name="posted"]').val(1);
+        $('#posted_image').show();
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).on('click','#posted_remove',function(){
+        $('[name="posted"]').val(0);
+        $('#posted_image').hide();
+    });
+</script>
 <script>
+    $(document).on('click','[name="vendor"]',function (){
+        type = $(this).attr('id');
+        if(type == 'customer'){
+             $('#scode').val('');
+            $('#name').val('');
+            $('#company_name').val('');
+            $('#phone_no').val('');
+            $('#address').val('');
+            $('#credit_balance_limit').val('');
+            $('#credit_balance').val('');
+            $('#pd_cheque_limit').val('');
+            $('#pd_cheque_balance').val('');
+            $('[name="limit_amount"]').val('');
+            $('#type_supplier').hide('slow');
+            $('[name="supplier"]').prop('required',false);
+             $('#type_customer').show('slow');
+            $('[name="customer"]').prop('required',true);
+        }if(type == 'supplier'){
+             $('#scode').val('');
+            $('#name').val('');
+            $('#company_name').val('');
+            $('#phone_no').val('');
+            $('#address').val('');
+            $('#credit_balance_limit').val('');
+            $('#credit_balance').val('');
+            $('#pd_cheque_limit').val('');
+            $('#pd_cheque_balance').val('');
+            $('[name="limit_amount"]').val('');
+            $('#type_customer').hide('slow');
+            $('[name="customer"]').prop('required',false);
+             $('#type_supplier').show('slow');
+            $('[name="supplier"]').prop('required',true);
+        }
+    });
+    $(document).on('click','.add_more_cheques',function (){
+        html = `<div class="form-group col-md-3">
+                    <label class="col-md-12 control-label">Bank Name</label>
+                    <div class="col-md-12">
+                         <select class="form-control" name="bank_name[]">
+                            @foreach($bank as $key => $val)
+                                <option value="{{$val->bank_name}}">{{$val->bank_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>                                
+                </div>
+                <div class="form-group col-md-2">
+                    <label class="col-md-12 control-label">Cheque Number</label>
+                    <div class="col-md-12">
+                        <input type="text" class="form-control" name="cheque_number[]"  placeholder="Cheque Number"  required="">
+                    </div>                                
+                </div>
+                <div class="form-group col-md-2">
+                    <label class="col-md-12 control-label">Cheque Amount</label>
+                    <div class="col-md-12">
+                        <input type="text" class="form-control" name="cheque_amount[]"  placeholder="Cheque Amount"  required="">
+                    </div>                                
+                </div>
+                <div class="form-group col-md-2">
+                    <label class="col-md-12 control-label">Cheque Image</label>
+                    <div class="col-md-12">
+                        <input type="file" class="form-control" name="cheque_image[]"  placeholder="Cheque Image"  required="">
+                    </div>                                
+                </div>
+                <div class="form-group col-md-2">
+                    <label class="col-md-12 control-label">Cheque Date Limit</label>
+                    <div class="col-md-12">
+                        <input type="date" class="form-control" name="limit_cheque_date[]"  placeholder="Cheque Date Limit"  required="">
+                    </div>                                
+                </div>
+                <div class="form-group col-md-1">
+                    <label class="col-md-12 control-label"></label>
+                    <div class="col-md-12">
+                        <button type="button"  class="btn btn-success fa fa-plus modal-plus add_more_cheques" ></button>
+                    </div>                                
+                </div>`;
+            $('#add_cheque_here').append(html);
+    }); 
     var sum =  0;
     var tax =  0; 
     var total_max = 0 ;
+    var carriage = 0;
     $(document).on('keyup','.unit',function (){
         id = $(this).attr('id');
-        
         id = id.substring(5);
-        quantity = parseInt($('#quantity_'+id).val());
+        measure_type = $('#check_type_quantity option:selected').val();
+        /*alert(measure_type);*/
         unit = parseInt($('#unit_'+id).val());
-        rate = quantity * unit;
+        cost = parseInt($('#cost_'+id).val());
+        rate = unit * cost;
         $('#rate_'+id).val(rate);  
+        $('#exc_tax_'+id).val(rate);  
         sum = 0; 
          $('[name="rate[]"]').each(function(){
             amount = $(this).val();
@@ -426,12 +719,87 @@ input[type=number]::-webkit-outer-spin-button {
         });
         $('#total_rs').html('');
         $('#total_rs').html('Total Rs:  '+sum);
+        $('#total_rs_ex').html('');
+        $('#total_rs_ex').html('Total Rs:  '+sum);
         $('#net_total').val(sum);
         total = sum;
+    }); 
+
+    $(document).on('change','.kg',function (){
+        id = $(this).attr('id');
+        id = id.substring(3);
+        /*alert(measure_type);*/
+        unit = parseInt($('#kg_'+id+' option:selected').val());
+        cost = parseInt($('#cost_'+id).val());
+        rate = unit * cost;
+        $('#rate_'+id).val(rate);  
+        $('#exc_tax_'+id).val(rate);  
+        sum = 0; 
+         $('[name="rate[]"]').each(function(){
+            amount = $(this).val();
+            if(amount != ''){
+                sum =  parseInt(amount) + sum;    
+            }
+        });
+        $('#total_rs').html('');
+        $('#total_rs').html('Total Rs:  '+sum);
+        $('#total_rs_ex').html('');
+        $('#total_rs_ex').html('Total Rs:  '+sum);
+        $('#net_total').val(sum);
+        total = sum;
+    }); 
+
+    $(document).on('focusout','.gram',function(){
+        id = $(this).attr('id');
+        id = id.substring(5);
+        value = $(this).val();
+        gram = parseFloat(value)/1000;
+        new_rate = parseFloat($('#cost_'+id).val()) * gram;
+        rate = $('#rate_'+id).val();
+        new_rate = parseInt(new_rate) + parseInt(rate);
+        $('#total_rs').html('Total Rs:  '+new_rate);
+        $('#total_rs_ex').html('Total Rs:  '+new_rate);
+        $('#rate_'+id).val(new_rate);
+        $('#exc_tax_'+id).val(new_rate);
+        $('#net_total').val(new_rate);
     });
 
+    $(document).on('change','.add_item_type',function (){
+        id = $(this).attr('id');
+        item_type = $(this).val();
+        
+        id = id.substring(13);
+
+        $.ajax({
+               type:'POST',
+               url:'{{route('get-barrel-type')}}',
+               data:{
+                    "_token": "{{ csrf_token() }}",
+                    'item_type' : item_type
+               },
+               success:function(data){
+                data = JSON.parse(data);
+                console.log(id);
+                   $('#storeage_quantity_'+id).val(data.item_type);
+                   $('#quantity_'+id).attr('max',data.item_type);
+                   
+                   if(data.item_purchase_type == 'kg'){
+                    $('#unit_'+id).hide();
+                    $('#kg_'+id).show('slow');
+                    $('#gram_'+id).show('slow');
+                   }else{
+                    $('#unit_'+id).show();
+                    /*$('#kg_'+id).hide('slow');
+                    $('#gram_'+id).hide('slow');*/
+                   }    
+                    $('#append_unit').append(`<input type="hidden" value="`+data.item_type+`" name="storage_strength[]" id="check_type_quantity" />Each `+data.item_name+` contain `+data.item_type+` `+data.item_purchase_type+``);
+
+
+               }
+            });
+    });
     /******/
-    $(document).on('keyup','[name="exc_tax[]"]',function (){
+   /* $(document).on('keyup','[name="exc_tax[]"]',function (){
         tax = 0;
         $('[name="exc_tax[]"]').each(function(){
             amount = $(this).val();
@@ -450,7 +818,7 @@ input[type=number]::-webkit-outer-spin-button {
         $('#tax_rs').html('');
         $('#tax_rs').html(`Tax Rs:  `+tax);
         $('#net_total').val(parseInt(tax)+parseInt(sum));
-    });
+    });*/
     /******/
     /******/
     $(document).on('keyup','[name="inc_code[]"]',function (){
@@ -463,23 +831,71 @@ input[type=number]::-webkit-outer-spin-button {
         });
         $('#tax_rs').html('');
         $('#tax_rs').html(`Tax Rs:  `+tax);
-        $('[name="exc_tax[]"]').each(function(){
+       /* $('[name="exc_tax[]"]').each(function(){
             amount = $(this).val();
             if(amount != ''){
                 tax =  parseInt(amount) + parseInt(tax);    
             }
-        });
+        });*/
         $('#tax_rs').html('');
         $('#tax_rs').html(`Tax Rs:  `+tax);
         $('#net_total').val(parseInt(tax)+parseInt(sum));
     }); 
+    /***/
+    $(document).on('focusout','#carriage',function (){
+       net_total = $('#net_total').val();
+       
+       total_money = parseInt(net_total) + parseInt($(this).val());
+       $('#net_total').val(total_money);
+       carriage = total_money;
+    });
+    /***/
+    row = 4;
+    $(document).on('click','#add_more',function (){
+
+        html = `<tr>
+                <th scope="row">1</th>
+                <td><input type="text" id="code_`+row+`" class="form-control code " name="item_code[]" required=""></td>
+                <td><input type="text" id="name_`+row+`" class="form-control name " name="description[]" required=""></td>
+                <td>
+                    <select name="measurment[]" class="form-control" required="">
+                        <option>Select Mesurement</option>
+                        <option value="kg">Kg</option>
+                        <option value="kg">Liter</option>
+                    </select>
+                </td>
+                <td><select name="storage_type[]" id="storage_type_`+row+`" class="form-control add_item_type" required=""> 
+                    <option value="">Select Storage type</option>
+                    @foreach($item_type as $key => $val)
+                        <option value="{{$val->item_name}}">{{$val->item_name}}</option>
+                    @endforeach
+                </select></td>
+                <td><input type="number" id="storeage_quantity_`+row+`" class="form-control storeage_quantity" name="storeage_quantity[]" required=""></td>
+                <td><input type="number" id="quantity_`+row+`" class="form-control quantity" name="quantity[]" required=""></td>
+                <td><input type="number" id="cost_`+row+`" class="form-control cost" name="cost[]" required=""></td>
+                <td> <input type="hidden"   id="unit_`+row+`" class="form-control unit" name="unit[]" >
+                    <select class="form-control kg" id="kg_`+row+`" name="kg[]"{{--  style="display: none" --}}>
+                        <option value="">unit</option>
+                        @for($i=1;$i<100;$i++)
+                        <option>{{$i}}</option>
+                        @endfor
+                    </select>
+                    <input type="text" id="gram_`+row+`" class="form-control gram" name="gram[]" {{-- style="display: none;"  --}}/></td>
+                <td><input type="number" id="rate_`+row+`" class="form-control rate calculate" name="rate[]" required=""></td>
+                <td><input type="text"   id="exc_tax_`+row+`" class="form-control calculate exc_tax" name="exc_tax[]" required=""></td>
+                <td><input type="text"   id="inc_code_`+row+`" class="form-control calculate inc_code" name="inc_code[]"></td>
+            </tr>`;
+                $('#add_here').append(html);
+                row++;
+    });
     /******/
     $(document).on('focusout',function (){
         total_rupees = parseInt(sum)+parseInt(tax)
         carriage = $('#carriage').val();
         sum_of_product = parseInt(total_rupees) + parseInt(carriage)
-        total = sum_of_product;
-        $('#net_total').val(parseInt(tax)+parseInt(sum));
+        total = parseInt(tax)+parseInt(sum);
+        total = total + parseInt(carriage);
+        $('#net_total').val();
     });
     /******/
    
@@ -507,20 +923,21 @@ input[type=number]::-webkit-outer-spin-button {
         id = id.substring(5);
         item_name = $('#name_'+id).val();
         $.ajax({
-               type:'POST',
-               url:'{{route('get_ajax_chemical_code')}}',
-               data:{
-                    "_token": "{{ csrf_token() }}",
-                    'item_name' : item_name
-               },
-               success:function(data){
-                data = JSON.parse(data);
-                 if(data == null){
-                    return false;
-                }
-                   $('#code_'+id).val(data);
-               }
-            });
+           type:'POST',
+           url:'{{route('get_ajax_chemical_code')}}',
+           data:{
+                "_token": "{{ csrf_token() }}",
+                'item_name' : item_name
+           },
+           success:function(data){
+            data = JSON.parse(data);
+            console.log(data);
+             if(data == null){
+                return false;
+            }
+               $('#code_'+id).val(data.inventory);
+           }
+        });
     });
 
     $('.code').autocomplete({
@@ -541,6 +958,17 @@ input[type=number]::-webkit-outer-spin-button {
         }
     });
 
+    $(document).on('keyup','.quantity',function (){
+        value = $(this).attr('id');
+        id    = value.substring(9);
+        multiply_by = $('#check_type_quantity').val();
+        multiply_to = $(this).val();
+        result = '';
+        result = parseInt(multiply_by) * parseInt(multiply_to);
+        $('#unit_'+id).attr('max',result);
+        $('#storeage_quantity_'+id).val(result);
+
+    });
 
   </script>
     <script type="text/javascript">
@@ -618,11 +1046,12 @@ input[type=number]::-webkit-outer-spin-button {
 
             if($('#pdc').is(":checked")){
                 supplier = $('[name="supplier"]').val();
+
                 if(supplier == ''){
                     alert('please select supplier first');
                     return false;
                 }
-                alert();
+                
                 $('.show_post_cheques').show('slow');
                 $('[name="cheque_number"]').prop('required',true);
                 $('[name="cheque_image"]').prop('required',true);
@@ -668,12 +1097,15 @@ input[type=number]::-webkit-outer-spin-button {
                     alert('please select supplier first');
                     return false;
                 }
+                $('[name="amount_credit"]').prop('required',false);
+                $('[name="credit_date_limit"]').prop('required',false);
+                $('[name="cash_recieved"]').prop('required',false); 
                 $('.show_post_cheques').show('slow');
                 $('[name="cheque_number"]').prop('required',true);
                 $('[name="cheque_image"]').prop('required',true);
                 $('[name="limit_cheque_date"]').prop('required',true);
                 $('[name="cheque_number"]').prop('required',true);
-                
+                 $('#mycheque').modal('show');  
                  $.ajax({
                    type:'POST',
                    url:'{{route('get-cheque-limit')}}',
@@ -713,6 +1145,7 @@ input[type=number]::-webkit-outer-spin-button {
         /*Get selected supplier credit limit*/
          $(document).on('change','[name="supplier"]',function (){
             supplier = $(this).val();
+           
             $.ajax({
                type:'POST',
                url:'{{route('get-credit-limit')}}',
@@ -743,7 +1176,48 @@ input[type=number]::-webkit-outer-spin-button {
                   $('#credit_date_limit').attr('max',date_limit);
                }
             });
+
         });
+
+
+         /*Get selected customer credit limit*/
+         $(document).on('change','[name="customer"]',function (){
+            customer = $(this).val();
+           
+            $.ajax({
+               type:'POST',
+               url:'{{route('get-credit-limit-customer')}}',
+               data:{
+                    "_token": "{{ csrf_token() }}",
+                    'customer' : customer
+               },
+               success:function(data){
+                 data = JSON.parse(data);
+                 console.log(data);
+                 $('#scode').val(data['customer'].id);
+                 $('#name').val(data['customer'].name);
+                 $('#company_name').val(data['customer'].company_name);
+                 $('#phone_no').val(data['customer'].phone_number);
+                 $('#address').val(data['customer'].address);
+                 $('#credit_balance_limit').val(data['customer_amount'].customer_amount_limit);
+                 $('#credit_balance').val(data.remaining_credit);
+                 $('#pd_cheque_limit').val(data['customer_amount'].customer_amount_limit);
+                 $('#pd_cheque_balance').val(data.remaining_cheque);
+                 $('[name="limit_amount"]').attr('max' , data.customer_amount_limit);
+                 var someDate = new Date();
+                 var numberOfDaysToAdd = parseInt(data['customer_amount'].credit_date_limit);
+                 datee = someDate.setDate(someDate.getDate() + numberOfDaysToAdd); 
+                 var dd =( '0' + ( someDate.getDate()+1) ).slice( -2 );
+                 var mm = ( '0' + (someDate.getMonth()+1) ).slice( -2 );
+                 var y = someDate.getFullYear();
+                 date_limit = someFormattedDate = y + '-'+ mm + '-'+ dd;
+                  $('#credit_date_limit').attr('max',date_limit);
+               }
+            });
+
+        });
+         
+
          /*Payment Status*/ 
          $(document).on('change','#payment_status',function (){
             payment_status = $(this).val();
@@ -857,5 +1331,17 @@ input[type=number]::-webkit-outer-spin-button {
             });
         });
     </script> 
+
+     <!-- Examples -->
+    <script src="{{URL('/')}}/backend/plugins/magnific-popup/js/jquery.magnific-popup.min.js"></script>
+    <script src="{{URL('/')}}/backend/plugins/jquery-datatables-editable/jquery.dataTables.js"></script>
+    <script src="{{URL('/')}}/backend/plugins/datatables/dataTables.bootstrap.js"></script>
+    <script src="{{URL('/')}}/backend/plugins/tiny-editable/mindmup-editabletable.js"></script>
+    <script src="{{URL('/')}}/backend/plugins/tiny-editable/numeric-input-example.js"></script>
+
+    <!-- <script src="{{URL('/')}}/backend/pages/datatables.editable.init.js"></script>
+    <script>
+        $('#mainTable').editableTableWidget().numericInputExample().find('td').focus();
+    </script> -->
 @endsection
 @endsection

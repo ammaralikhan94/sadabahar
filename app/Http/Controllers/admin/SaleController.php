@@ -10,13 +10,22 @@ use App\Customer_amount_limit;
 use App\Customer;
 use App\Customer_cheque_bounce;
 use App\Sale;
+use App\Item_purchase_type;
+use App\Supplier;
+use App\Invoice_number;
+use App\Bank;
 
 class saleController extends Controller
 {
     public function create_sale(){
-    	$chemical = Chemical::get();
-        $customer = Customer::get();
-    	return view('admin.sale.create_sale' , compact('chemical','customer'));
+    	$item_type = Item_purchase_type::get();
+        $supplier  = Supplier::get();
+        $customer  = Customer::get();
+        $chemical  = Chemical::get();
+        $invoice_number = Invoice_number::count();
+        $bank = Bank::get();
+        $invoice_number = $invoice_number +1;
+        return view('admin.sale.create_sale' , compact('item_type','supplier','chemical','customer','invoice_number','bank'));
     }
 
     /*Ajax for getting available quantity*/

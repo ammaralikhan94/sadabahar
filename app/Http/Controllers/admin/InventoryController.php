@@ -476,6 +476,18 @@ class InventoryController extends Controller
         return view('admin.bank.list_bank',compact('bank'));
     }
 
+    public function update_bank(Request $request){
+
+       Bank::where('id',$_POST['id'])->update([
+        'bank_name' => $_POST['bank_name']
+       ]);
+       return redirect()->back()->with('success' , 'bank updated successfully !');
+    }
+
+    public function delete_bank($id){
+        Bank::where('id',$id)->delete();
+        return redirect()->back()->with('success' , 'bank deleted successfully !');
+    }
     /***************Return Purchase Work******************/
     public function return_purchase(){
         $invoice_number = Invoice_number::distinct()->groupBy('invoice_number')->get();

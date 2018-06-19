@@ -45,7 +45,7 @@
 
                     <!-- Logo container-->
                     <div class="logo">
-                        <a href="index.html" class="logo"><span>SADA BAHAR</span></a>
+                        <a href="{{route('home')}}" class="logo"><span>SADA BAHAR</span></a>
                     </div>
                     <!-- End Logo container-->
 

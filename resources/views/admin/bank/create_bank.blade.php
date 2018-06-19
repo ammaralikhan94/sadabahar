@@ -35,12 +35,12 @@
                 <h4 class="m-t-0 header-title"><b>Create Bank</b></h4>
                 <div class="row">
                     <div class="col-md-12">
-                        <form class="form-horizontal" action="{{route('insert_bank')}}" method="post">
+                        <form class="form-horizontal" id="form_action" action="{{route('insert_bank')}}" method="post">
                             {{csrf_field()}}
                             <div class="form-group col-md-8">
                                 <label class="col-md-3 control-label">Bank Name</label>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" name="bank_name" required="">
+                                    <input type="text" class="form-control" name="bank_name" id="bank_name" required="">
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
@@ -62,6 +62,7 @@
                     <tr>
                         <th>#</th>
                         <th>Name</th>
+                        <th>Action</th>
                         
                     </tr>
                     </thead>
@@ -69,7 +70,8 @@
                         @foreach($bank as $key => $val)
                     <tr>
                         <td>{{$key + 1}}</td>
-                        <td>{{$val->bank_name}}</td>
+                        <td><input type="hidden" value="{{$val->bank_name}}" id="bank_{{$val->id}}">{{$val->bank_name}}</td>
+                        <td><a href="javascript:;" id="{{$val->id}}" class="btn btn-primary edit">Edit</a> <a href="{{route('delete_bank',['id' => $val->id])}}" class="btn btn-danger">Delete</a></td>
                     </tr>
                     @endforeach
                     </tbody>
@@ -98,6 +100,25 @@
         <script src="{{URL('/')}}/backend/pages/datatables.init.js"></script>
     <script type="text/javascript">
         $('#subadmin_table').DataTable();
+        $(document).on('click','.edit',function(){
+        id = $(this).attr('id');
+        bank_name  = $('#bank_'+id).val();
+        $('#form_action').append(`<input type="hidden" name="id" value="`+id+`">`);
+        $('#bank_name').val(bank_name);
+         $('#form_action').attr('action', '{{route('update_bank')}}');
+        $.ajax({
+               type:'POST',
+               url:'{{route('get_ajax_chemical_name')}}',
+               data:{
+                    "_token": "{{ csrf_token() }}",
+                    'item_code' : item_code
+               },
+               success:function(data){
+                data = JSON.parse(data);
+                   $('#name_'+id).val(data);
+               }
+            });
+    });
     </script>
 @endsection
 @endsection

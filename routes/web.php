@@ -129,6 +129,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/create_bank/', ['as' => 'create_bank',  'uses' => 'admin\InventoryController@create_bank']);/*create bank*/
 	Route::post('/insert_bank/', ['as' => 'insert_bank',  'uses' => 'admin\InventoryController@insert_bank']);/*insert bank*/
 	Route::get('/list_bank/', ['as' => 'list_bank',  'uses' => 'admin\InventoryController@list_bank']);/*insert bank*/
+	Route::post('/update_bank/', ['as' => 'update_bank',  'uses' => 'admin\InventoryController@update_bank']);/*insert bank*/
+	Route::get('/delete_bank/{id}', ['as' => 'delete_bank',  'uses' => 'admin\InventoryController@delete_bank']);/*insert bank*/
 	/*********************************Bank End*************************************/
 
 	/**********************Get Suggestion**************/

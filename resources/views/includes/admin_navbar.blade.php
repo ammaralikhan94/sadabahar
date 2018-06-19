@@ -30,6 +30,9 @@
                     </li>
                 </ul>       
             </li> 
+             <li class="has-submenu bg-inverse-hvr">
+                <a href="{{route('create_sale')}}"><i class="fa fa-opencart"></i>Sale</a></li>
+            </li>  
            {{--  <li class="has-submenu">
              <a href="#"><i class="fa fa-shopping-basket"></i>Product Sale</a>
                 <ul class="submenu megamenu">
